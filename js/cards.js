@@ -1,6 +1,6 @@
 let onCardClickCallback = null;
 
-export function renderCards(monks, allMonks, onSelect, emptyState = null) {
+export function renderCards(monks, allMonks, onSelect, emptyState = null, onIntro = null) {
   onCardClickCallback = onSelect;
 
   const container = document.getElementById('monks-list') || 
@@ -28,6 +28,22 @@ export function renderCards(monks, allMonks, onSelect, emptyState = null) {
     return;
   }
 
+  if (onIntro && monks.length === allMonks.length) {
+    const intro = document.createElement('div');
+    intro.id = 'card-intro';
+    intro.className = 'monk-card intro-card';
+    intro.setAttribute('role', 'button');
+    intro.setAttribute('tabindex', '0');
+    intro.innerHTML = '<span>Introduction</span>';
+    intro.addEventListener('click', () => onIntro());
+    intro.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      onIntro();
+    });
+    container.appendChild(intro);
+  }
+
   monks.forEach((monk) => {
     const originalIndex = allMonks.findIndex(m => m.id === monk.id) + 1;
 
@@ -43,6 +59,10 @@ export function renderCards(monks, allMonks, onSelect, emptyState = null) {
         <img
           src="${monk.iconUrl || `./images/icons/${monk.id}.jpg`}"
           alt=""
+          width="48"
+          height="48"
+          loading="lazy"
+          decoding="async"
           onerror="this.remove()"
         />
       </span>

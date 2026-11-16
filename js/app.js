@@ -1,7 +1,12 @@
-import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-2';
+import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-6';
 import {
-  initMap, flyToMonk, showPopup, closePopup, resetMapView, setActiveMarker, selectMobileCard
-} from './map.js?v=figma-sync-5';
+  initMap, flyToMonk, showPopup, closePopup, resetMapView, setActiveMarker, selectMobileCard, showAllMonks
+} from './map.js?v=figma-sync-6';
+
+const INTRO_PARAGRAPHS = [
+  'In the 6th century, thirteen Syrian (Assyrian) fathers, led by John of Zedazeni, came to Georgia and founded some of the earliest monasteries in the country.',
+  'Choose a father from the list or a pin on the map to read his story and find his monastery.'
+];
 
 let allMonksData = [];
 let selectionRevision = 0;
@@ -11,6 +16,8 @@ function openMonkModal(monk, index, direction = 0) {
   const modal = document.getElementById('monk-detail-modal');
   if (!modal || !monk) return;
 
+  const wasHidden = modal.classList.contains('hidden');
+  modal.classList.remove('is-intro');
   document.getElementById('detail-overlay')?.classList.remove('hidden');
   document.body.classList.add('monk-modal-open');
   const modalContent = modal.querySelector('.modal-content');
@@ -77,6 +84,50 @@ function openMonkModal(monk, index, direction = 0) {
     descContainer.innerHTML = paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('');
   }
   modal.classList.remove('hidden');
+  if (wasHidden && !direction && window.matchMedia('(max-width: 760px)').matches) {
+    modal.classList.remove('sheet-enter');
+    void modal.offsetWidth;
+    modal.classList.add('sheet-enter');
+    modal.addEventListener('animationend', () => modal.classList.remove('sheet-enter'), { once: true });
+  }
+}
+
+function openIntroModal() {
+  const modal = document.getElementById('monk-detail-modal');
+  if (!modal) return;
+
+  document.getElementById('detail-overlay')?.classList.remove('hidden');
+  document.body.classList.add('monk-modal-open');
+  const modalContent = modal.querySelector('.modal-content');
+  if (modalContent) modalContent.scrollTop = 0;
+  document.getElementById('modal-monk-name').textContent = 'Introduction';
+  document.getElementById('modal-monk-desc').replaceChildren(...INTRO_PARAGRAPHS.map((text) => {
+    const paragraph = document.createElement('p');
+    paragraph.textContent = text;
+    return paragraph;
+  }));
+  const wasHidden = modal.classList.contains('hidden');
+  modal.classList.add('is-intro');
+  modal.classList.remove('hidden');
+  if (wasHidden && window.matchMedia('(max-width: 760px)').matches) {
+    modal.classList.remove('sheet-enter');
+    void modal.offsetWidth;
+    modal.classList.add('sheet-enter');
+    modal.addEventListener('animationend', () => modal.classList.remove('sheet-enter'), { once: true });
+  }
+}
+
+function handleSelectIntro() {
+  selectionRevision += 1;
+  activeMonkId = null;
+  document.body.classList.remove('map-only-view');
+  updateMapViewButton();
+  closePopup({ notify: false });
+  setActiveMarker(null);
+  highlightActiveCard('intro');
+  setMobileListOpen(false);
+  openIntroModal();
+  void showAllMonks().catch((error) => console.error('Failed to fit map to all monasteries', error));
 }
 
 function openMonkDetails(monkId) {
@@ -111,7 +162,11 @@ function setMobileListOpen(isOpen) {
     updateMapViewButton();
   }
   document.body.classList.toggle('mobile-list-open', isOpen);
-  document.getElementById('mobile-list-toggle')?.setAttribute('aria-expanded', String(isOpen));
+  const toggle = document.getElementById('mobile-list-toggle');
+  toggle?.setAttribute('aria-expanded', String(isOpen));
+  toggle?.setAttribute('aria-label', isOpen ? 'Close monastery list' : 'Open monastery list');
+  toggle?.querySelector('.icon')?.classList.replace(isOpen ? 'icon-menu' : 'icon-close', isOpen ? 'icon-close' : 'icon-menu');
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isOpen ? '#ffffff' : '#f5f2eb');
 }
 
 function updateMapViewButton() {
@@ -243,6 +298,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       monkList.replaceChildren();
       monkList.setAttribute('aria-busy', 'false');
     }
+    document.getElementById('mobile-card-overlay')?.replaceChildren();
     if (status && statusMessage) {
       status.classList.add('is-error');
       status.setAttribute('role', 'alert');
@@ -256,7 +312,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   status?.classList.add('hidden');
 
   initMap(allMonksData, handleSelectMonk);
-  renderCards(allMonksData, allMonksData, handleSelectMonk);
+
+  if (!window.matchMedia('(max-width: 760px)').matches) {
+    const skeletonOverlay = document.getElementById('mobile-card-overlay');
+    skeletonOverlay?.replaceChildren();
+    if (skeletonOverlay) skeletonOverlay.hidden = true;
+  }
 
   const searchInput = document.getElementById('search-input');
   const counter = document.getElementById('counter');
@@ -276,18 +337,29 @@ document.addEventListener('DOMContentLoaded', async () => {
           if (searchInput) searchInput.value = '';
           renderFilteredCards();
         }
-      });
+      }, handleSelectIntro);
       if (counter) counter.textContent = '0 monasteries';
       return;
     }
 
-    renderCards(filteredMonks, allMonksData, handleSelectMonk);
+    renderCards(filteredMonks, allMonksData, handleSelectMonk, null, handleSelectIntro);
+    if (!activeMonkId && !document.getElementById('monk-detail-modal')?.classList.contains('hidden')
+      && document.getElementById('monk-detail-modal')?.classList.contains('is-intro')) {
+      highlightActiveCard('intro', { scroll: false });
+    } else if (activeMonkId) {
+      highlightActiveCard(activeMonkId, { scroll: false });
+    }
     if (counter) counter.textContent = `${filteredMonks.length} Monasteries`;
   };
 
   if (searchInput) {
     searchInput.addEventListener('input', renderFilteredCards);
   }
+  document.getElementById('search-clear')?.addEventListener('click', () => {
+    if (searchInput) searchInput.value = '';
+    renderFilteredCards();
+    searchInput?.focus();
+  });
 
   const resetMap = () => {
     selectionRevision += 1;
@@ -300,14 +372,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateMapViewButton();
   };
   document.getElementById('reset-btn')?.addEventListener('click', () => {
+    setMobileListOpen(false);
     document.body.classList.toggle('map-only-view');
     updateMapViewButton();
   });
   document.getElementById('mobile-reset-btn')?.addEventListener('click', resetMap);
-  document.getElementById('mobile-list-toggle')?.addEventListener('click', () => setMobileListOpen(true));
+  document.getElementById('mobile-list-toggle')?.addEventListener('click', () => {
+    setMobileListOpen(!document.body.classList.contains('mobile-list-open'));
+  });
   document.getElementById('mobile-list-close')?.addEventListener('click', () => setMobileListOpen(false));
 
   renderFilteredCards();
+  monkList?.classList.add('is-revealing');
+  window.setTimeout(() => monkList?.classList.remove('is-revealing'), 400);
   monkList?.setAttribute('aria-busy', 'false');
   if (window.matchMedia('(max-width: 760px)').matches && allMonksData[0]?.coordinates) {
     activeMonkId = allMonksData[0].id;
@@ -336,9 +413,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   const selectAdjacentMonk = (offset) => {
     const currentName = document.getElementById('modal-monk-name')?.textContent;
-    const currentIndex = allMonksData.findIndex((monk) => monk.name === currentName);
-    if (currentIndex < 0 || !allMonksData.length) return;
-    const nextIndex = (currentIndex + offset + allMonksData.length) % allMonksData.length;
+    const isIntro = currentName === 'Introduction';
+    const currentIndex = isIntro ? -1 : allMonksData.findIndex((monk) => monk.name === currentName);
+    if ((currentIndex < 0 && !isIntro) || !allMonksData.length) return;
+    const nextIndex = isIntro
+      ? (offset > 0 ? 0 : allMonksData.length - 1)
+      : (currentIndex + offset + allMonksData.length) % allMonksData.length;
     const modal = document.getElementById('monk-detail-modal');
     const keepModalOpen = window.matchMedia('(max-width: 760px)').matches
       && modal

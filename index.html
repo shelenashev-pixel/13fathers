@@ -187,13 +187,23 @@
       color: var(--text-primary); pointer-events: none;
     }
     #search-input {
-      width: 100%; height: 100%; padding: 0 var(--space-4) 0 44px; outline: none;
-      border: 2px solid var(--text-secondary); border-radius: var(--radius-pill); background: transparent;
+      width: 100%; height: 100%; padding: 0 44px 0 44px; outline: none;
+      border: 1.5px solid var(--text-secondary); border-radius: var(--radius-pill); background: transparent;
       color: var(--text-primary); font: 14px/20px Inter, sans-serif;
     }
-    #search-input:focus { border-color: var(--text-primary); }
-    #search-input:focus-visible { outline: 2px solid #6f5636; outline-offset: 2px; }
+    #search-input:focus, #search-input:focus-visible { outline: none; border-color: var(--text-primary); }
     #search-input::placeholder { color: var(--text-secondary); }
+    #search-input::-webkit-search-cancel-button, #search-input::-webkit-search-decoration {
+      display: none; -webkit-appearance: none; appearance: none;
+    }
+    .search-clear {
+      position: absolute; top: 4px; right: 4px; display: inline-flex; width: var(--control-height-s); height: var(--control-height-s);
+      align-items: center; justify-content: center; padding: var(--space-1); border: 0;
+      border-radius: var(--radius-pill); background: transparent; color: var(--text-primary); cursor: pointer;
+    }
+    .search-clear:hover { background: var(--surface-hover); }
+    .search-clear:focus-visible { outline: none; background: var(--surface-hover); }
+    .search-wrap:has(#search-input:placeholder-shown) .search-clear { display: none; }
     #monks-list { display: flex; flex: 1; flex-direction: column; gap: var(--space-3); min-height: 0; overflow-y: auto; padding: 0 4px 2px 0; margin-right: calc(6px - var(--space-4)); }
     .empty-state {
       display: flex; align-items: center; justify-content: center; min-height: 180px; padding: 20px 16px;
@@ -209,15 +219,24 @@
       color: white; font: 600 12px Inter, sans-serif; cursor: pointer;
     }
     .monk-skeleton {
-      position: relative; flex: 0 0 70px; overflow: hidden; border-radius: 12px;
-      background: #f1efeb;
+      position: relative; display: grid; flex: 0 0 64px; height: 64px; overflow: hidden;
+      grid-template-columns: 24px 48px minmax(0, 1fr); align-items: center; gap: var(--space-3);
+      padding: var(--space-2) var(--space-4); border-radius: 8px;
     }
-    .monk-skeleton::after {
+    .monk-skeleton > i { display: block; height: 20px; border-radius: var(--radius-pill); background: var(--surface-hover); }
+    .monk-skeleton > .sk-avatar { width: 48px; height: 48px; }
+    .monk-skeleton > .sk-lines { display: grid; height: auto; gap: 6px; justify-items: center; background: none; }
+    .monk-skeleton > .sk-lines b { display: block; width: 80%; height: 14px; border-radius: var(--radius-pill); background: var(--surface-hover); }
+    .monk-skeleton > .sk-lines b + b { width: 60%; }
+    .monk-skeleton::after, .mobile-skel-card::after {
       position: absolute; inset: 0; content: "";
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.7), transparent);
+      background: linear-gradient(90deg, transparent, var(--surface-soft), transparent);
       transform: translateX(-100%); animation: skeleton-shimmer 1.4s ease-in-out infinite;
     }
     @keyframes skeleton-shimmer { to { transform: translateX(100%); } }
+    @keyframes list-reveal { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    #monks-list.is-revealing > * { animation: list-reveal .3s ease-out both; }
+    .mobile-card-skeleton { display: none; }
     .app-status {
       position: fixed; z-index: 40; bottom: 24px; left: 50%;
       display: flex; align-items: center; gap: var(--space-3); max-width: calc(100vw - 32px);
@@ -272,9 +291,11 @@
     .monk-card:hover { background: var(--surface-hover); }
     #monks-list:has(.monk-card[aria-current="true"]) .monk-card:hover { background: var(--surface-hover); }
     #monks-list .monk-card[aria-current="true"] {
-      background: var(--surface-base); box-shadow: inset 0 0 0 2px var(--border-selected);
+      background: transparent; box-shadow: inset 0 0 0 1.5px var(--border-selected);
     }
-    #monks-list .monk-card[aria-current="true"]:hover { background: var(--surface-base); }
+    #monks-list .monk-card[aria-current="true"]:hover { background: transparent; }
+    .monk-card.intro-card { display: flex; justify-content: center; }
+    .intro-card span { color: var(--text-primary); font: 400 24px/26px 'Prata', Georgia, serif; }
     .card-number { padding-top: 4px; color: var(--text-primary); font: 400 20px/24px 'Prata', Georgia, serif; text-align: center; }
     .card-icon-frame {
       position: relative; display: grid; width: 48px; height: 48px; overflow: hidden; place-items: center;
@@ -288,7 +309,7 @@
     .card-icon-frame img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
     .card-copy { min-width: 0; text-align: center; }
     .card-copy h3 {
-      overflow: hidden; margin: 0; color: var(--text-primary); font: 400 16px/20px 'Prata', Georgia, serif;
+      overflow: hidden; margin: 0; color: var(--text-primary); font: 400 16px/22px 'Prata', Georgia, serif;
       text-overflow: ellipsis; white-space: nowrap;
     }
     .card-copy p { overflow: hidden; margin: 0; color: var(--text-secondary); font: 14px/20px Inter, sans-serif; text-overflow: ellipsis; white-space: nowrap; }
@@ -340,13 +361,16 @@
     .modal-icon-fallback { display: none; width: 42px; height: 42px; color: #777; }
     .modal-icon-frame.is-missing .modal-icon { display: none; }
     .modal-icon-frame.is-missing .modal-icon-fallback { display: block; }
-    #modal-monk-desc { margin: 0; color: var(--text-primary); font: 14px/20px Inter, sans-serif; text-align: left; }
+    #modal-monk-desc { margin: 0; color: var(--text-primary); font: 14px/22px Inter, sans-serif; text-align: left; }
     #modal-monk-desc section { text-align: left; }
     #modal-monk-desc section + section { margin-top: var(--space-6); }
     #modal-monk-desc h3 {
       margin: 0 0 var(--space-2); color: var(--text-primary); font: 400 16px/20px 'Prata', Georgia, serif;
     }
-    #modal-monk-desc p + p { margin-top: var(--space-2); }
+    #modal-monk-desc p + p { margin-top: var(--space-3); }
+    .monk-detail-modal.is-intro #modal-monk-index,
+    .monk-detail-modal.is-intro .modal-icon-frame,
+    .monk-detail-modal.is-intro .modal-footer { display: none; }
     #modal-monk-desc strong { color: var(--text-primary); }
     .monk-popup-gmaps {
       display: inline-flex; height: var(--control-height-m); align-items: center; justify-content: center; gap: var(--space-3);
@@ -390,17 +414,48 @@
     }
     .maplibregl-popup-tip { display: none; }
 
+    /* Map controls: Button design-system pills on one shared vertical axis. */
+    .maplibregl-ctrl-bottom-right {
+      right: var(--space-4); bottom: var(--space-4);
+      display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
+    }
+    .maplibregl-ctrl-bottom-right .maplibregl-ctrl { float: none; clear: none; margin: 0; }
+    .maplibregl-ctrl-group, .maplibregl-ctrl-group:not(:empty) {
+      display: flex; flex-direction: column; gap: var(--space-2); border-radius: 0; background: transparent; box-shadow: none;
+    }
+    .maplibregl-ctrl-group button {
+      width: var(--control-height-m); height: var(--control-height-m); border: 0; border-radius: var(--radius-pill);
+      background-color: var(--surface-soft);
+    }
+    .maplibregl-ctrl-group button + button { border-top: 0; }
+    .maplibregl-ctrl-group button:not(:disabled):hover { background-color: var(--surface-hover); }
+    .maplibregl-ctrl-group button .maplibregl-ctrl-icon { background-position: center; background-size: 24px; }
+    .maplibregl-ctrl-attrib.maplibregl-compact, .maplibregl-ctrl-attrib.maplibregl-compact-show {
+      position: relative; box-sizing: border-box; width: var(--control-height-m); height: var(--control-height-m);
+      min-height: var(--control-height-m); margin: 0; padding: 0; border-radius: var(--radius-pill); background: var(--surface-soft);
+    }
+    .maplibregl-ctrl-attrib-button {
+      top: 0; right: 0; width: var(--control-height-m); height: var(--control-height-m);
+      border-radius: var(--radius-pill); background-position: center; background-size: 24px;
+    }
+    .maplibregl-ctrl-attrib.maplibregl-compact .maplibregl-ctrl-attrib-inner { display: none; }
+    .maplibregl-ctrl-attrib.maplibregl-compact-show .maplibregl-ctrl-attrib-inner {
+      position: absolute; top: 50%; right: 48px; display: block; padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-pill); background: var(--surface-soft); white-space: nowrap; transform: translateY(-50%);
+    }
+
     @media (min-width: 761px) {
       .maplibregl-popup-close-button { display: none; }
+      body::after { display: none; }
       .app-header {
-        align-items: center; gap: var(--space-3); min-height: 88px; padding: var(--space-6);
+        align-items: center; gap: var(--space-3); min-height: 88px; padding: 20px var(--space-6);
         background:
           linear-gradient(to bottom, var(--surface-soft), rgba(245,242,235,0) 50%),
           linear-gradient(to bottom, #ebe6da, rgba(235,230,218,0));
       }
       .app-header .app-title {
         min-width: 0; max-width: none; flex: 1; overflow: hidden; text-overflow: ellipsis;
-        color: var(--text-primary); font: 400 40px/40px 'Prata', Georgia, serif; letter-spacing: 0;
+        color: var(--text-primary); font: 400 40px/48px 'Prata', Georgia, serif; letter-spacing: 0;
         text-shadow: none; white-space: nowrap;
       }
       .header-actions { align-items: center; gap: var(--space-6); }
@@ -413,22 +468,23 @@
       .header-actions .language-switch span:first-child { width: 100%; height: 100%; }
       .monks-panel {
         top: 88px; bottom: 16px; left: 16px; width: min(340px, calc(100vw - 32px));
-        gap: var(--space-3); padding: var(--space-5) var(--space-4) var(--space-4);
+        gap: var(--space-3); padding: var(--space-5) var(--space-4) 0; overflow: hidden;
         border: 2px solid var(--surface-soft); border-radius: var(--radius-s); background: var(--surface-soft);
         box-shadow: none;
       }
+      #monks-list { padding-bottom: var(--space-4); }
       .panel-intro { display: none; }
       .detail-overlay {
         top: 88px; bottom: 16px;
         left: calc(32px + min(340px, calc(100vw - 32px)));
-        width: min(380px, calc(100vw - min(340px, calc(100vw - 32px)) - 48px));
+        width: min(400px, calc(100vw - min(340px, calc(100vw - 32px)) - 48px));
       }
       .monk-detail-modal {
         width: 100%;
         border-radius: var(--radius-s); background: var(--surface-base);
       }
       .modal-transition-outgoing { display: none !important; }
-      .modal-content { padding: var(--space-6) 10px 96px var(--space-4); }
+      .modal-content { padding: var(--space-6) 18px 96px var(--space-6); }
       .desktop-detail-nav {
         position: absolute; right: 0; bottom: 0; left: 0; z-index: 2;
         display: flex; justify-content: center; gap: var(--space-3); padding: var(--space-3) 0; pointer-events: none;
@@ -467,8 +523,8 @@
         top: 0; right: 0; bottom: 0; left: 0; width: auto;
       }
       body.monk-modal-open .modal-side-preview {
-        position: fixed; z-index: 31; top: calc(72px + env(safe-area-inset-top)); bottom: 0; display: block;
-        width: calc(100vw - 32px); border-radius: var(--radius-s) var(--radius-s) 0 0; background: var(--surface-base);
+        position: fixed; z-index: 31; top: calc(72px + env(safe-area-inset-top)); bottom: calc(var(--space-4) + env(safe-area-inset-bottom)); display: block;
+        width: calc(100vw - 32px); border-radius: var(--radius-s); background: var(--surface-base);
         pointer-events: none;
       }
       .modal-side-preview-previous { left: calc(40px - 100vw); }
@@ -488,7 +544,7 @@
       }
       .app-header .app-title {
         grid-area: title; max-width: none; color: var(--text-primary); text-shadow: none;
-        font: 400 24px/28px 'Prata', Georgia, serif; text-align: center; letter-spacing: 0;
+        font: 400 24px/32px 'Prata', Georgia, serif; text-align: center; letter-spacing: 0;
       }
       .header-actions { display: contents; }
       .header-actions .reset-btn {
@@ -508,26 +564,22 @@
       }
       .mobile-list-toggle { align-items: center; justify-content: center; }
       .monks-panel {
-        z-index: 35; top: 0; right: 0; bottom: 0; left: 0; display: none;
+        z-index: 35; top: 0; right: 0; bottom: 0; left: 0; display: flex;
         width: 100%; height: auto; gap: var(--space-3);
-        padding: calc(var(--space-4) + env(safe-area-inset-top)) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom));
+        padding: max(136px, calc(120px + env(safe-area-inset-top))) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom));
         border: 0; border-radius: 0; background: var(--surface-base);
         box-shadow: none;
+        opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(12px);
+        transition: opacity .3s ease-out, transform .3s ease-out, visibility 0s linear .3s;
       }
-      body.mobile-list-open .monks-panel { display: flex; }
-      body.mobile-list-open .app-header { display: none; }
-      .mobile-list-close {
-        position: absolute; top: calc(var(--space-4) + env(safe-area-inset-top)); left: var(--space-4);
-        display: inline-flex; flex: 0 0 var(--control-height-m);
-        width: var(--control-height-m); height: var(--control-height-m);
-        place-items: center; padding: var(--space-2); border: 0; border-radius: var(--radius-pill);
-        background: var(--surface-base); color: var(--text-primary); cursor: pointer;
+      body.mobile-list-open .monks-panel {
+        opacity: 1; visibility: visible; pointer-events: auto; transform: none;
+        transition-delay: 0s;
       }
-      .panel-intro {
-        flex: 0 0 auto; align-self: center; justify-content: center;
-        width: min(300px, 100%); min-height: 56px; margin: 14px 0 8px; padding: 0 28px;
-        border: 0; border-radius: 0; text-align: center; font-size: 22px; line-height: 1.05;
-      }
+      body.mobile-list-open .app-header { z-index: 36; background: var(--surface-base); }
+      .app-header { transition: background-color .3s var(--ease-ui); }
+      .mobile-list-close { display: none; }
+      .panel-intro { display: none; }
       .mobile-reset-btn {
         display: none;
         align-self: flex-start; padding: 0; border: 0; background: transparent;
@@ -535,7 +587,6 @@
       }
       .search-wrap { flex-basis: var(--control-height-m); }
       #monks-list { padding-bottom: env(safe-area-inset-bottom); }
-      body.mobile-list-open .mobile-list-toggle { visibility: hidden; }
       #mobile-card-overlay {
         position: fixed; z-index: 25; right: 0; bottom: calc(var(--space-4) + env(safe-area-inset-bottom)); left: 0;
         overflow: hidden; pointer-events: none; contain: layout paint;
@@ -634,14 +685,17 @@
         animation: detail-card-exit-previous .38s var(--motion-standard) both;
       }
       .modal-content {
-        margin-right: 0; padding: calc(72px + env(safe-area-inset-top)) var(--space-4) 0;
+        position: absolute; top: calc(72px + env(safe-area-inset-top)); right: var(--space-4); left: var(--space-4);
+        bottom: calc(var(--space-4) + env(safe-area-inset-bottom)); margin: 0; padding: 0; overflow-x: hidden;
+        border-radius: var(--radius-s); background: var(--surface-base);
         text-align: center; touch-action: pan-y;
       }
-      .modal-card {
-        min-height: calc(100dvh - 72px - env(safe-area-inset-top));
-        padding: var(--space-6) var(--space-4) 96px; border-radius: var(--radius-s) var(--radius-s) 0 0;
-        background: var(--surface-base);
+      .modal-card { padding: var(--space-6) var(--space-4) 96px; }
+      @keyframes sheet-enter {
+        from { opacity: 0; transform: translateY(24px) scale(.98); }
+        to { opacity: 1; transform: none; }
       }
+      .monk-detail-modal.sheet-enter { animation: sheet-enter .3s ease-out both; }
       body.monk-modal-open, html:has(body.monk-modal-open) { background-color: var(--surface-soft); }
       body.monk-modal-open::after { display: none; }
       #modal-monk-desc { text-align: center; }
@@ -654,10 +708,10 @@
       }
       body.monk-modal-open .app-header { display: none; }
       .modal-footer {
-        position: absolute; right: 0; bottom: 0; left: 0; z-index: 2;
+        position: absolute; right: var(--space-4); bottom: calc(var(--space-4) + env(safe-area-inset-bottom)); left: var(--space-4); z-index: 2;
         display: flex; gap: var(--space-3); justify-content: center; pointer-events: none;
-        padding: var(--space-3) var(--space-4) calc(var(--space-3) + env(safe-area-inset-bottom));
-        border-top: 0; background: linear-gradient(to top, var(--surface-base) 40%, rgba(255,255,255,0));
+        padding: var(--space-3) 0; border-radius: 0 0 var(--radius-s) var(--radius-s);
+        background: linear-gradient(to top, var(--surface-base) 40%, rgba(255,255,255,0));
       }
       .modal-gmaps {
         display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; gap: var(--space-3);
@@ -667,6 +721,18 @@
       }
       .modal-gmaps { background: var(--surface-inverse); color: var(--text-inverse); }
       .monk-detail-modal .modal-close { display: inline-flex; }
+      .mobile-card-skeleton {
+        display: flex; width: 100%; padding: 0 var(--space-8); pointer-events: none;
+      }
+      .mobile-skel-card {
+        position: relative; display: flex; flex: 0 0 calc(100vw - 64px); height: 240px; flex-direction: column;
+        align-items: center; gap: var(--space-3); overflow: hidden; padding-bottom: var(--space-3);
+        border-radius: var(--radius-m); background: var(--surface-base);
+      }
+      .mobile-skel-card > i { display: block; flex: 1; width: 100%; background: var(--surface-hover); }
+      .mobile-skel-card > b { display: block; width: 50%; height: 16px; border-radius: var(--radius-pill); background: var(--surface-hover); }
+      .mobile-skel-card > b + b { width: 35%; }
+      .mobile-skel-card > u { display: block; width: 96px; height: 32px; border-radius: var(--radius-pill); background: var(--surface-soft); }
     }
   </style>
 </head>
@@ -676,7 +742,11 @@
     <span id="app-status-message">Loading monastery locations…</span>
     <button id="app-status-retry" class="app-status-retry" type="button" hidden>Retry</button>
   </div>
-  <div id="mobile-card-overlay" hidden></div>
+  <div id="mobile-card-overlay">
+    <div class="mobile-card-skeleton" aria-hidden="true">
+      <div class="mobile-skel-card"><i></i><b></b><b></b><u></u></div>
+    </div>
+  </div>
 
   <header class="app-header">
     <h1 class="app-title">13 Assyrian fathers in Georgia</h1>
@@ -701,18 +771,25 @@
       <label class="search-wrap">
         <i class="icon icon-search search-icon" aria-hidden="true"></i>
         <input id="search-input" type="search" placeholder="Search" aria-label="Search by monk, monastery, or region">
+        <button id="search-clear" class="search-clear" type="button" aria-label="Clear search">
+          <i class="icon icon-close" aria-hidden="true"></i>
+        </button>
       </label>
       <span id="counter" aria-live="polite">0 monasteries</span>
       <div id="monks-list" aria-busy="true">
-        <div class="monk-skeleton" aria-hidden="true"></div>
-        <div class="monk-skeleton" aria-hidden="true"></div>
-        <div class="monk-skeleton" aria-hidden="true"></div>
-        <div class="monk-skeleton" aria-hidden="true"></div>
+        <div class="monk-skeleton" aria-hidden="true"><i></i><i class="sk-avatar"></i><i class="sk-lines"><b></b><b></b></i></div>
+        <div class="monk-skeleton" aria-hidden="true"><i></i><i class="sk-avatar"></i><i class="sk-lines"><b></b><b></b></i></div>
+        <div class="monk-skeleton" aria-hidden="true"><i></i><i class="sk-avatar"></i><i class="sk-lines"><b></b><b></b></i></div>
+        <div class="monk-skeleton" aria-hidden="true"><i></i><i class="sk-avatar"></i><i class="sk-lines"><b></b><b></b></i></div>
+        <div class="monk-skeleton" aria-hidden="true"><i></i><i class="sk-avatar"></i><i class="sk-lines"><b></b><b></b></i></div>
+        <div class="monk-skeleton" aria-hidden="true"><i></i><i class="sk-avatar"></i><i class="sk-lines"><b></b><b></b></i></div>
+        <div class="monk-skeleton" aria-hidden="true"><i></i><i class="sk-avatar"></i><i class="sk-lines"><b></b><b></b></i></div>
+        <div class="monk-skeleton" aria-hidden="true"><i></i><i class="sk-avatar"></i><i class="sk-lines"><b></b><b></b></i></div>
       </div>
     </aside>
   </main>
 
-  <script type="module" src="js/app.js?v=figma-sync-2"></script>
+  <script type="module" src="js/app.js?v=figma-sync-6"></script>
 
   <div id="detail-overlay" class="detail-overlay hidden">
     <button id="close-modal-btn" class="modal-close" type="button" aria-label="Close">
@@ -726,7 +803,7 @@
         <span id="modal-monk-index">2</span>
         <h2 id="modal-monk-name">Anton of Martqopi</h2>
         <div id="modal-icon-frame" class="modal-icon-frame">
-          <img id="modal-monk-icon" class="modal-icon" src="" alt="">
+          <img id="modal-monk-icon" class="modal-icon" src="" alt="" width="160" height="160" decoding="async">
           <i class="icon icon-cross modal-icon-fallback" aria-hidden="true"></i>
         </div>
         <div id="modal-monk-desc"></div>

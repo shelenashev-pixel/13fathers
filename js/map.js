@@ -12,6 +12,7 @@ export function initMap(monks, onMarkerClick) {
     style: './assets/i7nro2p20%20(1).json',
     center: [44.8, 41.9],
     zoom: 7.5,
+    refreshExpiredTiles: false,
     attributionControl: false
   });
 
@@ -60,6 +61,50 @@ export function initMap(monks, onMarkerClick) {
   return mapInstance;
 }
 
+// Part of the viewport not covered by the list/detail panels or the header (desktop only).
+function getFreeMapInsets() {
+  if (window.innerWidth <= 760) return { top: 0, left: 0 };
+  const mapOnly = document.body.classList.contains('map-only-view');
+  const header = document.querySelector('.app-header')?.getBoundingClientRect();
+  const panel = document.querySelector('.monks-panel')?.getBoundingClientRect();
+  const overlay = document.getElementById('detail-overlay');
+  const detail = overlay && !overlay.classList.contains('hidden') ? overlay.getBoundingClientRect() : null;
+  const left = mapOnly ? 0 : Math.max(panel?.right ?? 0, detail?.right ?? 0);
+  return { top: header?.bottom ?? 0, left };
+}
+
+export function showAllMonks({ duration = 900 } = {}) {
+  if (!mapInstance) return Promise.resolve();
+
+  mapInstance.stop();
+  mapInstance.resize();
+  const bounds = new maplibregl.LngLatBounds();
+  Object.values(markersMap).forEach(({ monk }) => bounds.extend(monk.coordinates));
+  if (bounds.isEmpty()) return Promise.resolve();
+
+  const isMobile = window.innerWidth <= 760;
+  const { top, left } = getFreeMapInsets();
+  const padding = isMobile
+    ? { top: 150, right: 32, bottom: 40, left: 32 }
+    : { top: top + 24, right: 72, bottom: 24, left: left + 24 };
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  return new Promise((resolve) => {
+    const startFit = () => {
+      mapInstance.once('moveend', resolve);
+      mapInstance.fitBounds(bounds, {
+        padding, maxZoom: 11, essential: !reducedMotion, duration: reducedMotion ? 0 : duration
+      });
+      if (!mapInstance.isMoving()) {
+        mapInstance.off('moveend', resolve);
+        resolve();
+      }
+    };
+    if (mapInstance.isStyleLoaded()) startFit();
+    else mapInstance.once('load', startFit);
+  });
+}
+
 export function flyToMonk(monk, { duration } = {}) {
   if (!mapInstance || !monk || !monk.coordinates) return Promise.resolve();
 
@@ -68,9 +113,11 @@ export function flyToMonk(monk, { duration } = {}) {
   setActiveMarker(monk);
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const { top, left } = getFreeMapInsets();
+  // Centre the pin + place card group (card above the pin) in the free map area.
   const cameraOptions = {
     center: monk.coordinates,
-    offset: window.innerWidth > 760 ? [Math.min(window.innerWidth * 0.33, 450), 165] : [0, 0],
+    offset: window.innerWidth > 760 ? [left / 2, top / 2 + 138] : [0, 0],
     zoom: 11,
     essential: !prefersReducedMotion,
     duration: prefersReducedMotion ? 0 : duration ?? 850
@@ -126,7 +173,7 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
     popupContent.innerHTML = monks.map((item, itemIndex) => `
       <article class="mobile-monk-card" data-monk-index="${itemIndex}" aria-current="${item.id === monk.id}">
         <div class="mobile-card-image">
-          <img src="${item.imageUrl || `./images/monasteries/${item.id}.jpg`}" alt="${item.monastery}" onerror="this.style.display='none'" />
+          <img src="${item.imageUrl || `./images/monasteries/${item.id}.jpg`}" alt="${item.monastery}" width="296" height="132" loading="${itemIndex === activeIndex ? 'eager' : 'lazy'}" decoding="async" onerror="this.style.display='none'" />
           <span class="mobile-card-number">${itemIndex + 1}</span>
           ${item.gmapsUrl ? `
             <a class="mobile-card-location" href="${item.gmapsUrl}" target="_blank" rel="noopener noreferrer" aria-label="Open ${item.monastery} in Google Maps">
@@ -134,7 +181,7 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
             </a>
           ` : ''}
         </div>
-        <img class="mobile-card-icon" src="${item.iconUrl || `./images/icons/${item.id}.jpg`}" alt="" onerror="this.style.display='none'" />
+        <img class="mobile-card-icon" src="${item.iconUrl || `./images/icons/${item.id}.jpg`}" alt="" width="48" height="48" loading="lazy" decoding="async" onerror="this.style.display='none'" />
         <div class="mobile-card-content">
           <h2 class="mobile-card-name">${item.name}</h2>
           <p class="mobile-card-monastery">${item.monastery}</p>
@@ -153,6 +200,9 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
           <img
             src="${monk.imageUrl || `./images/monasteries/${monk.id}.jpg`}"
             alt="${monk.monastery}"
+            width="296"
+            height="132"
+            decoding="async"
             onerror="this.style.display='none'"
           />
         </div>
