@@ -121,6 +121,7 @@
       right: 0 !important;
       width: 100vw !important;
       height: 100lvh !important;
+      z-index: 0;
       background-color: var(--surface-canvas);
     }
     body::after {
@@ -141,6 +142,11 @@
       position: fixed; z-index: 20; inset: 0 0 auto; min-height: 72px;
       display: flex; align-items: flex-start; justify-content: space-between;
       padding: 12px 16px; pointer-events: none;
+    }
+    .app-header::before {
+      position: absolute; z-index: -1; inset: 0 0 -24px; content: ""; pointer-events: none;
+      background: linear-gradient(to bottom, rgba(235,230,218,.96) 0%, rgba(235,230,218,.8) 55%, rgba(235,230,218,0) 100%);
+      transition: opacity .3s var(--ease-ui);
     }
     .app-title {
       margin: 0; color: var(--ink); font: 400 clamp(26px, 3.4vw, 43px)/1.1 'Prata', Georgia, serif;
@@ -173,21 +179,23 @@
       background: #f7f5ef; box-shadow: 0 10px 28px rgba(36,31,24,.08);
     }
     .panel-intro {
-      flex: 0 0 auto; display: flex; align-items: center; margin: 0; padding: 8px 0;
-      border: 0; border-radius: 0; color: var(--ink);
-      background: transparent; font: 400 clamp(28px, 2.8vw, 39px)/1.08 'Prata', Georgia, serif;
-      letter-spacing: -.8px;
+      flex: 0 0 auto; display: block; width: 100%; max-width: 280px; margin: 0 auto; padding: 0;
+      border: 0; border-radius: 0; background: transparent; color: var(--text-primary); cursor: pointer;
+      font: 400 24px/26px 'Prata', Georgia, serif; letter-spacing: 0; text-align: center;
+      text-wrap: balance; white-space: normal;
     }
+    .panel-intro:hover, .panel-intro.is-active { color: var(--text-secondary); }
+    .panel-intro:focus-visible { outline-offset: 4px; }
     .search-wrap {
       position: relative; flex: 0 0 var(--control-height-m);
-      height: var(--control-height-m);
+      display: block; height: var(--control-height-m);
     }
     .search-icon {
       position: absolute; top: 8px; left: 10px;
       color: var(--text-primary); pointer-events: none;
     }
     #search-input {
-      width: 100%; height: 100%; padding: 0 44px 0 44px; outline: none;
+      width: 100%; height: 100%; padding: 0 44px 0 44px; outline: none; -webkit-appearance: none; appearance: none;
       border: 1.5px solid var(--text-secondary); border-radius: var(--radius-pill); background: transparent;
       color: var(--text-primary); font: 14px/20px Inter, sans-serif;
     }
@@ -294,8 +302,6 @@
       background: transparent; box-shadow: inset 0 0 0 1.5px var(--border-selected);
     }
     #monks-list .monk-card[aria-current="true"]:hover { background: transparent; }
-    .monk-card.intro-card { display: flex; justify-content: center; }
-    .intro-card span { color: var(--text-primary); font: 400 24px/26px 'Prata', Georgia, serif; }
     .card-number { padding-top: 4px; color: var(--text-primary); font: 400 20px/24px 'Prata', Georgia, serif; text-align: center; }
     .card-icon-frame {
       position: relative; display: grid; width: 48px; height: 48px; overflow: hidden; place-items: center;
@@ -449,9 +455,9 @@
       body::after { display: none; }
       .app-header {
         align-items: center; gap: var(--space-3); min-height: 88px; padding: 20px var(--space-6);
-        background:
-          linear-gradient(to bottom, var(--surface-soft), rgba(245,242,235,0) 50%),
-          linear-gradient(to bottom, #ebe6da, rgba(235,230,218,0));
+      }
+      .app-header::before {
+        background: linear-gradient(to bottom, rgba(224,213,193,.98) 0%, rgba(235,230,218,.9) 50%, rgba(235,230,218,0) 100%);
       }
       .app-header .app-title {
         min-width: 0; max-width: none; flex: 1; overflow: hidden; text-overflow: ellipsis;
@@ -467,21 +473,20 @@
       .header-actions .language-switch span:not(:first-child) { display: none; }
       .header-actions .language-switch span:first-child { width: 100%; height: 100%; }
       .monks-panel {
-        top: 88px; bottom: 16px; left: 16px; width: min(340px, calc(100vw - 32px));
-        gap: var(--space-3); padding: var(--space-5) var(--space-4) 0; overflow: hidden;
-        border: 2px solid var(--surface-soft); border-radius: var(--radius-s); background: var(--surface-soft);
+        top: 88px; bottom: 0; left: 16px; width: min(340px, calc(100vw - 32px));
+        gap: var(--space-4); padding: var(--space-5) var(--space-4) 0; overflow: hidden;
+        border: 2px solid var(--surface-soft); border-bottom: 0; border-radius: var(--radius-s) var(--radius-s) 0 0; background: var(--surface-soft);
         box-shadow: none;
       }
       #monks-list { padding-bottom: var(--space-4); }
-      .panel-intro { display: none; }
       .detail-overlay {
-        top: 88px; bottom: 16px;
+        top: 88px; bottom: 0;
         left: calc(32px + min(340px, calc(100vw - 32px)));
         width: min(400px, calc(100vw - min(340px, calc(100vw - 32px)) - 48px));
       }
       .monk-detail-modal {
         width: 100%;
-        border-radius: var(--radius-s); background: var(--surface-base);
+        border-radius: var(--radius-s) var(--radius-s) 0 0; background: var(--surface-base);
       }
       .modal-transition-outgoing { display: none !important; }
       .modal-content { padding: var(--space-6) 18px 96px var(--space-6); }
@@ -492,11 +497,11 @@
       }
       .desktop-detail-nav button {
         display: inline-flex; width: var(--control-height-m); height: var(--control-height-m);
-        border: 0; border-radius: var(--radius-pill); background: var(--surface-soft); color: var(--text-primary);
+        border: 0; border-radius: 0; background: transparent; color: var(--text-primary);
         align-items: center; justify-content: center; padding: var(--space-2);
         cursor: pointer; pointer-events: auto;
       }
-      .desktop-detail-nav button:hover { background: var(--surface-hover); }
+      .desktop-detail-nav button:hover { background: transparent; color: var(--text-secondary); }
       #modal-monk-desc { text-align: center; }
       .monks-panel, .detail-overlay {
         transition: opacity .24s ease, transform .24s ease, visibility 0s;
@@ -530,14 +535,9 @@
       .modal-side-preview-previous { left: calc(40px - 100vw); }
       .modal-side-preview-next { right: calc(40px - 100vw); }
       .map-pin-wrap { width: 40px; height: 40px; }
-      body::after {
-        background: linear-gradient(
-          to bottom, var(--surface-soft) 0%, rgba(245, 242, 235, 0) 36px,
-          rgba(224, 213, 193, 0) calc(100% - 36px), #e0d5c1 100%
-        );
-      }
+      body::after { display: none; }
       .app-header {
-        display: grid; min-height: 136px; align-items: start; justify-content: stretch; gap: var(--space-4) var(--space-3);
+        z-index: 34; display: grid; min-height: 136px; align-items: start; justify-content: stretch; gap: var(--space-4) var(--space-3);
         grid-template-columns: var(--control-height-m) minmax(0, 1fr) var(--control-height-m);
         grid-template-areas: "menu title lang" "view view view";
         padding: calc(var(--space-4) + env(safe-area-inset-top)) var(--space-4) var(--space-4);
@@ -566,8 +566,9 @@
       .monks-panel {
         z-index: 35; top: 0; right: 0; bottom: 0; left: 0; display: flex;
         width: 100%; height: auto; gap: var(--space-3);
-        padding: max(136px, calc(120px + env(safe-area-inset-top))) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom));
-        border: 0; border-radius: 0; background: var(--surface-base);
+        padding: calc(72px + env(safe-area-inset-top)) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom));
+        border: 0; border-radius: 0;
+        background: linear-gradient(to bottom, var(--surface-soft) 0, var(--surface-base) calc(132px + env(safe-area-inset-top)));
         box-shadow: none;
         opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(12px);
         transition: opacity .3s ease-out, transform .3s ease-out, visibility 0s linear .3s;
@@ -576,10 +577,11 @@
         opacity: 1; visibility: visible; pointer-events: auto; transform: none;
         transition-delay: 0s;
       }
-      body.mobile-list-open .app-header { z-index: 36; background: var(--surface-base); }
-      .app-header { transition: background-color .3s var(--ease-ui); }
+      body.mobile-list-open .app-header { z-index: 36; }
+      body.mobile-list-open .app-header::before { opacity: 0; }
+      body.mobile-list-open .header-actions .reset-btn,
+      body.mobile-list-open .header-actions .language-switch { opacity: 0; visibility: hidden; pointer-events: none; }
       .mobile-list-close { display: none; }
-      .panel-intro { display: none; }
       .mobile-reset-btn {
         display: none;
         align-self: flex-start; padding: 0; border: 0; background: transparent;
@@ -616,8 +618,9 @@
       .mobile-card-image > img { width: 100%; height: 100%; object-fit: cover; }
       .mobile-card-number {
         position: absolute; top: var(--space-5); left: var(--space-5); z-index: 1;
-        display: grid; width: 40px; height: 40px; place-items: center;
-        color: var(--surface-base); font: 400 20px/24px 'Prata', Georgia, serif;
+        display: grid; width: var(--control-height-m); height: var(--control-height-m); place-items: center;
+        border-radius: var(--radius-pill); background: var(--surface-soft); color: var(--text-primary);
+        font: 400 20px/24px 'Prata', Georgia, serif;
       }
       .mobile-card-location {
         position: absolute; top: var(--space-5); right: var(--space-5); z-index: 1;
@@ -766,7 +769,7 @@
       <button id="mobile-list-close" class="mobile-list-close" type="button" aria-label="Close monastery list">
         <i class="icon icon-close" aria-hidden="true"></i>
       </button>
-      <h2 class="panel-intro">13 Assyrian fathers in Georgia</h2>
+      <button id="card-intro" class="panel-intro" type="button">The origins of the spread of Christianity</button>
       <button id="mobile-reset-btn" class="mobile-reset-btn" type="button">Reset map</button>
       <label class="search-wrap">
         <i class="icon icon-search search-icon" aria-hidden="true"></i>
@@ -789,7 +792,7 @@
     </aside>
   </main>
 
-  <script type="module" src="js/app.js?v=figma-sync-6"></script>
+  <script type="module" src="js/app.js?v=figma-sync-7"></script>
 
   <div id="detail-overlay" class="detail-overlay hidden">
     <button id="close-modal-btn" class="modal-close" type="button" aria-label="Close">

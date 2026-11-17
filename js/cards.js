@@ -1,6 +1,6 @@
 let onCardClickCallback = null;
 
-export function renderCards(monks, allMonks, onSelect, emptyState = null, onIntro = null) {
+export function renderCards(monks, allMonks, onSelect, emptyState = null) {
   onCardClickCallback = onSelect;
 
   const container = document.getElementById('monks-list') || 
@@ -26,22 +26,6 @@ export function renderCards(monks, allMonks, onSelect, emptyState = null, onIntr
     actionButton?.addEventListener('click', () => emptyState.onAction?.());
     container.appendChild(empty);
     return;
-  }
-
-  if (onIntro && monks.length === allMonks.length) {
-    const intro = document.createElement('div');
-    intro.id = 'card-intro';
-    intro.className = 'monk-card intro-card';
-    intro.setAttribute('role', 'button');
-    intro.setAttribute('tabindex', '0');
-    intro.innerHTML = '<span>Introduction</span>';
-    intro.addEventListener('click', () => onIntro());
-    intro.addEventListener('keydown', (event) => {
-      if (event.key !== 'Enter' && event.key !== ' ') return;
-      event.preventDefault();
-      onIntro();
-    });
-    container.appendChild(intro);
   }
 
   monks.forEach((monk) => {
@@ -89,7 +73,7 @@ export function renderCards(monks, allMonks, onSelect, emptyState = null, onIntr
 }
 
 export function highlightActiveCard(id, { scroll = true } = {}) {
-  document.querySelectorAll('.monk-card').forEach((card) => {
+  document.querySelectorAll('.monk-card, .panel-intro').forEach((card) => {
     card.removeAttribute('aria-current');
     card.classList.remove('is-active');
   });
