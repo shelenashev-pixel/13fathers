@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#f5f2eb">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -522,8 +521,11 @@
     }
 
     @media (max-width: 760px) {
-      body { height: 100lvh !important; }
-      #map { position: fixed !important; inset: 0 !important; width: 100% !important; height: auto !important; min-height: 100lvh; }
+      html, body { min-height: 100lvh; height: 100lvh !important; }
+      #map {
+        position: fixed !important; top: 0 !important; right: 0 !important; bottom: auto !important; left: 0 !important;
+        width: 100% !important; height: 100lvh !important;
+      }
       body.monk-modal-open .maplibregl-popup { display: none; }
       body.monk-modal-open #map { visibility: hidden; }
       .detail-overlay {
@@ -537,16 +539,35 @@
       .modal-side-preview-previous { left: calc(40px - 100vw); }
       .modal-side-preview-next { right: calc(40px - 100vw); }
       .map-pin-wrap { width: 40px; height: 40px; }
-      body::after { display: none; }
+      body::after {
+        z-index: 15; inset: auto 0 0;
+        height: max(84px, calc(76px + env(safe-area-inset-bottom, 0px)));
+        background: linear-gradient(to bottom, rgba(224, 213, 193, 0) 0%, rgba(224, 213, 193, .28) 100%);
+        -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 65%);
+        mask-image: linear-gradient(to bottom, transparent 0%, #000 65%);
+      }
+      body.mobile-list-open::after, body.monk-modal-open::after { display: none; }
       .app-header {
         z-index: 34; display: grid; min-height: 136px; align-items: start; justify-content: stretch; gap: var(--space-4) var(--space-3);
         grid-template-columns: var(--control-height-m) minmax(0, 1fr) var(--control-height-m);
         grid-template-areas: "menu title lang" "view view view";
         padding: calc(var(--space-4) + env(safe-area-inset-top)) var(--space-4) var(--space-4);
       }
+      .app-header::after {
+        position: absolute; z-index: -1; inset: 0 0 auto;
+        height: max(4px, env(safe-area-inset-top, 0px));
+        content: ""; pointer-events: none;
+        background-color: var(--surface-soft);
+      }
+      .app-header::before {
+        inset: max(4px, env(safe-area-inset-top, 0px)) 0 auto;
+        height: 68px;
+        background: linear-gradient(to bottom, var(--surface-soft) 0%, rgba(245, 242, 235, 0) 100%);
+      }
       .app-header .app-title {
         grid-area: title; max-width: none; color: var(--text-primary); text-shadow: none;
-        font: 400 24px/32px 'Prata', Georgia, serif; text-align: center; letter-spacing: 0;
+        font: 400 24px/28px 'Prata', Georgia, serif; text-align: center; letter-spacing: 0;
       }
       .header-actions { display: contents; }
       .header-actions .reset-btn {
@@ -566,32 +587,41 @@
       }
       .mobile-list-toggle { align-items: center; justify-content: center; }
       .monks-panel {
-        z-index: 35; top: 0; right: 0; bottom: 0; left: 0; display: flex;
-        width: 100%; height: auto; gap: var(--space-3);
-        padding: calc(72px + env(safe-area-inset-top)) var(--space-4) 0;
+        z-index: 35; top: 0; right: 0; bottom: auto; left: 0; display: flex;
+        width: 100%; height: 100lvh; min-height: 100lvh; gap: var(--space-3);
+        padding: calc(88px + env(safe-area-inset-top, 0px)) var(--space-4) 0;
         border: 0; border-radius: 0;
         background: var(--surface-base);
         box-shadow: none;
         opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(12px);
         transition: opacity .3s ease-out, transform .3s ease-out, visibility 0s linear .3s;
       }
+      .monks-panel::after {
+        position: fixed; z-index: 2; right: 0; bottom: 0; left: 0; content: "";
+        height: max(84px, calc(76px + env(safe-area-inset-bottom, 0px))); pointer-events: none;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .82) 100%);
+        -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 65%);
+        mask-image: linear-gradient(to bottom, transparent 0%, #000 65%);
+      }
       body.mobile-list-open .monks-panel {
         opacity: 1; visibility: visible; pointer-events: auto; transform: none;
         transition-delay: 0s;
       }
-      html, body, #map { background-color: transparent; }
-      body.mobile-list-open .app-header { z-index: 36; }
-      body.mobile-list-open .app-header::before {
-        inset: 0 0 auto; height: calc(72px + env(safe-area-inset-top, 0px));
-        background: linear-gradient(
-          to bottom,
-          var(--surface-soft) 0,
-          var(--surface-soft) env(safe-area-inset-top, 0px),
-          rgba(245, 242, 235, 0) 100%
-        );
+      body.mobile-list-open, html:has(body.mobile-list-open) { background-color: var(--surface-base); }
+      body.mobile-list-open .app-header {
+        z-index: 36; min-height: 0;
+        grid-template-areas: "menu title lang";
       }
-      body.mobile-list-open .header-actions .reset-btn,
+      body.mobile-list-open .header-actions .reset-btn { display: none; }
       body.mobile-list-open .header-actions .language-switch { opacity: 0; visibility: hidden; pointer-events: none; }
+      .panel-intro {
+        display: flex; flex: 0 0 64px; height: 64px; max-width: none;
+        align-items: center; justify-content: center;
+        padding: var(--space-2) var(--space-4); border-radius: 8px;
+        font: 400 16px/20px 'Prata', Georgia, serif;
+      }
+      .card-number { font: 400 24px/26px 'Prata', Georgia, serif; }
       .mobile-list-close { display: none; }
       .mobile-reset-btn {
         display: none;
@@ -599,7 +629,7 @@
         color: var(--text-secondary); font: 12px Inter, sans-serif; text-decoration: underline; cursor: pointer;
       }
       .search-wrap { flex-basis: var(--control-height-m); }
-      #monks-list { padding-bottom: calc(var(--space-8) * 2 + env(safe-area-inset-bottom, 0px)); }
+      #monks-list { padding-bottom: max(96px, calc(84px + env(safe-area-inset-bottom, 0px))); }
       #mobile-card-overlay {
         position: fixed; z-index: 25; right: 0; bottom: calc(var(--space-4) + env(safe-area-inset-bottom)); left: 0;
         overflow: hidden; pointer-events: none; contain: layout paint;

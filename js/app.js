@@ -167,7 +167,6 @@ function setMobileListOpen(isOpen) {
   toggle?.setAttribute('aria-expanded', String(isOpen));
   toggle?.setAttribute('aria-label', isOpen ? 'Close monastery list' : 'Open monastery list');
   toggle?.querySelector('.icon')?.classList.replace(isOpen ? 'icon-menu' : 'icon-close', isOpen ? 'icon-close' : 'icon-menu');
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--surface-soft').trim());
 }
 
 function updateMapViewButton() {
