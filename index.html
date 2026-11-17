@@ -567,7 +567,7 @@
       .monks-panel {
         z-index: 35; top: 0; right: 0; bottom: 0; left: 0; display: flex;
         width: 100%; height: auto; gap: var(--space-3);
-        padding: calc(72px + env(safe-area-inset-top)) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom));
+        padding: calc(72px + env(safe-area-inset-top)) var(--space-4) 0;
         border: 0; border-radius: 0;
         background: var(--surface-base);
         box-shadow: none;
@@ -578,10 +578,21 @@
         opacity: 1; visibility: visible; pointer-events: auto; transform: none;
         transition-delay: 0s;
       }
+      body.mobile-list-open, html:has(body.mobile-list-open) { background-color: var(--surface-base); }
       body.mobile-list-open .app-header { z-index: 36; }
       body.mobile-list-open .app-header::before {
-        inset: 0 0 auto; height: 136px;
-        background: linear-gradient(to bottom, var(--surface-soft), rgba(245,242,235,0));
+        inset: 0 0 auto; height: calc(72px + env(safe-area-inset-top, 0px));
+        background: linear-gradient(
+          to bottom,
+          var(--surface-soft) 0,
+          var(--surface-soft) env(safe-area-inset-top, 0px),
+          rgba(245, 242, 235, 0) 100%
+        );
+      }
+      .monks-panel::after {
+        position: fixed; z-index: 2; right: 0; bottom: 0; left: 0; content: "";
+        height: calc(var(--space-8) * 2 + env(safe-area-inset-bottom, 0px)); pointer-events: none;
+        background: linear-gradient(to bottom, transparent, var(--surface-base));
       }
       body.mobile-list-open .header-actions .reset-btn,
       body.mobile-list-open .header-actions .language-switch { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -592,7 +603,7 @@
         color: var(--text-secondary); font: 12px Inter, sans-serif; text-decoration: underline; cursor: pointer;
       }
       .search-wrap { flex-basis: var(--control-height-m); }
-      #monks-list { padding-bottom: env(safe-area-inset-bottom); }
+      #monks-list { padding-bottom: calc(var(--space-8) * 2 + env(safe-area-inset-bottom, 0px)); }
       #mobile-card-overlay {
         position: fixed; z-index: 25; right: 0; bottom: calc(var(--space-4) + env(safe-area-inset-bottom)); left: 0;
         overflow: hidden; pointer-events: none; contain: layout paint;
