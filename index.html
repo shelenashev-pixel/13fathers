@@ -522,7 +522,8 @@
     }
 
     @media (max-width: 760px) {
-      body, #map { height: 100lvh !important; }
+      body { height: 100lvh !important; }
+      #map { position: fixed !important; inset: 0 !important; width: 100% !important; height: auto !important; min-height: 100lvh; }
       body.monk-modal-open .maplibregl-popup { display: none; }
       body.monk-modal-open #map { visibility: hidden; }
       .detail-overlay {
