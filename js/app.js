@@ -1,8 +1,8 @@
-import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-9';
+import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-10';
 import {
   initMap, flyToMonk, showPopup, closePopup, resetMapView, setActiveMarker, selectMobileCard, hasMobilePopup, showAllMonks
-} from './map.js?v=figma-sync-9';
-import { i18n } from './i18n.js?v=figma-sync-9';
+} from './map.js?v=figma-sync-10';
+import { i18n } from './i18n.js?v=figma-sync-10';
 
 const INTRO_TITLE = 'The origins of the spread of Christianity';
 const INTRO_PARAGRAPHS = [
@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   retryButton?.addEventListener('click', () => window.location.reload());
 
   try {
-    const response = await fetch('./data/monks.json');
+    const response = await fetch('./data/monks.json', { cache: 'no-cache' });
     if (!response.ok) {
       throw new Error(`Failed to load monastery data: ${response.status} ${response.statusText}`);
     }

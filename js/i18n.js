@@ -40,7 +40,7 @@ class I18nManager {
       return this.cache.get(lang);
     }
 
-    const response = await fetch(`./data/locales/${lang}.json`);
+    const response = await fetch(`./data/locales/${lang}.json`, { cache: 'no-cache' });
     if (!response.ok) {
       throw new Error(`Failed to load locale "${lang}": ${response.status} ${response.statusText}`);
     }
