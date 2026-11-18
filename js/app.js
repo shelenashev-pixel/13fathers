@@ -1,12 +1,13 @@
-import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-8';
+import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-9';
 import {
   initMap, flyToMonk, showPopup, closePopup, resetMapView, setActiveMarker, selectMobileCard, hasMobilePopup, showAllMonks
-} from './map.js?v=figma-sync-8';
+} from './map.js?v=figma-sync-9';
+import { i18n } from './i18n.js?v=figma-sync-9';
 
 const INTRO_TITLE = 'The origins of the spread of Christianity';
 const INTRO_PARAGRAPHS = [
-  'In the 6th century, thirteen Syrian (Assyrian) fathers, led by John of Zedazeni, came to Georgia and founded some of the earliest monasteries in the country.',
-  'Choose a father from the list or a pin on the map to read his story and find his monastery.'
+  { key: 'intro.p1', fallback: 'In the 6th century, thirteen Syrian (Assyrian) fathers, led by John of Zedazeni, came to Georgia and founded some of the earliest monasteries in the country.' },
+  { key: 'intro.p2', fallback: 'Choose a father from the list or a pin on the map to read his story and find his monastery.' }
 ];
 
 let allMonksData = [];
@@ -49,7 +50,11 @@ function openMonkModal(monk, index, direction = 0) {
     }, { once: true });
   }
   document.getElementById('modal-monk-index').innerText = index;
-  document.getElementById('modal-monk-name').innerText = monk.name;
+  const modalNameEl = document.getElementById('modal-monk-name');
+  if (modalNameEl) {
+    modalNameEl.setAttribute('data-i18n', `monks.${monk.id}.name`);
+    modalNameEl.textContent = i18n.t(`monks.${monk.id}.name`, monk.name);
+  }
   const icon = document.getElementById('modal-monk-icon');
   const iconFrame = document.getElementById('modal-icon-frame');
   iconFrame?.classList.remove('is-missing');
@@ -62,14 +67,20 @@ function openMonkModal(monk, index, direction = 0) {
 
   const descContainer = document.getElementById('modal-monk-desc');
   if (Array.isArray(monk.detailSections)) {
-    descContainer.replaceChildren(...monk.detailSections.map(({ heading, paragraphs }) => {
+    descContainer.replaceChildren(...monk.detailSections.map(({ heading, paragraphs }, sectionIdx) => {
       const section = document.createElement('section');
       const title = document.createElement('h3');
-      title.textContent = heading;
+      const sectionKey = sectionIdx === 0 ? 'sections.saint' : sectionIdx === 1 ? 'sections.monastery' : '';
+      if (sectionKey) {
+        title.setAttribute('data-i18n', sectionKey);
+      }
+      title.textContent = sectionKey ? i18n.t(sectionKey, heading) : heading;
       section.appendChild(title);
-      paragraphs.forEach((text) => {
+      paragraphs.forEach((text, pIdx) => {
         const paragraph = document.createElement('p');
-        paragraph.textContent = text;
+        const pKey = `monks.${monk.id}.sections.${sectionIdx}.${pIdx}`;
+        paragraph.setAttribute('data-i18n', pKey);
+        paragraph.textContent = i18n.t(pKey, text);
         section.appendChild(paragraph);
       });
       return section;
@@ -101,10 +112,15 @@ function openIntroModal() {
   document.body.classList.add('monk-modal-open');
   const modalContent = modal.querySelector('.modal-content');
   if (modalContent) modalContent.scrollTop = 0;
-  document.getElementById('modal-monk-name').textContent = INTRO_TITLE;
-  document.getElementById('modal-monk-desc').replaceChildren(...INTRO_PARAGRAPHS.map((text) => {
+  const modalNameEl = document.getElementById('modal-monk-name');
+  if (modalNameEl) {
+    modalNameEl.setAttribute('data-i18n', 'intro.title');
+    modalNameEl.textContent = i18n.t('intro.title', INTRO_TITLE);
+  }
+  document.getElementById('modal-monk-desc').replaceChildren(...INTRO_PARAGRAPHS.map(({ key, fallback }) => {
     const paragraph = document.createElement('p');
-    paragraph.textContent = text;
+    paragraph.setAttribute('data-i18n', key);
+    paragraph.textContent = i18n.t(key, fallback);
     return paragraph;
   }));
   const wasHidden = modal.classList.contains('hidden');
@@ -166,11 +182,15 @@ function setMobileListOpen(isOpen) {
   if (isOpen) {
     document.body.classList.remove('map-only-view');
     updateMapViewButton();
+    i18n.closeMenu();
   }
   document.body.classList.toggle('mobile-list-open', isOpen);
   const toggle = document.getElementById('mobile-list-toggle');
+  const labelKey = isOpen ? 'header.closeList' : 'header.openList';
+  const fallbackLabel = isOpen ? 'Close monastery list' : 'Open monastery list';
   toggle?.setAttribute('aria-expanded', String(isOpen));
-  toggle?.setAttribute('aria-label', isOpen ? 'Close monastery list' : 'Open monastery list');
+  toggle?.setAttribute('data-i18n-aria-label', labelKey);
+  toggle?.setAttribute('aria-label', i18n.t(labelKey, fallbackLabel));
   toggle?.querySelector('.icon')?.classList.replace(isOpen ? 'icon-menu' : 'icon-close', isOpen ? 'icon-close' : 'icon-menu');
 }
 
@@ -178,7 +198,10 @@ function updateMapViewButton() {
   const button = document.getElementById('reset-btn');
   const isMapOnlyView = document.body.classList.contains('map-only-view');
   if (button) {
-    button.textContent = isMapOnlyView ? 'View list' : 'View map';
+    const key = isMapOnlyView ? 'header.viewList' : 'header.viewMap';
+    const fallback = isMapOnlyView ? 'View list' : 'View map';
+    button.setAttribute('data-i18n', key);
+    button.textContent = i18n.t(key, fallback);
     button.setAttribute('aria-pressed', String(isMapOnlyView));
   }
   const mobileOverlay = document.getElementById('mobile-card-overlay');
@@ -281,6 +304,8 @@ export function handleSelectMonk(monkId, {
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', async () => {
+  await i18n.init();
+
   const status = document.getElementById('app-status');
   const statusMessage = document.getElementById('app-status-message');
   const retryButton = document.getElementById('app-status-retry');
@@ -308,7 +333,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       status.classList.add('is-error');
       status.setAttribute('role', 'alert');
       status.setAttribute('aria-live', 'assertive');
-      statusMessage.textContent = 'Monastery locations could not be loaded. Check your connection and retry.';
+      statusMessage.setAttribute('data-i18n', 'status.error');
+      statusMessage.textContent = i18n.t('status.error', 'Monastery locations could not be loaded. Check your connection and retry.');
       retryButton?.removeAttribute('hidden');
     }
     return;
@@ -329,8 +355,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   const renderFilteredCards = () => {
     const query = searchInput?.value.trim().toLocaleLowerCase() ?? '';
     const filteredMonks = allMonksData.filter((monk) =>
-      [monk.name, monk.monastery, monk.region]
-        .some((value) => value?.toLocaleLowerCase().includes(query))
+      [
+        monk.name,
+        monk.monastery,
+        monk.region,
+        monk.georgianName,
+        i18n.t(`monks.${monk.id}.name`),
+        i18n.t(`monks.${monk.id}.monastery`),
+        i18n.t(`monks.${monk.id}.region`)
+      ].some((value) => value?.toLocaleLowerCase().includes(query))
     );
 
     if (!filteredMonks.length) {
@@ -418,9 +451,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     closeBtn.addEventListener('click', closeDetailModal);
   }
   const selectAdjacentMonk = (offset) => {
-    const currentName = document.getElementById('modal-monk-name')?.textContent;
     const isIntro = document.getElementById('monk-detail-modal')?.classList.contains('is-intro');
-    const currentIndex = isIntro ? -1 : allMonksData.findIndex((monk) => monk.name === currentName);
+    const currentIndex = isIntro ? -1 : allMonksData.findIndex((monk) => monk.id === activeMonkId);
     if ((currentIndex < 0 && !isIntro) || !allMonksData.length) return;
     const nextIndex = isIntro
       ? (offset > 0 ? 0 : allMonksData.length - 1)

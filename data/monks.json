@@ -91,31 +91,32 @@
     ]
   },
   {
-    "id": "tate-dzveli-shuamta",
-    "name": "Tate of Shuamta",
-    "monastery": "Dzveli Shuamta Monastery",
-    "georgianName": "თათე ძველ-შუამთელი",
-    "region": "Kakheti (Gombori Pass)",
+    "id": "tadeoz-stepantsminda",
+    "iconUrl": "./images/icons/thaddeus-stepantsminda.jpg",
+    "name": "Tadeoz of Stepantsminda",
+    "monastery": "Tetrakhevi Monastery",
+    "georgianName": "თადეოზ სტეფანწმინდელი",
+    "region": "Shida Kartli (Kaspi)",
     "coordinates": [
-      45.4055,
-      41.9125
+      44.3822,
+      41.9672
     ],
-    "imageUrl": "./assets/monasteries/tate-dzveli-shuamta.jpg",
-    "gmapsUrl": "https://www.google.com/maps/place/Dzveli+Shuamta%27s+Monastery/@41.9108884,45.4059221,17z/data=!3m1!4b1!4m6!3m5!1s0x404433bca4c07a77:0xf96a1a1487b4b33!8m2!3d41.9108884!4d45.4059221!16s%2Fg%2F12214wcn",
+    "imageUrl": "./images/monasteries/thaddaeus-stepantsminda.jpg",
+    "gmapsUrl": "https://www.google.com/maps/search/?api=1&query=41.96722,44.38222",
     "detailSections": [
       {
         "heading": "The Saint",
         "paragraphs": [
-          "Known in old chronicles as Tate (or Thaddeus) of Stepantsminda, this quiet ascetic initially stayed close to his teacher Ioane at the foot of Mount Zedazeni, organizing a monastery near Mtskheta before longing for deeper wilderness. Travelling over the misty Gombori mountain pass into Kakheti, he discovered a hidden clearing hemmed in on three sides by steep, forested ridges—a place locals called Shuamta, literally \"Between the Mountains.\"",
-          "What makes Tate's woodland retreat so memorable is how completely it swallowed him from the outside world. According to local lore and hagiographical accounts, Tate spent his days in a natural forest cave high on the Tsiv-Gombori slopes, where mountain travelers lost in the thick Gombori fog claimed to follow the sound of his night prayers and the glow of a single oil lamp back to safety. Even after disciples gathered around him to expand the forest cloister, Tate refused to leave the mountain woods, turning Shuamta into a sanctuary for contemplatives and copyists.",
-          "While early hagiographical traditions link his final resting place to his first foundation at Tserovani (Stepantsminda) near Mtskheta, his spiritual legacy remained inseparable from the forest clearing of Dzveli Shuamta. He is venerated by the Georgian Orthodox Church as Venerable Tate (Thaddeus), protector of mountain travelers and ascetics, commemorated on May 20."
+          "Affectionately called Tate by Georgians, Tadeoz was the quiet builder who stayed longest by his teacher's side. When the other Syrian fathers set off across Georgia, Tadeoz remained at the foot of Mount Zedazeni to look after the aging Ioane, founding a monastery dedicated to St. Stephen the Protomartyr (Stepantsminda—which gave Tadeoz his surname Stepantsmindeli, not to be confused with the northern mountain town of Kazbegi). Only with Ioane's blessing did he finally head west into the rugged valleys of Shida Kartli, preaching across Urbnisi and Kaspi.",
+          "What makes Tadeoz's story so striking is how he traded busy valley churches for a hidden cliffside aerie high on Mount Tslevi above Kaspi. Climbing into the wooded limestone ravine of Tetrakhevi (\"White Gorge\"), he carved out a tiny solitary cave cell directly into the rock face, where according to medieval hagiography he lived in strict silence and prayer while mountain shepherds and villagers hiked up the steep gorge to seek his blessing and healing.",
+          "Tadeoz lived to a peaceful old age in his mountain retreat and was buried right inside the cave church he founded at Tetrakhevi on Mount Tslevi. He is venerated by the Georgian Orthodox Church as Venerable Tadeoz (Thaddeus) of Stepantsminda, protector of ascetics and mountain travelers, commemorated on May 20."
         ]
       },
       {
         "heading": "The Monastery",
         "paragraphs": [
-          "Architecturally, Dzveli (\"Old\") Shuamta is one of the most charming ensembles in Georgia: three early medieval stone churches pressed right up against one another on a grassy clearing in the middle of a deciduous forest. The oldest is a tiny 5th-century three-nave basilica with narrow horseshoe arches, flanked by two 7th-century cross-domed churches—the larger of which is a near-twin of Mtskheta's famous Jvari Monastery. Look closely at the walls and you won't see smooth cut stone: Kakhetian masons built all three churches out of split river cobblestones (riqis kva) held together with lime mortar, using golden porous tufa (shirimi) only for the corners and window arches.",
-          "In the 16th century, after Old Shuamta grew too isolated, Queen Tinatin founded Akhali (\"New\") Shuamta a couple of kilometers down the road, leaving the ancient stone trio in peaceful retirement. Today, Dzveli Shuamta is an active church site with no resident stalls or crowds—just three moss-touched stone roofs rising out of a sea of beech and hornbeam trees."
+          "Tucked high on the forested northern slope of Mount Tslevi near Kaspi, the Tetrakhevi (Stepantsminda) Fathers' Monastery is one of the most remote and untouched sites linked to the Syrian Fathers. Built directly over Tadeoz's 6th-century rock-cut cave cell, the surviving medieval hall church is constructed from rough-hewn local stone and tufa blocks, preserving fragments of ancient masonry and the rock-hewn crypt where the saint's tomb was venerated for centuries.",
+          "Today, Tetrakhevi sits deep inside dense mountain woods far from paved roads and tour buses. Reaching it requires a hike or off-road climb up the slopes above Kaspi, rewarding visitors with complete forest silence and the feeling of stumbling upon a secret 6th-century hermitage just as Tadeoz left it."
         ]
       }
     ]
@@ -247,7 +248,7 @@
     "id": "ise-tsilkani",
     "name": "Ise of Tsilkani",
     "monastery": "Tsilkani Cathedral",
-    "georgianName": "ელისე წეროვნელი",
+    "georgianName": "იესე წილკნელი",
     "region": "Mtskheta-Mtianeti",
     "coordinates": [
       44.6883,

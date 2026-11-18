@@ -160,13 +160,43 @@
     }
     .reset-btn:hover { background: var(--action-primary-hover); }
     .language-switch {
+      position: relative; z-index: 38;
       display: flex; width: var(--control-height-m); height: var(--control-height-m);
-      align-items: center; justify-content: center; gap: 4px; padding: var(--space-2);
-      border: 0; border-radius: var(--radius-pill); background: var(--surface-base);
+      align-items: center; justify-content: center; pointer-events: auto;
     }
-    .language-switch span {
-      display: grid; width: 30px; height: 30px; place-items: center;
-      border-radius: 50%; font-size: 20px; line-height: 16px;
+    .language-toggle {
+      display: flex; width: var(--control-height-m); height: var(--control-height-m);
+      align-items: center; justify-content: center; padding: var(--space-2);
+      border: 0; border-radius: var(--radius-pill); background: var(--surface-base);
+      color: var(--text-primary); cursor: pointer;
+    }
+    .language-toggle:hover { background: var(--surface-soft); }
+    .language-switch.is-open .language-toggle,
+    .language-toggle[aria-expanded="true"] {
+      background: var(--surface-inverse); color: var(--text-inverse);
+    }
+    .language-toggle span,
+    .language-option span {
+      display: grid; width: 24px; height: 24px; place-items: center;
+      font: 400 20px/16px 'Prata', Georgia, serif;
+    }
+    .language-menu {
+      position: absolute; top: calc(100% + var(--space-1)); left: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: var(--space-1); border-radius: var(--space-6);
+      background: var(--surface-base);
+      transform: translateX(-50%);
+    }
+    .language-option {
+      display: flex; width: var(--control-height-m); height: var(--control-height-m);
+      align-items: center; justify-content: center; padding: var(--space-2);
+      border: 1.5px solid transparent; border-radius: var(--radius-pill);
+      background: transparent; color: var(--text-primary); cursor: pointer;
+    }
+    .language-option:hover { background: var(--surface-soft); }
+    .language-option.is-active,
+    .language-option[aria-selected="true"] {
+      border-color: var(--border-selected); background: #f0f0f0;
     }
     .mobile-list-toggle, .mobile-list-close, .mobile-reset-btn { display: none; }
 
@@ -465,12 +495,9 @@
       }
       .header-actions { align-items: center; gap: var(--space-6); }
       .header-actions .language-switch {
-        order: 1; display: grid; width: var(--control-height-m); height: var(--control-height-m);
-        padding: 0; place-items: center; border-radius: var(--radius-pill);
+        order: 1; width: var(--control-height-m); height: var(--control-height-m);
       }
       .header-actions .reset-btn { order: 2; }
-      .header-actions .language-switch span:not(:first-child) { display: none; }
-      .header-actions .language-switch span:first-child { width: 100%; height: 100%; }
       .monks-panel {
         top: 88px; bottom: 0; left: 16px; width: min(340px, calc(100vw - 32px));
         gap: var(--space-4); padding: var(--space-5) var(--space-4) 0; overflow: hidden;
@@ -596,11 +623,8 @@
         padding: var(--space-2) var(--space-4); pointer-events: auto;
       }
       .language-switch {
-        grid-area: lang; display: flex; width: var(--control-height-m); height: var(--control-height-m);
-        align-items: center; justify-content: center; padding: var(--space-2); pointer-events: auto;
+        grid-area: lang; width: var(--control-height-m); height: var(--control-height-m);
       }
-      .language-switch span { display: none; }
-      .language-switch span:first-child { display: grid; width: 100%; height: 100%; font-size: 20px; }
       .mobile-list-toggle {
         grid-area: menu; display: inline-flex; width: var(--control-height-m); height: var(--control-height-m);
         padding: var(--space-2); border: 0; border-radius: var(--radius-pill); background: var(--surface-base);
@@ -840,8 +864,8 @@
 <body>
   <div id="map" aria-label="Map showing monastery locations"></div>
   <div id="app-status" class="app-status" role="status" aria-live="polite">
-    <span id="app-status-message">Loading monastery locations…</span>
-    <button id="app-status-retry" class="app-status-retry" type="button" hidden>Retry</button>
+    <span id="app-status-message" data-i18n="status.loading">Loading monastery locations…</span>
+    <button id="app-status-retry" class="app-status-retry" type="button" data-i18n="status.retry" hidden>Retry</button>
   </div>
   <div id="mobile-card-overlay">
     <div class="mobile-card-skeleton" aria-hidden="true">
@@ -850,13 +874,39 @@
   </div>
 
   <header class="app-header">
-    <h1 class="app-title">13 Assyrian fathers in Georgia</h1>
+    <h1 class="app-title" data-i18n="app.title">13 Assyrian fathers in Georgia</h1>
     <div class="header-actions">
-      <button id="reset-btn" class="reset-btn" type="button" aria-pressed="false">View map</button>
-      <div class="language-switch" aria-hidden="true">
-        <span>🇬🇧</span><span>🇬🇪</span><span>🇷🇺</span>
+      <button id="reset-btn" class="reset-btn" type="button" aria-pressed="false" data-i18n="header.viewMap">View map</button>
+      <div id="language-switch" class="language-switch">
+        <button
+          id="language-toggle"
+          class="language-toggle"
+          type="button"
+          aria-label="Change language"
+          aria-haspopup="listbox"
+          aria-expanded="false"
+        >
+          <span id="language-current-flag" aria-hidden="true">🇬🇧</span>
+        </button>
+        <div
+          id="language-menu"
+          class="language-menu"
+          role="listbox"
+          aria-label="Select language"
+          hidden
+        >
+          <button class="language-option is-active" type="button" role="option" data-lang="en" aria-selected="true" aria-label="English">
+            <span aria-hidden="true">🇬🇧</span>
+          </button>
+          <button class="language-option" type="button" role="option" data-lang="ka" aria-selected="false" aria-label="ქართული">
+            <span aria-hidden="true">🇬🇪</span>
+          </button>
+          <button class="language-option" type="button" role="option" data-lang="ru" aria-selected="false" aria-label="Русский">
+            <span aria-hidden="true">🇷🇺</span>
+          </button>
+        </div>
       </div>
-      <button id="mobile-list-toggle" class="mobile-list-toggle" type="button" aria-label="Open monastery list" aria-expanded="false">
+      <button id="mobile-list-toggle" class="mobile-list-toggle" type="button" aria-label="Open monastery list" data-i18n-aria-label="header.openList" aria-expanded="false">
         <i class="icon icon-menu" aria-hidden="true"></i>
       </button>
     </div>
@@ -864,15 +914,15 @@
 
   <main class="main-layout">
     <aside class="monks-panel" aria-label="Monastery list">
-      <button id="mobile-list-close" class="mobile-list-close" type="button" aria-label="Close monastery list">
+      <button id="mobile-list-close" class="mobile-list-close" type="button" aria-label="Close monastery list" data-i18n-aria-label="header.closeList">
         <i class="icon icon-close" aria-hidden="true"></i>
       </button>
-      <button id="card-intro" class="panel-intro" type="button">The origins of the spread of Christianity</button>
-      <button id="mobile-reset-btn" class="mobile-reset-btn" type="button">Reset map</button>
+      <button id="card-intro" class="panel-intro" type="button" data-i18n="intro.title">The origins of the spread of Christianity</button>
+      <button id="mobile-reset-btn" class="mobile-reset-btn" type="button" data-i18n="header.resetMap">Reset map</button>
       <label class="search-wrap">
         <i class="icon icon-search search-icon" aria-hidden="true"></i>
-        <input id="search-input" type="search" placeholder="Search" aria-label="Search by monk, monastery, or region">
-        <button id="search-clear" class="search-clear" type="button" aria-label="Clear search">
+        <input id="search-input" type="search" placeholder="Search" data-i18n-placeholder="search.placeholder" data-i18n-aria-label="search.ariaLabel" aria-label="Search by monk, monastery, or region">
+        <button id="search-clear" class="search-clear" type="button" aria-label="Clear search" data-i18n-aria-label="search.clear">
           <i class="icon icon-close" aria-hidden="true"></i>
         </button>
       </label>
@@ -890,7 +940,7 @@
     </aside>
   </main>
 
-  <script type="module" src="js/app.js?v=figma-sync-8"></script>
+  <script type="module" src="js/app.js?v=figma-sync-9"></script>
 
   <div id="detail-overlay" class="detail-overlay hidden">
     <button id="close-modal-btn" class="modal-close" type="button" aria-label="Close">
@@ -916,7 +966,7 @@
       </div>
       <div class="modal-footer">
         <a id="modal-monk-gmaps" class="modal-gmaps" href="#" target="_blank" rel="noopener noreferrer">
-          <span>Open in Google Maps</span>
+          <span data-i18n="card.openMaps">Open in Google Maps</span>
           <i class="icon icon-map-pin" aria-hidden="true"></i>
         </a>
       </div>

@@ -1,3 +1,5 @@
+import { i18n } from './i18n.js?v=figma-sync-9';
+
 let onCardClickCallback = null;
 
 export function renderCards(monks, allMonks, onSelect, emptyState = null) {
@@ -13,13 +15,14 @@ export function renderCards(monks, allMonks, onSelect, emptyState = null) {
   if (!monks.length) {
     const empty = document.createElement('div');
     empty.className = 'empty-state';
-    const title = emptyState?.title || 'No monasteries found';
-    const message = emptyState?.message || 'Try another name or region.';
+    const title = i18n.t('empty.title', emptyState?.title || 'No monasteries found');
+    const message = i18n.t('empty.message', emptyState?.message || 'Try another name or region.');
+    const actionLabel = i18n.t('empty.clear', emptyState?.actionLabel || 'Clear search');
     empty.innerHTML = `
       <div class="empty-state-card">
-        <h3>${title}</h3>
-        <p>${message}</p>
-        ${emptyState?.onAction ? `<button type="button" class="empty-state-action">${emptyState.actionLabel || 'Clear search'}</button>` : ''}
+        <h3 data-i18n="empty.title">${title}</h3>
+        <p data-i18n="empty.message">${message}</p>
+        ${emptyState?.onAction ? `<button type="button" class="empty-state-action" data-i18n="empty.clear">${actionLabel}</button>` : ''}
       </div>
     `;
     const actionButton = empty.querySelector('.empty-state-action');
@@ -30,6 +33,8 @@ export function renderCards(monks, allMonks, onSelect, emptyState = null) {
 
   monks.forEach((monk) => {
     const originalIndex = allMonks.findIndex(m => m.id === monk.id) + 1;
+    const monkName = i18n.t(`monks.${monk.id}.name`, monk.name);
+    const monkMonastery = i18n.t(`monks.${monk.id}.monastery`, monk.monastery);
 
     const card = document.createElement('div');
     card.id = `card-${monk.id}`;
@@ -51,8 +56,8 @@ export function renderCards(monks, allMonks, onSelect, emptyState = null) {
         />
       </span>
       <span class="card-copy">
-        <h3>${monk.name}</h3>
-        <p>${monk.monastery}</p>
+        <h3 data-i18n="monks.${monk.id}.name">${monkName}</h3>
+        <p data-i18n="monks.${monk.id}.monastery">${monkMonastery}</p>
       </span>
     `;
 

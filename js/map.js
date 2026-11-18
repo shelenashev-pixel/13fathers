@@ -1,3 +1,5 @@
+import { i18n } from './i18n.js?v=figma-sync-9';
+
 let mapInstance = null;
 let markersMap = {};
 let currentActivePopup = null;
@@ -173,7 +175,7 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
     popupContent.innerHTML = monks.map((item, itemIndex) => `
       <article class="mobile-monk-card" data-monk-index="${itemIndex}" aria-current="${item.id === monk.id}">
         <div class="mobile-card-image">
-          <img src="${item.imageUrl || `./images/monasteries/${item.id}.jpg`}" alt="${item.monastery}" width="296" height="132" loading="${Math.abs(itemIndex - activeIndex) <= 1 ? 'eager' : 'lazy'}" decoding="async" />
+          <img src="${item.imageUrl || `./images/monasteries/${item.id}.jpg`}" alt="${i18n.t(`monks.${item.id}.monastery`, item.monastery)}" width="296" height="132" loading="${Math.abs(itemIndex - activeIndex) <= 1 ? 'eager' : 'lazy'}" decoding="async" />
           <span class="mobile-card-number">${itemIndex + 1}</span>
           ${item.gmapsUrl ? `
             <a class="mobile-card-location" href="${item.gmapsUrl}" target="_blank" rel="noopener noreferrer" aria-label="Open ${item.monastery} in Google Maps">
@@ -183,10 +185,10 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
         </div>
         <img class="mobile-card-icon" src="${item.iconUrl || `./images/icons/${item.id}.jpg`}" alt="" width="48" height="48" loading="lazy" decoding="async" onerror="this.style.display='none'" />
         <div class="mobile-card-content">
-          <h2 class="mobile-card-name">${item.monastery}</h2>
-          <p class="mobile-card-monastery">${item.region || ''}</p>
+          <h2 class="mobile-card-name" data-i18n="monks.${item.id}.monastery">${i18n.t(`monks.${item.id}.monastery`, item.monastery)}</h2>
+          <p class="mobile-card-monastery" data-i18n="monks.${item.id}.region">${i18n.t(`monks.${item.id}.region`, item.region || '')}</p>
           <div class="mobile-card-actions">
-            <button class="mobile-card-read" type="button" data-action="read" data-monk-id="${item.id}">Read more</button>
+            <button class="mobile-card-read" type="button" data-action="read" data-monk-id="${item.id}" data-i18n="card.readMore">${i18n.t('card.readMore', 'Read more')}</button>
           </div>
         </div>
       </article>
@@ -209,7 +211,7 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
         <div class="place-card-image">
           <img
             src="${monk.imageUrl || `./images/monasteries/${monk.id}.jpg`}"
-            alt="${monk.monastery}"
+            alt="${i18n.t(`monks.${monk.id}.monastery`, monk.monastery)}"
             width="296"
             height="132"
             decoding="async"
@@ -218,8 +220,8 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
         </div>
         <div class="place-card-body">
           <div class="place-card-text">
-            <h4 class="place-card-title">${monk.monastery}</h4>
-            <span class="place-card-region">${monk.region || ''}</span>
+            <h4 class="place-card-title" data-i18n="monks.${monk.id}.monastery">${i18n.t(`monks.${monk.id}.monastery`, monk.monastery)}</h4>
+            <span class="place-card-region" data-i18n="monks.${monk.id}.region">${i18n.t(`monks.${monk.id}.region`, monk.region || '')}</span>
           </div>
           ${monk.gmapsUrl ? `
             <a
@@ -228,7 +230,7 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span>Open in Google Maps</span>
+              <span data-i18n="card.openMaps">${i18n.t('card.openMaps', 'Open in Google Maps')}</span>
               <i class="icon icon-map-pin" aria-hidden="true"></i>
             </a>
           ` : ''}
