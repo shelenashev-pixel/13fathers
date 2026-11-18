@@ -41,6 +41,4 @@ Always structure the output for each monk into these exact sections and sequence
    - Start with the physical history of the site: did the original 6th-century church or rock-hewn cell survive intact, or was it rebuilt, expanded with medieval domes, fortified, or damaged by invasions over the centuries? Point out 1–2 distinct architectural details to look for on site.
 2. **The Monastery Today (Current Status)**
    - Close with what the place is right now: an active men's or women's monastery, a cliffside museum complex, or a quiet ruin, along with what the atmosphere feels like for a visitor today.
-
-### Section 3: Sources Used
-- 2–4 concise bullet points naming the specific historical/architectural sources and reference links used for this profile.
+   - *(Note: Omit the "Sources Used" section from the output unless explicitly requested by the user.)*

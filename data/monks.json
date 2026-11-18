@@ -11,8 +11,23 @@
     ],
     "imageUrl": "./assets/monasteries/ioane-zedazeni.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/Zedazeni+Monastery/@41.8712688,44.7652799,17z/data=!3m1!4b1!4m6!3m5!1s0x404468a3b390a65d:0x1bfcfad66ce57486!8m2!3d41.8712688!4d44.7652799!16s%2Fm%2F02rx6pj",
-    "notable": "Leader of the mission from Mesopotamia. Chose Mount Zedazeni north of Mtskheta. Lived in ascetic solitude with bears as companions.",
-    "martyrdom": "Died peacefully around 573 AD. Buried inside Zedazeni Church."
+    "detailSections": [
+      {
+        "heading": "The Saint",
+        "paragraphs": [
+          "If the Syrian mission to Georgia had an architect and spiritual anchor, it was Ioane. While his disciples eventually scattered across valleys and deserts to build their own communities, Ioane climbed straight up the steep, forested ridge of Mount Zadeni—right across the river from the old royal capital of Mtskheta. The mountain wasn't a random pick: for centuries, it had been the site of a major pagan stronghold dedicated to the fierce idol Zaden, and Ioane deliberately planted his ascetic camp on top of the old cult's ruins to claim the heights overlooking the capital.",
+          "What makes Ioane's time on the mountain unforgettable are the stories of how he shared the ridge with the local wildlife and controlled its scarce water. According to medieval hagiographies, the dense woods around Zedazeni were full of Caucasian brown bears, yet after Ioane prayed for the mountain's inhabitants to live in peace, the bears stopped attacking travelers and wandered past his stone cell like tame neighbors. Even more famous is the spring inside the church: local lore says the mountain ridge was parched until Ioane's prayers brought forth a cold mountain spring right on the crest—water that pilgrims still line up to collect because tradition holds it never dries up and heals eye ailments.",
+          "Ioane spent his final years on the mountain ridge he had tamed and was buried right where he lived; his tomb still rests beneath a canopy in the northern aisle of the Zedazeni basilica, steps away from his mountain spring. Today, he is venerated by the Georgian Orthodox Church as Venerable Ioane of Zedazeni, the Founding Father of Georgian Monasticism, with his feast day celebrated on May 20 (May 7 Old Style)."
+        ]
+      },
+      {
+        "heading": "The Monastery",
+        "paragraphs": [
+          "What started in the 6th century as Ioane's cramped stone hermitage was transformed in the 8th century by Catholicos Clement into a three-nave basilica built directly over the saint's original cell and tomb. If you look closely at the layout inside, you can see how medieval builders refused to flatten the sacred spots: the northern aisle incorporates the older 6th–7th century chapel housing Ioane's grave and the rock-cut water basin. Outside, remnants of fortified stone walls and terrace foundations show how the monastery doubled as a strategic lookout over the Aragvi and Mtkvari rivers across centuries of invasions.",
+          "Today, Zedazeni operates as an active men's monastery tucked inside the Saguramo forest reserve. Reaching it feels like stepping onto a balcony in the sky—after winding up through beech and oak woods, you step out onto a quiet stone terrace with one of the best panoramic views in Georgia, looking straight down at Jvari Monastery and the confluence of the two rivers far below."
+        ]
+      }
+    ]
   },
   {
     "id": "stepane-khirsa",
@@ -88,8 +103,23 @@
     ],
     "imageUrl": "./assets/monasteries/zenon-ikhalto.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/Ikalto+Monastery/@41.9373621,45.3811438,17z/data=!3m1!4b1!4m6!3m5!1s0x404434885cdbc939:0x59eeba460d1974fc!8m2!3d41.9373621!4d45.3811438!16zL20vMDJzNnJi",
-    "notable": "Founded the Holy Transfiguration cloister, laying foundations for Georgia's famous Academy of philosophy and science.",
-    "martyrdom": "Reposed in peace of old age; enshrined within the Church of the Holy Spirit at Ikhalto."
+    "detailSections": [
+      {
+        "heading": "The Saint",
+        "paragraphs": [
+          "While several of his companions sought out barren cliffs or borderlands, Zenon headed into the heart of Kakheti's fertile wine country near Telavi and planted a monastery that would become medieval Georgia's premier university town. Settling in a quiet cypress-shaded valley at the foot of the Gombori range, Zenon wasn't chasing extreme physical isolation; his mission was to build a permanent, self-sustaining spiritual and intellectual hub that could anchor Christian teaching across eastern Georgia.",
+          "What makes Zenon's foundation at Ikhalto a standout story is how a 6th-century Syrian monk's hermitage evolved into the Silicon Valley and Oxford of Georgia's Golden Age. Five centuries after Zenon built his first church, King David the Builder invited the great philosopher Arsen Ikaltoeli to expand Zenon's monastery into a royal Academy where students studied theology, astronomy, mathematics, rhetoric, metalworking, and pharmacology—and according to enduring Georgian tradition, it was right here in Zenon's courtyard that Georgia's national poet, Shota Rustaveli, studied as a young man before writing The Knight in the Panther's Skin. Local lore also credits Zenon's monks with turning monastic winemaking into a disciplined science, pressing Kakhetian grapes in giant stone troughs that still sit in the yard today.",
+          "Zenon's tomb rests inside the main Church of the Transfiguration (Khvtaeba) at the center of the complex, right beneath the southern vault near the altar. He is venerated by the Georgian Orthodox Church as Venerable Zenon of Ikhalto, one of the luminous teachers of Kakheti, with his feast day commemorated on October 30 (October 17 Old Style)."
+        ]
+      },
+      {
+        "heading": "The Monastery",
+        "paragraphs": [
+          "Walking through Ikhalto is like reading a timeline of Georgian stone architecture laid out across a single lawn. The oldest jewel on the grounds is the 6th-century Church of the Holy Spirit (Sameba), a tiny domed structure dating straight back to Zenon's lifetime that still preserves his original monastic cell tucked into its second level. Next to it stands the 8th–9th century Church of the Transfiguration (Khvtaeba), built directly over the basilica where Zenon was buried, while the dramatic stone ruins of the 12th-century Academy—with its tall arched windows, lecture hall, scriptorium niches, and a massive open-air wine press (satsnakheli) alongside dozens of buried qvevri clay jars—still stand despite having its roof burned down by Shah Abbas I's Persian army in 1616.",
+          "Today, Ikhalto is an active church complex and open-air historical monument shaded by towering centuries-old cypress trees. Unlike busier tourist sites in Kakheti, the courtyard is remarkably peaceful—you can wander freely through the stone walls of the medieval lecture halls and peer into the ancient wine cellars where monks and scholars once debated philosophy."
+        ]
+      }
+    ]
   },
   {
     "id": "davit-gareja",
@@ -104,8 +134,23 @@
     ],
     "imageUrl": "./assets/monasteries/davit-gareja.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/David+Gareji+monastery/@41.4473406,45.3764547,17z/data=!3m1!4b1!4m6!3m5!1s0x4046b0894dcba09f:0x572a443af100e678!8m2!3d41.4473406!4d45.3764547!16zL20vMDJ0MjE4",
-    "notable": "Initially dwelt on Mount Mtatsminda in Tbilisi, then retreated south into the harsh semi-desert caves of Gareja.",
-    "martyrdom": "Reposed in peace in extreme old age. Refused to enter Jerusalem out of humility."
+    "detailSections": [
+      {
+        "heading": "The Saint",
+        "paragraphs": [
+          "Davit started out right in the heart of modern-day Tbilisi—living in a hillside cave on Mount Mtatsminda (\"Holy Mountain\"), which still carries that name because of him—before deciding city life was far too crowded. Together with his disciple Lukiane, he walked south into the parched, rust-striped badlands of the Gareja semi-desert on the modern Georgian-Azerbaijani border. Unlike the monks who chose lush river valleys or shady forests, Davit picked a treeless, sun-scorched wilderness of crumbly sandstone ridges where surviving meant carving your own shelter and cisterns directly into the rock.",
+          "Two legends about Davit are so vivid they shaped the very name and iconography of the region. First, medieval tradition says he and Lukiane survived in the desert on milk from wild mountain deer that walked up to their cave every day to be milked—until a gigantic serpent living in the rocks swallowed one of the fawns. Davit struck the creature down with his staff, and as he prayed for it to be banished, a blinding bolt of lightning incinerated the snake on the spot (a dramatic scene still painted on frescoes across Georgia). Just as famous is his pilgrimage to Jerusalem: walking all the way to the Holy Land, Davit stopped on the hill overlooking the city walls, wept, and refused to step inside, declaring himself unworthy to walk where Christ had walked. Instead, he picked up three small stones from the ground to carry home; that night, an angel appeared in a dream to the Patriarch of Jerusalem, warning him that a humble Syrian monk was walking away with \"all the grace of Jerusalem\" in his bag. Messengers raced after Davit and took back two of the stones, leaving him with the third—the famous \"Stone of Grace,\" which is still brought out for veneration on major feast days.",
+          "Davit's tomb lies inside the cave Church of the Transfiguration at the heart of the Lavra, where his Stone of Grace was kept for centuries before being safeguarded at the Sioni Patriarchal Cathedral in Tbilisi. He is venerated by the Georgian Orthodox Church as Venerable Davit of Gareja, the founder of Georgia's greatest desert monastic school, celebrated every year on the Thursday after Ascension (the feast of Davitgarejoba)."
+        ]
+      },
+      {
+        "heading": "The Monastery",
+        "paragraphs": [
+          "Stepping into the David Gareja Lavra feels less like visiting a church and more like exploring a multi-story subterranean fortress honeycombed into a diagonal slash of golden cliff. From Davit's original 6th-century natural cleft, monks spent the 9th through 13th centuries chiseling hundreds of cells, refectories with stone benches, bakeries, and chapels into the sheer rock face. Look closely at the cliffside and you'll spot a masterwork of medieval desert engineering: miles of hand-carved rainwater gutters chiseled across the tilted rock strata, funneling every drop of rain into deep underground rock cisterns that kept thousands of monks alive in the middle of a waterless steppe.",
+          "Today, the lower Lavra is an active men's monastery and one of the most surreal landscapes in the Caucasus. While upper ridge chapels like Udabno sit right along a contested border ridge, visitors can walk into the terraced courtyard of the main Lavra, where black-robed monks still move between sun-bleached cave doors and the silence of the rainbow-streaked desert hills feels almost otherworldly."
+        ]
+      }
+    ]
   },
   {
     "id": "ioseb-alaverdi",
@@ -120,8 +165,23 @@
     ],
     "imageUrl": "./assets/monasteries/ioseb-alaverdi.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/Alaverdi+Monastery/@42.032484,45.3772068,17z/data=!3m1!4b1!4m6!3m5!1s0x4045b5a2f185196f:0x5ed1db1b09239e1d!8m2!3d42.032484!4d45.3772068!16zL20vMDVsbDk2",
-    "notable": "Settled in the wild plains of Alaverdi. His hermitage later grew into the monumental 11th-century Alaverdi Cathedral.",
-    "martyrdom": "Fell asleep in the Lord peacefully in 570 AD. His tomb became an ancient center of pilgrimage."
+    "detailSections": [
+      {
+        "heading": "The Saint",
+        "paragraphs": [
+          "When Ioseb parted ways with his teacher Ioane of Zedazeni, he walked into the wide, marshy floor of the Alazani River plain in northern Kakheti, right below the snow-capped wall of the Greater Caucasus Mountains. At the time, the area around Alaverdi was a wild, sparsely inhabited hunting ground where local highlanders still gathered for seasonal pagan festivals dedicated to the moon deity. Armed with nothing but a small cross carved from a piece of the True Cross that he wore around his neck, Ioseb built a modest church dedicated to St. George right in the middle of the plain.",
+          "The story that turned Ioseb's lonely chapel into the grandest cathedral in eastern Georgia involves a chance encounter with a Kakhetian nobleman on a hunt. According to medieval hagiography, a local prince riding through the thickets of the Alazani plain stumbled upon the solitary Syrian monk praying in the wilderness; so struck was the nobleman by Ioseb's calm authority and the relic of the True Cross he carried that he immediately funded the first stone church on the spot and rallied the surrounding villages to protect the community. That humble 6th-century outpost planted the seed for what became, in the 11th century, the tallest church in all of Georgia—a white-stone giant that stood as the undefeated skyscraper of Georgian architecture for nearly a thousand years.",
+          "Ioseb was buried inside the original St. George church he founded, and when the monumental 11th-century cathedral was raised over the site, his tomb was preserved inside the northern side of the sanctuary, where pilgrims still light candles at his stone sepulcher today. He is venerated by the Georgian Orthodox Church as Venerable Ioseb (Joseph) of Alaverdi, the spiritual patron of the Alazani Valley, celebrated with the great regional festival of Alaverdoba in late September."
+        ]
+      },
+      {
+        "heading": "The Monastery",
+        "paragraphs": [
+          "Even from miles away across the flat vineyards of Kakheti, Alaverdi looks breathtaking: rising over 50 meters high against the backdrop of 3,000-meter Caucasus peaks, the early 11th-century St. George Cathedral built by King Kvirike III of Kakheti directly incorporates the foundation of Ioseb's 6th-century church. Surrounded by a massive crenellated fortress wall that makes it look like a medieval castle, the cathedral's exterior is famous for its austere, soaring proportions and blind arcades, while inside—after layers of 19th-century whitewash were peeled back by restorers—you can see haunting 11th-, 15th-, and 16th-century frescoes, including a towering Virgin and Child in the apse and a rare painted portrait of Ioseb himself above his tomb.",
+          "Today, Alaverdi is an active men's monastery, the seat of the Metropolitan Bishop of Alaverdi, and home to one of the oldest continuously operating monastic wineries in the world. Alongside the silent, cavernous cathedral, the resident monks tend organic vineyards, keep apiaries of Caucasian bees, and ferment amber wine in an archaeological marani dating back to the 8th–11th centuries."
+        ]
+      }
+    ]
   },
   {
     "id": "anton-martqopi",
@@ -135,8 +195,23 @@
     ],
     "imageUrl": "./assets/monasteries/anton-martqopi.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/Martkopi+Monastery/@41.8274472,44.9678167,17z/data=!3m1!4b1!4m6!3m5!1s0x40446abd48f7f073:0x1f639fee1943215e!8m2!3d41.8274472!4d44.9678167!16s%2Fg%2F11clt0j_nz",
-    "notable": "Brought an authentic Image of Christ on a clay tile (Mandylion) to Georgia. Lived atop a tall stone tower as a stylite.",
-    "martyrdom": "Spent his final 15 years atop his pillar in prayer, reposing peacefully around 590 AD."
+    "detailSections": [
+      {
+        "heading": "The Saint",
+        "paragraphs": [
+          "Even his Georgian nickname tells you who Anton was: Martqopi comes from marto-mkopi, literally \"the one who lives alone.\" While he accompanied the other Syrian fathers to Georgia, Anton wasn't just another hermit—he arrived carrying the single most famous relic in Georgian history. Before leaving Mesopotamia, Anton brought with him the Anchiskhati (an ancient ceramic tile bearing the \"Acheiropoieta,\" or Image of Christ Not Made by Hands, closely tied in local tradition to King Abgar of Edessa's Mandylion), which he wore against his chest and guarded in the wooded hills of Acrian (modern Martqopi) east of Tbilisi.",
+          "Beyond the legendary icon, Anton was a classic Syrian stylite—a pillar-monk who practiced an extreme form of vertical solitude. According to hagiographical tradition, when local villagers discovered him in the forest after a royal hunting party stumbled across his tame deer, crowds began hiking up the mountain to see the miracle-working monk and his sacred tile. To keep his vow of silence without abandoning his flock, Anton built a narrow stone tower high on a rocky crag above the monastery, climbed to the top, and refused to come down for the last fifteen years of his life—exposed to winter snows and summer sun while counseling disciples from the top of the pillar.",
+          "After spending fifteen unbroken years atop his stone tower, Anton's body was brought down by his disciples and buried inside the main monastery church at the foot of the cliff, beneath the north wall before the Mother of God icon. He is venerated by the Georgian Orthodox Church as Venerable Anton of Martqopi, Pillar of Monasticism and guardian of the Holy Tile, celebrated every year on August 29 (the feast of the Icon Not Made by Hands)."
+        ]
+      },
+      {
+        "heading": "The Monastery",
+        "paragraphs": [
+          "Set in an amphitheater of dense green hills, the Martqopi complex splits into two levels: the main monastery courtyard below and Anton's solitary stone pillar perched high on the wooded ridge above. The original 6th-century church where Anton enshrined his famous ceramic icon was battered by invasions—most infamously by Timur (Tamerlane) in 1395, when the icon itself was hidden away and eventually moved to Tbilisi (where it now rests in the Georgian National Museum). The churches standing in the lower complex today date largely to the 17th–19th centuries, including a striking bell tower designed in 1848 by architect Kalina, while a steep 20-minute forest trail leads up to the reconstructed stone tower built directly on the 6th-century foundations of Anton's stylite pillar.",
+          "Today, Martqopi is a vibrant, active men's monastery surrounded by quiet deciduous forests just outside Tbilisi. Making the climb up the narrow woodland path to Anton's stone tower is the highlight of any visit—standing at the base of the lonely pillar on the windy ridge, you immediately understand why he called this place \"the solitary one.\""
+        ]
+      }
+    ]
   },
   {
     "id": "ise-tsilkani",
@@ -165,8 +240,23 @@
     ],
     "imageUrl": "./assets/monasteries/shio-mgvime.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/Shiomgvime+Monastery/@41.8623609,44.6402038,17z/data=!3m1!4b1!4m6!3m5!1s0x404464fce9540da1:0xe9fa3081792d61d7!8m2!3d41.8623609!4d44.6402038!16s%2Fm%2F027b25y",
-    "notable": "Lived in a remote limestone canyon near Mtskheta. Thousands gathered to form Georgia's largest monastery.",
-    "martyrdom": "Voluntarily spent the last 15 years sealed deep in an underground pit tomb in ceaseless prayer."
+    "detailSections": [
+      {
+        "heading": "The Saint",
+        "paragraphs": [
+          "If Davit sought the open desert and Ioane claimed a mountaintop, Shio (\"the Cave-Dweller\") went underground. Heading west from Mtskheta along the northern bank of the Mtkvari River, he climbed into a narrow, sun-baked limestone canyon and squeezed himself into a cleft in the chalky cliff barely wide enough for a kneeling man. Yet his radical solitude had the opposite effect of what he intended: word of the hermit in the canyon spread so fast that according to historical chronicles, up to two thousand monks eventually crowded into the gorge, turning Shio's lonely cliff into one of the largest monastic communities in medieval Georgia.",
+          "The stories around Shio read like desert folklore brought to the Caucasus. Hagiographies recount that during his early years alone in the rock cleft, a wild dove brought him food each day, and when the canyon's monks needed to know where to build their first church on the ridge, Shio burned incense on his bare palm—without scorching his skin—and told them to build wherever the column of smoke settled. Even more striking was how he chose to end his public life: overwhelmed by fame and royal visitors, Shio had his disciples dig a pitch-black vertical pit (mgvime) roughly ten meters deep into the solid limestone floor. He lowered himself to the bottom by rope and lived in total darkness for the last fifteen years of his life, receiving only bread and water lowered in a basket through a narrow hole in the ceiling.",
+          "Shio was buried right at the bottom of that dark subterranean pit, which was immediately turned into a sacred crypt where his relics remained for centuries. He is venerated by the Georgian Orthodox Church as Venerable Shio the Cave-Dweller (Shio Mgvimeli), one of the most beloved ascetic saints of Georgia, commemorated on May 20 and on Cheesefare Thursday before Great Lent."
+        ]
+      },
+      {
+        "heading": "The Monastery",
+        "paragraphs": [
+          "Because the monastery grew around a vertical limestone shaft, its architecture is stacked in dramatic tiers against the ochre cliff face. The oldest structure on site is the 6th-century octagonal domed Church of St. John the Baptist—one of the earliest cross-domed stone churches in Georgia, built half-sunken into the rock right next to the circular wellhead opening into Shio's underground pit. Above it rises the grand 11th–12th century Upper Church (Zemo Eklesia), originally commissioned as a domed cathedral by King David the Builder and later rebuilt as a brick-and-stone basilica after Persian and Mongol raids, while the honeycombed limestone wall behind it is dotted with over a hundred dark cave cells dating from the 6th to 12th centuries.",
+          "Today, Shio-Mgvime is a thriving, active men's monastery just a short drive from Mtskheta. Visitors can step down into the dim, candlelit 6th-century church to peer into the stone pit where Shio lived for fifteen years, while the sunlit courtyard outside smells of cypress trees, beeswax, and fresh bread baked by the monks."
+        ]
+      }
+    ]
   },
   {
     "id": "isidor-samtavisi",
