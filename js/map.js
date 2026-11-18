@@ -173,7 +173,7 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
     popupContent.innerHTML = monks.map((item, itemIndex) => `
       <article class="mobile-monk-card" data-monk-index="${itemIndex}" aria-current="${item.id === monk.id}">
         <div class="mobile-card-image">
-          <img src="${item.imageUrl || `./images/monasteries/${item.id}.jpg`}" alt="${item.monastery}" width="296" height="132" loading="${itemIndex === activeIndex ? 'eager' : 'lazy'}" decoding="async" onerror="this.style.display='none'" />
+          <img src="${item.imageUrl || `./images/monasteries/${item.id}.jpg`}" alt="${item.monastery}" width="296" height="132" loading="${Math.abs(itemIndex - activeIndex) <= 1 ? 'eager' : 'lazy'}" decoding="async" />
           <span class="mobile-card-number">${itemIndex + 1}</span>
           ${item.gmapsUrl ? `
             <a class="mobile-card-location" href="${item.gmapsUrl}" target="_blank" rel="noopener noreferrer" aria-label="Open ${item.monastery} in Google Maps">
@@ -192,6 +192,16 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
       </article>
     `).join('');
     popupContent.dataset.activeIndex = String(activeIndex);
+    popupContent.querySelectorAll('.mobile-card-image > img').forEach((img) => {
+      const markLoaded = () => img.classList.add('is-loaded');
+      img.addEventListener('load', markLoaded, { once: true });
+      img.addEventListener('error', () => {
+        img.style.display = 'none';
+      }, { once: true });
+      if (img.complete && img.naturalWidth > 0) {
+        requestAnimationFrame(markLoaded);
+      }
+    });
   } else {
     popupContent.style.touchAction = 'pan-y';
     popupContent.innerHTML = `
@@ -300,7 +310,8 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
     };
     const selectMobileCard = (targetIndex) => {
       if (targetIndex < 0 || targetIndex >= monks.length) return;
-      if (targetIndex !== activeIndex) {
+      const didChange = targetIndex !== activeIndex;
+      if (didChange) {
         activeIndex = targetIndex;
         popupContent.dataset.activeIndex = String(targetIndex);
         popupContent.querySelectorAll('.mobile-monk-card').forEach((card, cardIndex) => {
@@ -308,6 +319,17 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
         });
       }
       centerCard(targetIndex);
+      if (didChange) {
+        const targetCard = popupContent.querySelector(`[data-monk-index="${targetIndex}"]`);
+        if (targetCard) {
+          targetCard.classList.remove('is-switching');
+          void targetCard.offsetWidth;
+          targetCard.classList.add('is-switching');
+          targetCard.addEventListener('animationend', () => {
+            targetCard.classList.remove('is-switching');
+          }, { once: true });
+        }
+      }
     };
     const settleUserScroll = () => {
       clearTimeout(scrollTimer);
@@ -358,6 +380,10 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
     }, { passive: true });
     const mobileOverlay = document.getElementById('mobile-card-overlay');
     if (!mobileOverlay) throw new Error('Missing #mobile-card-overlay');
+    popupContent.classList.add('is-entering');
+    popupContent.addEventListener('animationend', () => {
+      popupContent.classList.remove('is-entering');
+    }, { once: true });
     mobileOverlay.replaceChildren(popupContent);
     mobileOverlay.hidden = false;
     currentMobileCardOverlay = mobileOverlay;
@@ -406,6 +432,10 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
 
 export function selectMobileCard(index) {
   currentMobileCardSelect?.(index);
+}
+
+export function hasMobilePopup() {
+  return Boolean(currentMobileCardSelect);
 }
 
 export function closePopup({ notify = true } = {}) {

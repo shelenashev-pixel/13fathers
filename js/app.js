@@ -1,7 +1,7 @@
-import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-7';
+import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-8';
 import {
-  initMap, flyToMonk, showPopup, closePopup, resetMapView, setActiveMarker, selectMobileCard, showAllMonks
-} from './map.js?v=figma-sync-7';
+  initMap, flyToMonk, showPopup, closePopup, resetMapView, setActiveMarker, selectMobileCard, hasMobilePopup, showAllMonks
+} from './map.js?v=figma-sync-8';
 
 const INTRO_TITLE = 'The origins of the spread of Christianity';
 const INTRO_PARAGRAPHS = [
@@ -120,11 +120,16 @@ function openIntroModal() {
 
 function handleSelectIntro() {
   selectionRevision += 1;
-  activeMonkId = null;
+  const isMobile = window.matchMedia('(max-width: 760px)').matches;
+  if (!isMobile) {
+    activeMonkId = null;
+    closePopup({ notify: false });
+    setActiveMarker(null);
+  } else if (!activeMonkId && allMonksData[0]?.id) {
+    activeMonkId = allMonksData[0].id;
+  }
   document.body.classList.remove('map-only-view');
   updateMapViewButton();
-  closePopup({ notify: false });
-  setActiveMarker(null);
   highlightActiveCard('intro');
   setMobileListOpen(false);
   openIntroModal();
@@ -222,13 +227,13 @@ export function handleSelectMonk(monkId, {
 
   document.body.classList.remove('map-only-view');
   updateMapViewButton();
-  if (!fromSwipe || !isMobile) closePopup({ notify: !keepModalOpen });
+  if (!isMobile) closePopup({ notify: !keepModalOpen });
   if (!keepModalOpen) closeDetailModal({ syncMap: false });
   highlightActiveCard(monk.id, { scroll: !fromSwipe && !keepModalOpen });
   setMobileListOpen(false);
 
-  if (fromSwipe && isMobile && !keepModalOpen) {
-    syncActiveMonkOnMobile(monk.id, { syncMiniCarousel: false, flyMap: true });
+  if (isMobile && !keepModalOpen && hasMobilePopup()) {
+    syncActiveMonkOnMobile(monk.id, { syncMiniCarousel: !fromSwipe, flyMap: true });
     return;
   }
 
