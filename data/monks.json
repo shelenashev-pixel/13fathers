@@ -42,8 +42,23 @@
     ],
     "imageUrl": "./assets/monasteries/stepane-khirsa.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/Khirsa+St.+Stephan+Monastery/@41.5776934,45.9991593,17z/data=!3m1!4b1!4m6!3m5!1s0x4046f478f60b2b6d:0xc5b0d974dcb4efc0!8m2!3d41.5776934!4d45.9991593!16s%2Fg%2F11clszs0l0",
-    "notable": "Sent east into fertile Kakheti. Built a major cathedral dedicated to Archdeacon Stephen near the Khirsa river.",
-    "martyrdom": "Passed away peacefully; his tomb is preserved near the altar in Khirsa Cathedral."
+    "detailSections": [
+      {
+        "heading": "The Saint",
+        "paragraphs": [
+          "Of all the Syrian monks who headed east into Kakheti, Stephane pushed farthest toward the frontier. Settling on the green slopes below modern-day Signagi near the Khirsa stream, he planted an outpost right at the eastern edge of the Georgian kingdom—a borderland exposed to constant raids from the Caucasus mountains and neighboring Caucasian Albania. Rather than hiding in an unreachable cliff, Stephane built an open missionary community dedicated to St. Stephen the Protomartyr to anchor Christian life among the frontier villages.",
+          "According to local church tradition, Khirsa didn't just carry St. Stephen's name—it guarded a physical piece of him. Medieval lore holds that a prized relic, the severed pinky finger of Archdeacon Stephen, was brought to the monastery and enshrined near the altar, turning this remote Kakhetian hillside into a major pilgrimage stop. Chronicles also credit Stephane's prayers with calling forth an abundant spring near the ravine that sustained villagers whenever siege cut off the lower valley.",
+          "Stephane was buried inside the original 6th-century basilica he founded, and across every subsequent rebuilding of the church, masons carefully preserved his raised stone tomb beside the northern wall near the sanctuary. He is venerated by the Georgian Orthodox Church as Venerable Stephane of Khirsa, the spiritual guardian of eastern Kakheti, with his feast day commemorated on May 20."
+        ]
+      },
+      {
+        "heading": "The Monastery",
+        "paragraphs": [
+          "Looking at St. Stephen's Cathedral at Khirsa today is like peeling back five layers of history in a single building. Originally erected by Stephane in the 6th century as a modest three-nave basilica, it was converted in the 10th century under King Leon and King Kvirike the Great into a soaring domed cathedral, then repaired again in the 16th century by King Levan of Kakheti after devastating earthquakes and invasions. Look high up on the facade and inside the altar apse for ancient Georgian Asomtavruli stone inscriptions—including one credited to the 11th-century chronicler-king Kvirike III—and step outside to see the massive fortified stone wall built to fend off Dagestani mountain raids.",
+          "Today, Khirsa operates as a quiet, active men's monastery tucked among vineyards and fig trees just below the hilltop town of Signagi. Despite its monumental scale and brick-and-cobblestone dome, it sits just off the main tourist trail, meaning you often have the breezy courtyard and Stephane's candlelit 6th-century tomb completely to yourself."
+        ]
+      }
+    ]
   },
   {
     "id": "abibos-nekresi",
@@ -87,8 +102,23 @@
     ],
     "imageUrl": "./assets/monasteries/tate-dzveli-shuamta.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/Dzveli+Shuamta%27s+Monastery/@41.9108884,45.4059221,17z/data=!3m1!4b1!4m6!3m5!1s0x404433bca4c07a77:0xf96a1a1487b4b33!8m2!3d41.9108884!4d45.4059221!16s%2Fg%2F12214wcn",
-    "notable": "Settled in the dense deciduous woods of Tsiv-Gombori mountains, building the early Christian basilica of Shuamta.",
-    "martyrdom": "Died in tranquility surrounded by disciples; revered as a protector of mountaineers and travelers."
+    "detailSections": [
+      {
+        "heading": "The Saint",
+        "paragraphs": [
+          "Known in old chronicles as Tate (or Thaddeus) of Stepantsminda, this quiet ascetic initially stayed close to his teacher Ioane at the foot of Mount Zedazeni, organizing a monastery near Mtskheta before longing for deeper wilderness. Travelling over the misty Gombori mountain pass into Kakheti, he discovered a hidden clearing hemmed in on three sides by steep, forested ridges—a place locals called Shuamta, literally \"Between the Mountains.\"",
+          "What makes Tate's woodland retreat so memorable is how completely it swallowed him from the outside world. According to local lore and hagiographical accounts, Tate spent his days in a natural forest cave high on the Tsiv-Gombori slopes, where mountain travelers lost in the thick Gombori fog claimed to follow the sound of his night prayers and the glow of a single oil lamp back to safety. Even after disciples gathered around him to expand the forest cloister, Tate refused to leave the mountain woods, turning Shuamta into a sanctuary for contemplatives and copyists.",
+          "While early hagiographical traditions link his final resting place to his first foundation at Tserovani (Stepantsminda) near Mtskheta, his spiritual legacy remained inseparable from the forest clearing of Dzveli Shuamta. He is venerated by the Georgian Orthodox Church as Venerable Tate (Thaddeus), protector of mountain travelers and ascetics, commemorated on May 20."
+        ]
+      },
+      {
+        "heading": "The Monastery",
+        "paragraphs": [
+          "Architecturally, Dzveli (\"Old\") Shuamta is one of the most charming ensembles in Georgia: three early medieval stone churches pressed right up against one another on a grassy clearing in the middle of a deciduous forest. The oldest is a tiny 5th-century three-nave basilica with narrow horseshoe arches, flanked by two 7th-century cross-domed churches—the larger of which is a near-twin of Mtskheta's famous Jvari Monastery. Look closely at the walls and you won't see smooth cut stone: Kakhetian masons built all three churches out of split river cobblestones (riqis kva) held together with lime mortar, using golden porous tufa (shirimi) only for the corners and window arches.",
+          "In the 16th century, after Old Shuamta grew too isolated, Queen Tinatin founded Akhali (\"New\") Shuamta a couple of kilometers down the road, leaving the ancient stone trio in peaceful retirement. Today, Dzveli Shuamta is an active church site with no resident stalls or crowds—just three moss-touched stone roofs rising out of a sea of beech and hornbeam trees."
+        ]
+      }
+    ]
   },
   {
     "id": "zenon-ikhalto",
@@ -225,8 +255,23 @@
     ],
     "imageUrl": "./assets/monasteries/ise-tsilkani.jpg",
     "gmapsUrl": "https://maps.app.goo.gl/zPPdu6k5tbxyvVck6",
-    "notable": "Established solitary prayer cells and churches in the valleys near Tsilkani and Mtskheta.",
-    "martyrdom": "Lived to extreme old age and passed into eternal rest in peace at his retreat in Tsilkani."
+    "detailSections": [
+      {
+        "heading": "The Saint",
+        "paragraphs": [
+          "Unlike the companions who hiked into empty deserts or virgin forests, Ise was drafted—much against his own wishes—into high office. Recognizing his gift for preaching and diplomacy, Catholicos Evlavios and Ioane of Zedazeni ordained Ise as Bishop of Tsilkani, placing him in charge of a major royal cathedral in the Mukhrani plain just northwest of Mtskheta, where he spent decades teaching and organizing parishes across the mountain valleys stretching toward the Caucasus range.",
+          "The most famous story about Ise—and the miracle still painted on his icons—happened when Ioane of Zedazeni gathered his disciples to test their faith. Seeing that the farms around Tsilkani were withering from drought while the Ksani River flowed far away, Ise walked down to the riverbank, dipped the tip of his bishop's crozier into the water, and commanded the stream to follow him in the name of Christ. According to the medieval Vita, as Ise walked steadily back uphill tracing a line in the dry dirt with his staff, a living channel of water flowed uphill right behind his heels all the way to Tsilkani, creating the irrigation canal that watered the village for centuries.",
+          "Ise served his flock into old age and was buried inside the Tsilkani Cathedral of the Mother of God, beneath the floor between the sanctuary and the northern choir. He is venerated by the Georgian Orthodox Church as Venerable Ise, Bishop and Wonderworker of Tsilkani, commemorated on May 20 and December 15 (December 2 Old Style)."
+        ]
+      },
+      {
+        "heading": "The Monastery",
+        "paragraphs": [
+          "Tsilkani is one of the oldest Christian sites in Georgia, originally founded in the 4th–5th century by King Bakar (son of Georgia's first Christian king, Mirian III) even before Ise arrived to serve as its bishop. Rebuilt as a three-nave basilica in the 5th–6th centuries and later transformed into a grand domed cathedral in the Middle Ages, the complex is enclosed by an 18th-century stone fortress wall punctuated by round corner battle towers. Inside, you can still spot ancient ornamental stone reliefs from its early medieval phases alongside the revered copy of the 9th-century Tsilkani Icon of the Mother of God.",
+          "Today, Tsilkani Cathedral is an active episcopal seat and parish church set in a quiet village just twenty minutes from Mtskheta. Walking through the fortified gate into the broad grassy yard, visitors find a calm, lived-in sanctuary where villagers still come to pray at the stone slab marking Bishop Ise's grave."
+        ]
+      }
+    ]
   },
   {
     "id": "shio-mgvime",
@@ -271,8 +316,23 @@
     ],
     "imageUrl": "./assets/monasteries/isidor-samtavisi.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/Samtavisi+Cathedral/@42.0063451,44.4089068,17z/data=!3m1!4b1!4m6!3m5!1s0x40448e6098cc5943:0xd26d4b6b794129f5!8m2!3d42.0063451!4d44.4089068!16s%2Fm%2F02x23yj",
-    "notable": "Established a monastic community on the banks of the Lekhura river. Renowned for boundless charity and discipline.",
-    "martyrdom": "Died peacefully; buried inside Samtavisi Cathedral, famed for its masterwork stone carvings."
+    "detailSections": [
+      {
+        "heading": "The Saint",
+        "paragraphs": [
+          "Also known in early chronicles as Ezderios, Isidore walked west from Mtskheta into the fertile orchards and wheat fields of Shida Kartli, stopping on the left bank of the Lekhura River. Rather than hiding away in a cave, he founded the Church of the Ascension and set up a lively missionary school, turning Samtavisi into a regional beacon of education and charity for the farming villages of central Georgia.",
+          "What makes Isidore's story stand out is how a humble 6th-century monk's riverside school became the artistic launchpad of medieval Georgia. Five hundred years after Isidore founded his modest monastery and was laid to rest inside it, a local bishop and master architect named Hilarion Kansavulidze decided Isidore's resting place deserved a masterpiece. In 1030, Hilarion raised a new cathedral over Isidore's grave whose eastern facade—carved with a soaring, lace-like stone cross and a mythical griffin—was so revolutionary that architects across Georgia copied its design for the next two hundred years.",
+          "Isidore's tomb is preserved inside Samtavisi Cathedral on the northern side of the sanctuary, right beneath the soaring 11th-century vaults built in his honor. He is venerated by the Georgian Orthodox Church as Venerable Isidore (Ezderios) of Samtavisi, founder of the Samtavisi see, commemorated on May 20."
+        ]
+      },
+      {
+        "heading": "The Monastery",
+        "paragraphs": [
+          "Architecturally, the 1030 Samtavisi Cathedral is a textbook of medieval Georgian stone artistry. Although Isidore's original 6th-century basilica no longer stands above ground, the 11th-century cross-domed cathedral built over it by Bishop Hilarion survives in remarkable detail despite a 15th-century earthquake that toppled its original dome and western wall. Walk around to the eastern facade to see the most famous stone carving in central Georgia: a giant ornamental cross flanked by two diamond-shaped rosettes and a sculpted griffin under the central window, alongside a fortified bishop's residence and a two-story 17th-century bell tower perched atop the defensive wall.",
+          "Today, Samtavisi is an active cathedral and episcopal residence just off the main highway near Kaspi. Stepping inside its tall, sunlit interior—where 17th-century frescoes still cover the apse and a simple stone canopy marks Isidore's 6th-century grave—feels like discovering a royal cathedral hidden in a quiet country village."
+        ]
+      }
+    ]
   },
   {
     "id": "piros-breti",
@@ -287,8 +347,23 @@
     ],
     "imageUrl": "./assets/monasteries/piros-breti.jpg",
     "gmapsUrl": "https://maps.app.goo.gl/eVdwKMJ4CePGYPD96",
-    "notable": "Founded a monastic cloister at Breti. Renowned for unceasing empathy toward leprosy patients and the poor.",
-    "martyrdom": "Died peacefully; buried inside the Mother of God Church at Breti Monastery."
+    "detailSections": [
+      {
+        "heading": "The Saint",
+        "paragraphs": [
+          "Pushing further west into the river plains of Shida Kartli near modern Kareli, Piros (Pyrrhus) settled along the banks of the Dvani River at Breti. While medieval liturgical hymns praised him as a \"divine image of repentance\" for his strict fasting and tearful night vigils, Piros never turned his back on the people around him—his cloister quickly became a refuge for the poor, the sick, and outcasts across the valley.",
+          "The most remarkable physical trace of Piros's legacy wasn't a cliffside cave, but a masterpiece of medieval goldsmithing created expressly for his monastery. In the 11th century, the renowned Georgian master Gabriel Sapaneli hammered sheets of silver and gold over a wooden core to craft the famous Breti Processional Cross for Piros's church—an intricate reliquary cross covered in embossed scenes of Christ's life and Georgian inscriptions that survived centuries of raids and now sits as a crown jewel of the Georgian National Museum in Tbilisi.",
+          "Piros was buried inside the small 6th-century church he built at Breti, and when later generations expanded the monastery, they kept his original chapel intact as the northern burial chamber housing his relics. He is venerated by the Georgian Orthodox Church as Venerable Piros of Breti, healer and intercessor of Kartli, commemorated on May 20 and May 28 (May 15 Old Style)."
+        ]
+      },
+      {
+        "heading": "The Monastery",
+        "paragraphs": [
+          "At Breti, you can literally see how medieval builders wrapped a new church around a saint's original home. Piros's small 6th-century hall church still survives on the northern side of the complex, directly adjoined by the larger 8th–9th century St. George Hall Church built of yellowish sandstone blocks. Inside, restorers cleaning away centuries of candle soot and whitewash uncovered fragments of expressive 11th–13th century frescoes, including depictions of the Church Fathers and rare medieval Georgian graffiti scratched into the plaster by pilgrims.",
+          "Today, Breti operates as a peaceful village church and monastic complex surrounded by fruit orchards in the Kareli district. Far removed from tourist buses, it offers an intimate glimpse into rural Shida Kartli—where the low doorway leading into Piros's 6th-century tomb chamber still feels untouched by time."
+        ]
+      }
+    ]
   },
   {
     "id": "mikhail-ulumbo",
@@ -303,7 +378,22 @@
     ],
     "imageUrl": "./assets/monasteries/mikhail-ulumbo.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/Ulumbo+Monastery/@42.1414147,43.5845125,17z/data=!3m1!4b1!4m6!3m5!1s0x4043553691e36b67:0x9c1e0b13093a52cf!8m2!3d42.1414147!4d43.5845125!16s%2Fg%2F11b6gcn005",
-    "notable": "Established a flourishing spiritual center at Mount Ulumbo, overturning remaining pagan practices.",
-    "martyrdom": "Reposed in peace after establishing an influential monastic cloister in central Georgia."
+    "detailSections": [
+      {
+        "heading": "The Saint",
+        "paragraphs": [
+          "Of all thirteen Syrian fathers, Mikhail walked the farthest west. Crossing the Likhi mountain watershed toward the border of western Georgia, he climbed into the steep, densely wooded gorge of the Cheratkhevi (Alisწყali) River near Surami and founded Ulumbo Monastery high on a forested mountain slope—right where ancient mountain trails linked eastern and western Georgia and old pagan tree cults still held sway.",
+          "Why did we lose almost all the early written scrolls about Mikhail's life while his cult stayed so fierce among locals? The answer lies in one of the most dramatic raids in Georgian history: around 1400, the Turco-Mongol conqueror Timur (Tamerlane) marched his army up into the Cheratkhevi gorge, sacked Ulumbo, and burned its rich medieval library and archives to ash. Yet village memory refused to let Mikhail fade: local lore passed down stories of the miracle-working spring he blessed in the forest and the sacred icon of the Mother of God of Ulumbo, which villagers hid in the woods whenever foreign armies marched through the pass.",
+          "When archaeologists excavated the sanctuary of the Ulumbo church in the 20th century, they uncovered a sacred tomb built directly in front of the altar—confirming the centuries-old tradition that Mikhail himself was buried inside the chancel of the church he founded. He is venerated by the Georgian Orthodox Church as Venerable Mikhail of Ulumbo, apostle of Upper Kartli, commemorated on May 20 and on the third day after Ascension."
+        ]
+      },
+      {
+        "heading": "The Monastery",
+        "paragraphs": [
+          "Hidden deep in the woods above the village of Alisiubani, the Ulumbo Church of the Assumption of the Mother of God has been knocked down and rebuilt more times than almost any other Syrian Father foundation. After Mikhail's 6th-century church and its medieval successors were leveled by Timur's invasion and later Ottoman raids, the local Amirejibi noble family rebuilt the church in the 17th–18th centuries and again in 1871, reusing carved medieval stone reliefs and cornice blocks that you can still spot embedded like puzzle pieces in the exterior walls.",
+          "Today, Ulumbo is a serene, active monastery tucked inside a lush mountain forest in the Khashuri district. Reached by a winding dirt road that climbs alongside a rushing mountain stream, the stone church sits in a quiet clearing where the sound of wind in the canopy and the cold spring water outside make it feel worlds away from modern civilization."
+        ]
+      }
+    ]
   }
 ]
