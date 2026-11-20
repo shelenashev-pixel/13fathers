@@ -661,7 +661,7 @@
         background-color: var(--surface-soft);
       }
       .detail-overlay::after {
-        position: absolute; z-index: 33; right: 0; bottom: 0; left: 0; content: "";
+        position: absolute; z-index: 31; right: 0; bottom: 0; left: 0; content: "";
         height: calc(76px + max(34px, env(safe-area-inset-bottom, 0px))); pointer-events: none;
         background: linear-gradient(to bottom, rgba(245, 242, 235, 0) 0%, rgba(245, 242, 235, .68) 100%);
         -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
@@ -937,7 +937,7 @@
         border: 0; border-radius: var(--radius-pill); pointer-events: auto;
         font: 600 14px var(--font-sans); text-decoration: none;
       }
-      .modal-gmaps { background: var(--surface-inverse); color: var(--text-inverse); }
+      .modal-gmaps { background: var(--surface-inverse); color: var(--text-inverse); box-shadow: var(--shadow-button); }
       .monk-detail-modal .modal-close { display: inline-flex; }
       .mobile-card-skeleton {
         display: flex; width: 100%; padding: 0 var(--space-8); pointer-events: none;
