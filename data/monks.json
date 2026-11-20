@@ -9,7 +9,7 @@
       44.7644,
       41.8711
     ],
-    "imageUrl": "./assets/monasteries/ioane-zedazeni.jpg",
+    "imageUrl": "./images/monasteries/ioane-zedazeni.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/Zedazeni+Monastery/@41.8712688,44.7652799,17z/data=!3m1!4b1!4m6!3m5!1s0x404468a3b390a65d:0x1bfcfad66ce57486!8m2!3d41.8712688!4d44.7652799!16s%2Fm%2F02rx6pj",
     "detailSections": [
       {
@@ -40,7 +40,7 @@
       45.8944,
       41.5794
     ],
-    "imageUrl": "./assets/monasteries/stepane-khirsa.jpg",
+    "imageUrl": "./images/monasteries/stephen-khirsa.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/Khirsa+St.+Stephan+Monastery/@41.5776934,45.9991593,17z/data=!3m1!4b1!4m6!3m5!1s0x4046f478f60b2b6d:0xc5b0d974dcb4efc0!8m2!3d41.5776934!4d45.9991593!16s%2Fg%2F11clszs0l0",
     "detailSections": [
       {
@@ -70,7 +70,7 @@
       45.7675,
       41.9723
     ],
-    "imageUrl": "./assets/monasteries/abibos-nekresi.jpg",
+    "imageUrl": "./images/monasteries/abibus-nekresi.jpg",
     "gmapsUrl": "https://www.google.com/maps/search/?api=1&query=Nekresi&query_place_id=ChIJBSsMNG_aRUARuqwXOPSZqas",
     "detailSections": [
       {
@@ -132,7 +132,7 @@
       45.3802,
       41.9372
     ],
-    "imageUrl": "./assets/monasteries/zenon-ikhalto.jpg",
+    "imageUrl": "./images/monasteries/zenon-iqalto.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/Ikalto+Monastery/@41.9373621,45.3811438,17z/data=!3m1!4b1!4m6!3m5!1s0x404434885cdbc939:0x59eeba460d1974fc!8m2!3d41.9373621!4d45.3811438!16zL20vMDJzNnJi",
     "detailSections": [
       {
@@ -163,7 +163,7 @@
       45.3761,
       41.4472
     ],
-    "imageUrl": "./assets/monasteries/davit-gareja.jpg",
+    "imageUrl": "./images/monasteries/david-gareji.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/David+Gareji+monastery/@41.4473406,45.3764547,17z/data=!3m1!4b1!4m6!3m5!1s0x4046b0894dcba09f:0x572a443af100e678!8m2!3d41.4473406!4d45.3764547!16zL20vMDJ0MjE4",
     "detailSections": [
       {
@@ -224,7 +224,7 @@
       45.0294,
       41.7892
     ],
-    "imageUrl": "./assets/monasteries/anton-martqopi.jpg",
+    "imageUrl": "./images/monasteries/anton-martqopi.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/Martkopi+Monastery/@41.8274472,44.9678167,17z/data=!3m1!4b1!4m6!3m5!1s0x40446abd48f7f073:0x1f639fee1943215e!8m2!3d41.8274472!4d44.9678167!16s%2Fg%2F11clt0j_nz",
     "detailSections": [
       {
@@ -254,7 +254,7 @@
       44.6883,
       41.8792
     ],
-    "imageUrl": "./assets/monasteries/ise-tsilkani.jpg",
+    "imageUrl": "./images/monasteries/ise-tsilkani.jpg",
     "gmapsUrl": "https://maps.app.goo.gl/zPPdu6k5tbxyvVck6",
     "detailSections": [
       {
@@ -284,7 +284,7 @@
       44.6403,
       41.8625
     ],
-    "imageUrl": "./assets/monasteries/shio-mgvime.jpg",
+    "imageUrl": "./images/monasteries/shio-mgvime.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/Shiomgvime+Monastery/@41.8623609,44.6402038,17z/data=!3m1!4b1!4m6!3m5!1s0x404464fce9540da1:0xe9fa3081792d61d7!8m2!3d41.8623609!4d44.6402038!16s%2Fm%2F027b25y",
     "detailSections": [
       {
@@ -315,7 +315,7 @@
       44.4069,
       41.9961
     ],
-    "imageUrl": "./assets/monasteries/isidor-samtavisi.jpg",
+    "imageUrl": "./images/monasteries/isidore-samtavisi.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/Samtavisi+Cathedral/@42.0063451,44.4089068,17z/data=!3m1!4b1!4m6!3m5!1s0x40448e6098cc5943:0xd26d4b6b794129f5!8m2!3d42.0063451!4d44.4089068!16s%2Fm%2F02x23yj",
     "detailSections": [
       {
@@ -346,7 +346,7 @@
       43.9161,
       42.0633
     ],
-    "imageUrl": "./assets/monasteries/piros-breti.jpg",
+    "imageUrl": "./images/monasteries/pyrrhus-breti.jpg",
     "gmapsUrl": "https://maps.app.goo.gl/eVdwKMJ4CePGYPD96",
     "detailSections": [
       {
@@ -377,7 +377,7 @@
       43.682,
       42.052
     ],
-    "imageUrl": "./assets/monasteries/mikhail-ulumbo.jpg",
+    "imageUrl": "./images/monasteries/michael-ulumbo.jpg",
     "gmapsUrl": "https://www.google.com/maps/place/Ulumbo+Monastery/@42.1414147,43.5845125,17z/data=!3m1!4b1!4m6!3m5!1s0x4043553691e36b67:0x9c1e0b13093a52cf!8m2!3d42.1414147!4d43.5845125!16s%2Fg%2F11b6gcn005",
     "detailSections": [
       {

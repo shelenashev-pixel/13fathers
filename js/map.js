@@ -7,6 +7,7 @@ let currentMobileCardOverlay = null;
 let currentMobileCardOnClose = null;
 let currentMobileCardCleanup = null;
 let currentMobileCardSelect = null;
+const loadedImages = new Set();
 
 export function initMap(monks, onMarkerClick) {
   mapInstance = new maplibregl.Map({
@@ -29,6 +30,14 @@ export function initMap(monks, onMarkerClick) {
   });
 
   monks.forEach((monk) => {
+    if (monk.imageUrl) {
+      const preload = new Image();
+      preload.onload = () => {
+        loadedImages.add(monk.imageUrl);
+        preload.decode?.().catch(() => {});
+      };
+      preload.src = monk.imageUrl;
+    }
     if (!monk.coordinates) return;
 
     const el = document.createElement('div');
@@ -60,6 +69,10 @@ export function initMap(monks, onMarkerClick) {
     markersMap[monk.id] = { marker, monk };
   });
 
+  if (window.innerWidth > 760) {
+    void showAllMonks({ duration: 0 });
+  }
+
   return mapInstance;
 }
 
@@ -68,10 +81,13 @@ function getFreeMapInsets() {
   if (window.innerWidth <= 760) return { top: 0, left: 0 };
   const mapOnly = document.body.classList.contains('map-only-view');
   const header = document.querySelector('.app-header')?.getBoundingClientRect();
-  const panel = document.querySelector('.monks-panel')?.getBoundingClientRect();
+  const panel = document.querySelector('.monks-panel');
   const overlay = document.getElementById('detail-overlay');
-  const detail = overlay && !overlay.classList.contains('hidden') ? overlay.getBoundingClientRect() : null;
-  const left = mapOnly ? 0 : Math.max(panel?.right ?? 0, detail?.right ?? 0);
+  const panelRight = panel ? panel.offsetLeft + panel.offsetWidth : 0;
+  const detailRight = overlay && !overlay.classList.contains('hidden')
+    ? overlay.offsetLeft + overlay.offsetWidth
+    : 0;
+  const left = mapOnly ? 0 : Math.max(panelRight, detailRight);
   return { top: header?.bottom ?? 0, left };
 }
 
@@ -88,14 +104,14 @@ export function showAllMonks({ duration = 900 } = {}) {
   const { top, left } = getFreeMapInsets();
   const padding = isMobile
     ? { top: 150, right: 32, bottom: 40, left: 32 }
-    : { top: top + 24, right: 72, bottom: 24, left: left + 24 };
+    : { top: top + 56, right: 110, bottom: 56, left: left + 88 };
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   return new Promise((resolve) => {
     const startFit = () => {
       mapInstance.once('moveend', resolve);
       mapInstance.fitBounds(bounds, {
-        padding, maxZoom: 11, essential: !reducedMotion, duration: reducedMotion ? 0 : duration
+        padding, maxZoom: 7.3, essential: !reducedMotion, duration: reducedMotion ? 0 : duration
       });
       if (!mapInstance.isMoving()) {
         mapInstance.off('moveend', resolve);
@@ -201,20 +217,23 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
         img.style.display = 'none';
       }, { once: true });
       if (img.complete && img.naturalWidth > 0) {
-        requestAnimationFrame(markLoaded);
+        markLoaded();
       }
     });
   } else {
+    const imgSrc = monk.imageUrl || `./images/monasteries/${monk.id}.jpg`;
+    const isCached = loadedImages.has(imgSrc);
     popupContent.style.touchAction = 'pan-y';
     popupContent.innerHTML = `
       <article class="place-card">
         <div class="place-card-image">
           <img
-            src="${monk.imageUrl || `./images/monasteries/${monk.id}.jpg`}"
+            class="${isCached ? 'is-loaded' : ''}"
+            src="${imgSrc}"
             alt="${i18n.t(`monks.${monk.id}.monastery`, monk.monastery)}"
             width="296"
             height="132"
-            decoding="async"
+            decoding="sync"
             onerror="this.style.display='none'"
           />
         </div>
@@ -237,6 +256,18 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
         </div>
       </article>
     `;
+    const placeImg = popupContent.querySelector('.place-card-image > img');
+    if (placeImg && !isCached) {
+      const markLoaded = () => {
+        loadedImages.add(imgSrc);
+        placeImg.classList.add('is-loaded');
+      };
+      if (placeImg.complete && placeImg.naturalWidth > 0) {
+        markLoaded();
+      } else {
+        placeImg.addEventListener('load', markLoaded, { once: true });
+      }
+    }
   }
 
   const popup = isMobile
@@ -463,6 +494,11 @@ export function closePopup({ notify = true } = {}) {
 export function resetMapView() {
   if (!mapInstance) return;
   closePopup();
+
+  if (window.innerWidth > 760) {
+    void showAllMonks({ duration: 900 });
+    return;
+  }
 
   mapInstance.flyTo({
     center: [44.8, 41.9],

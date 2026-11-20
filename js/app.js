@@ -1,7 +1,7 @@
 import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-10';
 import {
   initMap, flyToMonk, showPopup, closePopup, resetMapView, setActiveMarker, selectMobileCard, hasMobilePopup, showAllMonks
-} from './map.js?v=figma-sync-10';
+} from './map.js?v=figma-sync-20';
 import { i18n } from './i18n.js?v=figma-sync-10';
 
 const INTRO_TITLE = 'The origins of the spread of Christianity';
