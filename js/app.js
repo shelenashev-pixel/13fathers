@@ -5,9 +5,13 @@ import {
 import { i18n } from './i18n.js?v=figma-sync-10';
 
 const INTRO_TITLE = 'The origins of the spread of Christianity';
-const INTRO_PARAGRAPHS = [
-  { key: 'intro.p1', fallback: 'In the 6th century, thirteen Syrian (Assyrian) fathers, led by John of Zedazeni, came to Georgia and founded some of the earliest monasteries in the country.' },
-  { key: 'intro.p2', fallback: 'Choose a father from the list or a pin on the map to read his story and find his monastery.' }
+const INTRO_SECTIONS_FALLBACK = [
+  {
+    heading: 'What this map is about',
+    paragraphs: [
+      'In the 6th century, thirteen Syrian (Assyrian) fathers, led by Ioane of Zedazeni, came to Georgia and founded some of the earliest monasteries in the country.'
+    ]
+  }
 ];
 
 let allMonksData = [];
@@ -117,11 +121,44 @@ function openIntroModal() {
     modalNameEl.setAttribute('data-i18n', 'intro.title');
     modalNameEl.textContent = i18n.t('intro.title', INTRO_TITLE);
   }
-  document.getElementById('modal-monk-desc').replaceChildren(...INTRO_PARAGRAPHS.map(({ key, fallback }) => {
-    const paragraph = document.createElement('p');
-    paragraph.setAttribute('data-i18n', key);
-    paragraph.textContent = i18n.t(key, fallback);
-    return paragraph;
+  const introSections = i18n.getValue('intro.sections');
+  const sections = Array.isArray(introSections) && introSections.length ? introSections : INTRO_SECTIONS_FALLBACK;
+  document.getElementById('modal-monk-desc').replaceChildren(...sections.map((sec, sIdx) => {
+    const section = document.createElement('section');
+    if (sec.heading) {
+      const title = document.createElement('h3');
+      title.setAttribute('data-i18n', `intro.sections.${sIdx}.heading`);
+      title.textContent = sec.heading;
+      section.appendChild(title);
+    }
+    if (Array.isArray(sec.paragraphs)) {
+      sec.paragraphs.forEach((text, pIdx) => {
+        const paragraph = document.createElement('p');
+        paragraph.setAttribute('data-i18n', `intro.sections.${sIdx}.paragraphs.${pIdx}`);
+        paragraph.textContent = text;
+        section.appendChild(paragraph);
+      });
+    }
+    if (Array.isArray(sec.bullets) && sec.bullets.length) {
+      const list = document.createElement('ul');
+      sec.bullets.forEach((item, bIdx) => {
+        const li = document.createElement('li');
+        if (item.lead) {
+          const strong = document.createElement('strong');
+          strong.setAttribute('data-i18n', `intro.sections.${sIdx}.bullets.${bIdx}.lead`);
+          strong.textContent = item.lead;
+          li.appendChild(strong);
+          li.appendChild(document.createTextNode(' '));
+        }
+        const span = document.createElement('span');
+        span.setAttribute('data-i18n', `intro.sections.${sIdx}.bullets.${bIdx}.text`);
+        span.textContent = item.text || '';
+        li.appendChild(span);
+        list.appendChild(li);
+      });
+      section.appendChild(list);
+    }
+    return section;
   }));
   const wasHidden = modal.classList.contains('hidden');
   modal.classList.add('is-intro');

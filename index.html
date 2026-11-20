@@ -18,7 +18,7 @@
   <!-- Google Fonts: Prata & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Prata&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Georgian:wght@400;500;600&family=Noto+Serif+Georgian:wght@400;500&family=Prata&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
@@ -66,6 +66,12 @@
       --control-height-l: 48px;
       --motion-standard: cubic-bezier(.22, 1, .36, 1);
       --ease-ui: cubic-bezier(.4, 0, .2, 1);
+      --font-serif: 'Prata', Georgia, serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    html[lang="ka"] {
+      --font-serif: 'Noto Serif Georgian', 'Prata', Georgia, serif;
+      --font-sans: 'Noto Sans Georgian', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     * { box-sizing: border-box; }
@@ -147,7 +153,7 @@
       transition: opacity .3s var(--ease-ui);
     }
     .app-title {
-      margin: 0; color: var(--ink); font: 400 clamp(26px, 3.4vw, 43px)/1.1 'Prata', Georgia, serif;
+      margin: 0; color: var(--ink); font: 400 clamp(26px, 3.4vw, 43px)/1.1 var(--font-serif);
       letter-spacing: -1.2px; text-shadow: 0 1px 8px rgba(255,255,255,.38);
       max-width: 620px;
     }
@@ -155,7 +161,7 @@
     .reset-btn {
       display: inline-flex; height: var(--control-height-m); min-width: 0;
       padding: var(--space-2) var(--space-6); border: 0; border-radius: var(--radius-pill);
-      background: var(--surface-inverse); color: var(--text-inverse); font: 600 14px Inter, sans-serif; cursor: pointer;
+      background: var(--surface-inverse); color: var(--text-inverse); font: 600 14px var(--font-sans); cursor: pointer;
     }
     .reset-btn:hover { background: var(--action-primary-hover); }
     .language-switch {
@@ -177,7 +183,7 @@
     .language-toggle span,
     .language-option span {
       display: grid; width: 24px; height: 24px; place-items: center;
-      font: 400 20px/16px 'Prata', Georgia, serif;
+      font: 400 20px/16px var(--font-serif);
     }
     .language-menu {
       position: absolute; top: calc(100% + var(--space-1)); left: 50%;
@@ -209,7 +215,7 @@
     .panel-intro {
       flex: 0 0 auto; display: block; width: 100%; max-width: 280px; margin: 0 auto; padding: 0;
       border: 0; border-radius: 0; background: transparent; color: var(--text-primary); cursor: pointer;
-      font: 400 24px/26px 'Prata', Georgia, serif; letter-spacing: 0; text-align: center;
+      font: 400 24px/26px var(--font-serif); letter-spacing: 0; text-align: center;
       text-wrap: balance; white-space: normal;
     }
     .panel-intro:hover, .panel-intro.is-active { color: var(--text-secondary); }
@@ -225,7 +231,7 @@
     #search-input {
       width: 100%; height: 100%; padding: 0 44px 0 44px; outline: none; -webkit-appearance: none; appearance: none;
       border: 1.5px solid var(--text-secondary); border-radius: var(--radius-pill); background: transparent;
-      color: var(--text-primary); font: 14px/20px Inter, sans-serif;
+      color: var(--text-primary); font: 14px/20px var(--font-sans);
     }
     #search-input:focus, #search-input:focus-visible { outline: none; border-color: var(--text-primary); }
     #search-input::placeholder { color: var(--text-secondary); }
@@ -247,12 +253,12 @@
     .empty-state-card {
       width: 100%; padding: 20px 18px; border: 1px solid #e6e0d7; border-radius: 12px; background: rgba(255,255,255,.72); text-align: center;
     }
-    .empty-state-card h3 { margin: 0 0 8px; color: #171717; font: 400 24px/1.2 'Prata', Georgia, serif; }
-    .empty-state-card p { margin: 0 0 14px; color: #666; font: 13px/1.5 Inter, sans-serif; }
+    .empty-state-card h3 { margin: 0 0 8px; color: #171717; font: 400 24px/1.2 var(--font-serif); }
+    .empty-state-card p { margin: 0 0 14px; color: #666; font: 13px/1.5 var(--font-sans); }
     .empty-state-action {
       display: inline-flex; height: var(--control-height-m); padding: 0 16px;
       border: 0; border-radius: var(--radius-pill); background: #171717;
-      color: white; font: 600 12px Inter, sans-serif; cursor: pointer;
+      color: white; font: 600 12px var(--font-sans); cursor: pointer;
     }
     .monk-skeleton {
       position: relative; display: grid; flex: 0 0 64px; height: 64px; overflow: hidden;
@@ -280,7 +286,7 @@
       border: 1px solid rgba(17,17,17,.08); border-radius: 12px;
       background: var(--surface-panel); color: var(--text-primary);
       box-shadow: 0 8px 24px rgba(17,17,17,.12);
-      font: 13px/1.4 Inter, sans-serif;
+      font: 13px/1.4 var(--font-sans);
     }
     .app-status::before {
       width: 18px; height: 18px; flex: 0 0 18px; content: "";
@@ -296,7 +302,7 @@
     .app-status-retry {
       display: inline-flex; height: var(--control-height-m); margin-left: auto;
       padding: 0 16px; border: 0; border-radius: var(--radius-pill);
-      background: #171717; color: #fff; font: 500 12px Inter, sans-serif; cursor: pointer;
+      background: #171717; color: #fff; font: 500 12px var(--font-sans); cursor: pointer;
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -330,7 +336,7 @@
       background: transparent; box-shadow: inset 0 0 0 1.5px var(--border-selected);
     }
     #monks-list .monk-card[aria-current="true"]:hover { background: transparent; }
-    .card-number { padding-top: 4px; color: var(--text-primary); font: 400 20px/24px 'Prata', Georgia, serif; text-align: center; }
+    .card-number { padding-top: 4px; color: var(--text-primary); font: 400 20px/24px var(--font-serif); text-align: center; }
     .card-icon-frame {
       position: relative; display: grid; width: 48px; height: 48px; overflow: hidden; place-items: center;
       border-radius: 50%; background: #e8e6e0; color: #8a8882;
@@ -343,10 +349,10 @@
     .card-icon-frame img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
     .card-copy { min-width: 0; text-align: center; }
     .card-copy h3 {
-      overflow: hidden; margin: 0; color: var(--text-primary); font: 400 16px/22px 'Prata', Georgia, serif;
+      overflow: hidden; margin: 0; color: var(--text-primary); font: 400 16px/22px var(--font-serif);
       text-overflow: ellipsis; white-space: nowrap;
     }
-    .card-copy p { overflow: hidden; margin: 0; color: var(--text-secondary); font: 14px/20px Inter, sans-serif; text-overflow: ellipsis; white-space: nowrap; }
+    .card-copy p { overflow: hidden; margin: 0; color: var(--text-secondary); font: 14px/20px var(--font-sans); text-overflow: ellipsis; white-space: nowrap; }
 
     .detail-overlay {
       position: fixed; top: 84px; bottom: 16px;
@@ -384,8 +390,8 @@
       background: transparent; color: #111; cursor: pointer; pointer-events: auto;
     }
     .modal-close:hover { color: #777; }
-    #modal-monk-index { display: block; margin-bottom: var(--space-6); color: var(--text-primary); font: 400 16px/20px 'Prata', Georgia, serif; }
-    #modal-monk-name { margin: 0 0 var(--space-6); color: var(--text-primary); font: 400 24px/28px 'Prata', Georgia, serif; }
+    #modal-monk-index { display: block; margin-bottom: var(--space-6); color: var(--text-primary); font: 400 16px/20px var(--font-serif); }
+    #modal-monk-name { margin: 0 0 var(--space-6); color: var(--text-primary); font: 400 24px/28px var(--font-serif); }
     .modal-icon-frame {
       position: relative; display: grid; width: 160px; height: 160px; margin: 0 auto var(--space-6);
       overflow: hidden; place-items: center; border: 0;
@@ -395,13 +401,17 @@
     .modal-icon-fallback { display: none; width: 42px; height: 42px; color: #777; }
     .modal-icon-frame.is-missing .modal-icon { display: none; }
     .modal-icon-frame.is-missing .modal-icon-fallback { display: block; }
-    #modal-monk-desc { margin: 0; color: var(--text-primary); font: 14px/22px Inter, sans-serif; text-align: left; }
+    #modal-monk-desc { margin: 0; color: var(--text-primary); font: 14px/22px var(--font-sans); text-align: left; }
     #modal-monk-desc section { text-align: left; }
     #modal-monk-desc section + section { margin-top: var(--space-6); }
     #modal-monk-desc h3 {
-      margin: 0 0 var(--space-2); color: var(--text-primary); font: 400 16px/20px 'Prata', Georgia, serif;
+      margin: 0 0 var(--space-2); color: var(--text-primary); font: 400 16px/20px var(--font-serif);
     }
     #modal-monk-desc p + p { margin-top: var(--space-3); }
+    #modal-monk-desc ul {
+      margin: var(--space-3) 0 0; padding-left: 18px; list-style: disc; text-align: left;
+    }
+    #modal-monk-desc li + li { margin-top: var(--space-2); }
     .monk-detail-modal.is-intro #modal-monk-index,
     .monk-detail-modal.is-intro .modal-icon-frame,
     .monk-detail-modal.is-intro .modal-footer { display: none; }
@@ -409,7 +419,7 @@
     .monk-popup-gmaps {
       display: inline-flex; height: var(--control-height-m); align-items: center; justify-content: center; gap: var(--space-3);
       padding: var(--space-2) var(--space-3) var(--space-2) var(--space-5); border-radius: var(--radius-pill);
-      background: var(--surface-soft); color: var(--text-primary); font: 600 14px Inter, sans-serif;
+      background: var(--surface-soft); color: var(--text-primary); font: 600 14px var(--font-sans);
       text-decoration: none;
     }
     .monk-popup-gmaps:hover { background: var(--surface-hover); }
@@ -421,7 +431,7 @@
     .maplibregl-popup-content {
       width: 296px; padding: 0 !important; overflow: visible; border-radius: 0;
       background: transparent !important; box-shadow: none !important;
-      font-family: Inter, sans-serif;
+      font-family: var(--font-sans);
     }
     .place-card-wrap { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); user-select: none; }
     .place-card {
@@ -435,8 +445,8 @@
       gap: var(--space-3); padding: var(--space-5) var(--space-4) var(--space-4);
     }
     .place-card-text { display: flex; width: 100%; flex-direction: column; align-items: center; gap: var(--space-1); }
-    .place-card-title { margin: 0; color: var(--text-primary); font: 400 16px/20px 'Prata', Georgia, serif; white-space: nowrap; }
-    .place-card-region { color: var(--text-secondary); font: 400 14px/20px Inter, sans-serif; white-space: nowrap; }
+    .place-card-title { margin: 0; color: var(--text-primary); font: 400 16px/20px var(--font-serif); white-space: nowrap; }
+    .place-card-region { color: var(--text-secondary); font: 400 14px/20px var(--font-sans); white-space: nowrap; }
     .place-card-close {
       display: inline-flex; width: var(--control-height-s); height: var(--control-height-s); align-items: center; justify-content: center;
       border-radius: var(--radius-pill); pointer-events: none;
@@ -489,7 +499,7 @@
       }
       .app-header .app-title {
         min-width: 0; max-width: none; flex: 1; overflow: hidden; text-overflow: ellipsis;
-        color: var(--text-primary); font: 400 40px/48px 'Prata', Georgia, serif; letter-spacing: 0;
+        color: var(--text-primary); font: 400 40px/48px var(--font-serif); letter-spacing: 0;
         text-shadow: none; white-space: nowrap;
       }
       .header-actions { align-items: center; gap: var(--space-6); }
@@ -614,7 +624,7 @@
       }
       .app-header .app-title {
         grid-area: title; max-width: none; color: var(--text-primary); text-shadow: none;
-        font: 400 24px/28px 'Prata', Georgia, serif; text-align: center; letter-spacing: 0;
+        font: 400 24px/28px var(--font-serif); text-align: center; letter-spacing: 0;
       }
       .header-actions { display: contents; }
       .header-actions .reset-btn {
@@ -668,14 +678,14 @@
         display: flex; flex: 0 0 64px; height: 64px; max-width: none;
         align-items: center; justify-content: center;
         padding: var(--space-2) var(--space-4); border-radius: 8px;
-        font: 400 16px/20px 'Prata', Georgia, serif;
+        font: 400 16px/20px var(--font-serif);
       }
-      .card-number { font: 400 24px/26px 'Prata', Georgia, serif; }
+      .card-number { font: 400 24px/26px var(--font-serif); }
       .mobile-list-close { display: none; }
       .mobile-reset-btn {
         display: none;
         align-self: flex-start; padding: 0; border: 0; background: transparent;
-        color: var(--text-secondary); font: 12px Inter, sans-serif; text-decoration: underline; cursor: pointer;
+        color: var(--text-secondary); font: 12px var(--font-sans); text-decoration: underline; cursor: pointer;
       }
       .search-wrap { flex-basis: var(--control-height-m); }
       #monks-list { padding-bottom: max(96px, calc(84px + env(safe-area-inset-bottom, 0px))); }
@@ -741,7 +751,7 @@
         position: absolute; top: var(--space-5); left: var(--space-5); z-index: 1;
         display: grid; width: var(--control-height-m); height: var(--control-height-m); place-items: center;
         border-radius: var(--radius-pill); background: var(--surface-soft); color: var(--text-primary);
-        font: 400 20px/24px 'Prata', Georgia, serif;
+        font: 400 20px/24px var(--font-serif);
       }
       .mobile-card-location {
         position: absolute; top: var(--space-5); right: var(--space-5); z-index: 1;
@@ -755,12 +765,12 @@
       }
       .mobile-card-name {
         max-width: 100%; overflow: hidden; margin: 0 0 var(--space-1); color: var(--text-primary);
-        font: 400 16px/20px 'Prata', Georgia, serif;
+        font: 400 16px/20px var(--font-serif);
         text-overflow: ellipsis; white-space: nowrap;
       }
       .mobile-card-monastery {
         max-width: 100%; overflow: hidden; margin: 0 0 var(--space-3); color: var(--text-secondary);
-        font: 400 14px/20px Inter, sans-serif; text-overflow: ellipsis; white-space: nowrap;
+        font: 400 14px/20px var(--font-sans); text-overflow: ellipsis; white-space: nowrap;
       }
       .mobile-card-actions {
         display: flex; width: 100%; gap: var(--space-3); justify-content: center;
@@ -769,7 +779,7 @@
       .mobile-card-read, .mobile-card-maps {
         display: flex; flex: 1; min-width: 0; height: var(--control-height-s);
         align-items: center; justify-content: center; padding: var(--space-2) var(--space-4);
-        border: 0; border-radius: var(--radius-pill); font: 600 14px Inter, sans-serif;
+        border: 0; border-radius: var(--radius-pill); font: 600 14px var(--font-sans);
         text-decoration: none; white-space: nowrap;
       }
       .mobile-card-read {
@@ -850,7 +860,7 @@
         display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; gap: var(--space-3);
         height: var(--control-height-m); padding: var(--space-2) var(--space-3) var(--space-2) var(--space-5);
         border: 0; border-radius: var(--radius-pill); pointer-events: auto;
-        font: 600 14px Inter, sans-serif; text-decoration: none;
+        font: 600 14px var(--font-sans); text-decoration: none;
       }
       .modal-gmaps { background: var(--surface-inverse); color: var(--text-inverse); }
       .monk-detail-modal .modal-close { display: inline-flex; }
@@ -948,7 +958,7 @@
     </aside>
   </main>
 
-  <script type="module" src="js/app.js?v=figma-sync-10"></script>
+  <script type="module" src="js/app.js?v=figma-sync-11"></script>
 
   <div id="detail-overlay" class="detail-overlay hidden">
     <button id="close-modal-btn" class="modal-close" type="button" aria-label="Close">
