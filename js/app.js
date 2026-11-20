@@ -1,7 +1,7 @@
 import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-10';
 import {
   initMap, flyToMonk, showPopup, closePopup, resetMapView, setActiveMarker, selectMobileCard, hasMobilePopup, showAllMonks
-} from './map.js?v=figma-sync-20';
+} from './map.js?v=figma-sync-26';
 import { i18n } from './i18n.js?v=figma-sync-10';
 
 const INTRO_TITLE = 'The origins of the spread of Christianity';
@@ -65,21 +65,26 @@ function openMonkModal(monk, index, direction = 0) {
   icon.onload = () => iconFrame?.classList.remove('is-missing');
   icon.onerror = () => iconFrame?.classList.add('is-missing');
   icon.src = monk.iconUrl || `./images/icons/${monk.id}.jpg`;
-  const gmapsLink = document.getElementById('modal-monk-gmaps');
-  gmapsLink.href = monk.gmapsUrl || '#';
-  gmapsLink.hidden = !monk.gmapsUrl;
+  ['modal-monk-gmaps', 'modal-monk-gmaps-desktop'].forEach((id) => {
+    const gmapsLink = document.getElementById(id);
+    if (!gmapsLink) return;
+    gmapsLink.href = monk.gmapsUrl || '#';
+    gmapsLink.hidden = !monk.gmapsUrl;
+  });
 
   const descContainer = document.getElementById('modal-monk-desc');
   if (Array.isArray(monk.detailSections)) {
     descContainer.replaceChildren(...monk.detailSections.map(({ heading, paragraphs }, sectionIdx) => {
       const section = document.createElement('section');
-      const title = document.createElement('h3');
-      const sectionKey = sectionIdx === 0 ? 'sections.saint' : sectionIdx === 1 ? 'sections.monastery' : '';
-      if (sectionKey) {
-        title.setAttribute('data-i18n', sectionKey);
+      if (sectionIdx > 0) {
+        const title = document.createElement('h3');
+        const sectionKey = sectionIdx === 1 ? 'sections.monastery' : '';
+        if (sectionKey) {
+          title.setAttribute('data-i18n', sectionKey);
+        }
+        title.textContent = sectionKey ? i18n.t(sectionKey, heading) : heading;
+        section.appendChild(title);
       }
-      title.textContent = sectionKey ? i18n.t(sectionKey, heading) : heading;
-      section.appendChild(title);
       paragraphs.forEach((text, pIdx) => {
         const paragraph = document.createElement('p');
         const pKey = `monks.${monk.id}.sections.${sectionIdx}.${pIdx}`;
@@ -544,9 +549,23 @@ document.addEventListener('DOMContentLoaded', async () => {
   }, { passive: true });
   document.addEventListener('keydown', (event) => {
     const modal = document.getElementById('monk-detail-modal');
-    if (event.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+    const isModalOpen = modal && !modal.classList.contains('hidden');
+    if (event.key === 'Escape' && (isModalOpen || activeMonkId)) {
       event.preventDefault();
-      closeDetailModal();
+      activeMonkId = null;
+      setActiveMarker(null);
+      closeMonkModal();
+      return;
+    }
+    if (!isModalOpen || modal.classList.contains('is-intro')) return;
+    const tag = event.target?.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || event.target?.isContentEditable) return;
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      selectAdjacentMonk(-1);
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      selectAdjacentMonk(1);
     }
   });
 });

@@ -66,6 +66,7 @@
       --control-height-l: 48px;
       --motion-standard: cubic-bezier(.22, 1, .36, 1);
       --ease-ui: cubic-bezier(.4, 0, .2, 1);
+      --shadow-button: 0 4px 8px rgba(17,17,17,.16);
       --font-serif: 'Prata', Georgia, serif;
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
@@ -164,6 +165,7 @@
       display: inline-flex; height: var(--control-height-m); min-width: 0;
       padding: var(--space-2) var(--space-6); border: 0; border-radius: var(--radius-pill);
       background: var(--surface-inverse); color: var(--text-inverse); font: 600 14px var(--font-sans); cursor: pointer;
+      box-shadow: var(--shadow-button);
     }
     .reset-btn:hover { background: var(--action-primary-hover); }
     .language-switch {
@@ -175,7 +177,7 @@
       display: flex; width: var(--control-height-m); height: var(--control-height-m);
       align-items: center; justify-content: center; padding: var(--space-2);
       border: 0; border-radius: var(--radius-pill); background: var(--surface-base);
-      color: var(--text-primary); cursor: pointer;
+      color: var(--text-primary); cursor: pointer; box-shadow: var(--shadow-button);
     }
     .language-toggle:hover { background: var(--surface-soft); }
     .language-switch.is-open .language-toggle,
@@ -191,7 +193,7 @@
       position: absolute; top: calc(100% + var(--space-1)); left: 50%;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       padding: var(--space-1); border-radius: var(--space-6);
-      background: var(--surface-base);
+      background: var(--surface-base); box-shadow: var(--shadow-button);
       opacity: 1; visibility: visible; pointer-events: auto;
       transform: translateX(-50%) translateY(0) scale(1);
       transform-origin: top center;
@@ -455,8 +457,8 @@
     .modal-icon-fallback { display: none; width: 42px; height: 42px; color: #777; }
     .modal-icon-frame.is-missing .modal-icon { display: none; }
     .modal-icon-frame.is-missing .modal-icon-fallback { display: block; }
-    #modal-monk-desc { margin: 0; color: var(--text-primary); font: 14px/22px var(--font-sans); text-align: left; }
-    #modal-monk-desc section { text-align: left; }
+    #modal-monk-desc { margin: 0; color: var(--text-primary); font: 14px/22px var(--font-sans); text-align: center; }
+    #modal-monk-desc section { text-align: center; }
     #modal-monk-desc section + section { margin-top: var(--space-6); }
     #modal-monk-desc h3 {
       margin: 0 0 var(--space-2); color: var(--text-primary); font: 600 16px/20px var(--font-serif);
@@ -466,9 +468,11 @@
       margin: var(--space-3) 0 0; padding-left: 18px; list-style: disc; text-align: left;
     }
     #modal-monk-desc li + li { margin-top: var(--space-2); }
+    .desktop-modal-gmaps-wrap { display: none; }
     .monk-detail-modal.is-intro #modal-monk-index,
     .monk-detail-modal.is-intro .modal-icon-frame,
     .monk-detail-modal.is-intro .modal-footer,
+    .monk-detail-modal.is-intro .desktop-modal-gmaps-wrap,
     .monk-detail-modal.is-intro .desktop-detail-nav { display: none; }
     #detail-overlay:has(.monk-detail-modal.is-intro) .modal-side-preview { display: none; }
     #modal-monk-desc strong { color: var(--text-primary); }
@@ -588,6 +592,18 @@
       }
       .modal-transition-outgoing { display: none !important; }
       .modal-content { padding: var(--space-6) 18px 96px var(--space-6); }
+      .desktop-modal-gmaps-wrap {
+        display: flex; justify-content: center; margin-top: var(--space-6);
+      }
+      .desktop-modal-gmaps-wrap .modal-gmaps {
+        display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; gap: var(--space-3);
+        height: var(--control-height-m); padding: var(--space-2) var(--space-3) var(--space-2) var(--space-5);
+        border: 0; border-radius: var(--radius-pill);
+        background: var(--surface-inverse); color: var(--text-inverse);
+        font: 600 14px var(--font-sans); text-decoration: none;
+        box-shadow: var(--shadow-button);
+      }
+      .desktop-modal-gmaps-wrap .modal-gmaps:hover { background: var(--action-primary-hover); }
       .desktop-detail-nav {
         position: absolute; right: 0; bottom: 0; left: 0; z-index: 2;
         display: flex; justify-content: center; gap: var(--space-3); padding: var(--space-3) 0; pointer-events: none;
@@ -597,7 +613,7 @@
         display: inline-flex; width: var(--control-height-m); height: var(--control-height-m);
         border: 0; border-radius: var(--radius-pill); background: var(--surface-soft); color: var(--text-primary);
         align-items: center; justify-content: center; padding: var(--space-2);
-        cursor: pointer; pointer-events: auto;
+        cursor: pointer; pointer-events: auto; box-shadow: var(--shadow-button);
       }
       .desktop-detail-nav button:hover { background: var(--surface-hover); color: var(--text-primary); }
       #modal-monk-desc { text-align: center; }
@@ -1023,7 +1039,7 @@
     </aside>
   </main>
 
-  <script type="module" src="js/app.js?v=figma-sync-20"></script>
+  <script type="module" src="js/app.js?v=figma-sync-26"></script>
 
   <div id="detail-overlay" class="detail-overlay hidden">
     <button id="close-modal-btn" class="modal-close" type="button" aria-label="Close">
@@ -1041,6 +1057,12 @@
           <i class="icon icon-cross modal-icon-fallback" aria-hidden="true"></i>
         </div>
         <div id="modal-monk-desc"></div>
+        <div class="desktop-modal-gmaps-wrap">
+          <a id="modal-monk-gmaps-desktop" class="modal-gmaps" href="#" target="_blank" rel="noopener noreferrer">
+            <span data-i18n="card.openMaps">Open in Google Maps</span>
+            <i class="icon icon-map-pin" aria-hidden="true"></i>
+          </a>
+        </div>
         </div>
       </div>
       <div class="desktop-detail-nav" aria-label="Browse monks">

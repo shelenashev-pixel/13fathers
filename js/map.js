@@ -111,7 +111,7 @@ export function showAllMonks({ duration = 900 } = {}) {
     const startFit = () => {
       mapInstance.once('moveend', resolve);
       mapInstance.fitBounds(bounds, {
-        padding, maxZoom: 7.3, essential: !reducedMotion, duration: reducedMotion ? 0 : duration
+        padding, maxZoom: 7.7, essential: !reducedMotion, duration: reducedMotion ? 0 : duration
       });
       if (!mapInstance.isMoving()) {
         mapInstance.off('moveend', resolve);
@@ -191,7 +191,7 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
     popupContent.innerHTML = monks.map((item, itemIndex) => `
       <article class="mobile-monk-card" data-monk-index="${itemIndex}" aria-current="${item.id === monk.id}">
         <div class="mobile-card-image">
-          <img src="${item.imageUrl || `./images/monasteries/${item.id}.jpg`}" alt="${i18n.t(`monks.${item.id}.monastery`, item.monastery)}" width="296" height="132" loading="${Math.abs(itemIndex - activeIndex) <= 1 ? 'eager' : 'lazy'}" decoding="async" />
+          <img src="${item.imageUrl || `./images/monasteries/${item.id}.webp`}" alt="${i18n.t(`monks.${item.id}.monastery`, item.monastery)}" width="296" height="132" style="object-position: ${item.imagePosition || '50% 35%'}" loading="${Math.abs(itemIndex - activeIndex) <= 1 ? 'eager' : 'lazy'}" decoding="async" />
           <span class="mobile-card-number">${itemIndex + 1}</span>
           ${item.gmapsUrl ? `
             <a class="mobile-card-location" href="${item.gmapsUrl}" target="_blank" rel="noopener noreferrer" aria-label="Open ${item.monastery} in Google Maps">
@@ -221,7 +221,7 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
       }
     });
   } else {
-    const imgSrc = monk.imageUrl || `./images/monasteries/${monk.id}.jpg`;
+    const imgSrc = monk.imageUrl || `./images/monasteries/${monk.id}.webp`;
     const isCached = loadedImages.has(imgSrc);
     popupContent.style.touchAction = 'pan-y';
     popupContent.innerHTML = `
@@ -233,6 +233,7 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
             alt="${i18n.t(`monks.${monk.id}.monastery`, monk.monastery)}"
             width="296"
             height="132"
+            style="object-position: ${monk.imagePosition || '50% 35%'}"
             decoding="sync"
             onerror="this.style.display='none'"
           />
