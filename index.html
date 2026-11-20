@@ -18,7 +18,7 @@
   <!-- Google Fonts: Prata & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Georgian:wght@400;500;600&family=Noto+Serif+Georgian:wght@400;500&family=Prata&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Georgian:wght@400;500;600&family=Noto+Serif+Georgian:wght@400;500;600&family=Prata&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
@@ -111,6 +111,8 @@
     .icon-arrow-right { --icon: url('./images/ui-icons/arrow-right.svg'); }
     .icon-cross { --icon: url('./images/ui-icons/cross.svg'); }
     .icon-map-pin { --icon: url('./images/ui-icons/map-pin.svg'); }
+    .icon-chevron-right { width: 16px; height: 16px; --icon: url('./images/ui-icons/chevron-right.svg'); }
+    .icon-close-small { width: 16px; height: 16px; --icon: url('./images/ui-icons/close-small.svg'); }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: transparent; border-radius: 9999px; }
@@ -143,13 +145,13 @@
       );
     }
     .app-header {
-      position: fixed; z-index: 20; inset: 0 0 auto; min-height: 72px;
+      position: fixed; z-index: 15; inset: 0 0 auto; min-height: 72px;
       display: flex; align-items: flex-start; justify-content: space-between;
       padding: 12px 16px; pointer-events: none;
     }
     .app-header::before {
-      position: absolute; z-index: -1; inset: 0 0 -24px; content: ""; pointer-events: none;
-      background: linear-gradient(to bottom, rgba(235,230,218,.96) 0%, rgba(235,230,218,.8) 55%, rgba(235,230,218,0) 100%);
+      position: absolute; z-index: -1; inset: 0 0 -16px; content: ""; pointer-events: none;
+      background: linear-gradient(to bottom, rgba(224,213,193,.94) 0%, rgba(224,213,193,.56) 60%, rgba(224,213,193,0) 100%);
       transition: opacity .3s var(--ease-ui);
     }
     .app-title {
@@ -190,7 +192,22 @@
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       padding: var(--space-1); border-radius: var(--space-6);
       background: var(--surface-base);
-      transform: translateX(-50%);
+      opacity: 1; visibility: visible; pointer-events: auto;
+      transform: translateX(-50%) translateY(0) scale(1);
+      transform-origin: top center;
+      transition:
+        opacity .22s var(--motion-standard),
+        transform .22s var(--motion-standard),
+        visibility 0s linear 0s;
+    }
+    .language-menu[hidden] {
+      display: flex !important;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transform: translateX(-50%) translateY(-6px) scale(.94);
+      transition:
+        opacity .18s var(--ease-ui),
+        transform .18s var(--ease-ui),
+        visibility 0s linear .18s;
     }
     .language-option {
       display: flex; width: var(--control-height-m); height: var(--control-height-m);
@@ -213,10 +230,33 @@
       background: #f7f5ef; box-shadow: 0 10px 28px rgba(36,31,24,.08);
     }
     .panel-intro {
-      flex: 0 0 auto; display: block; width: 100%; max-width: 280px; margin: 0 auto; padding: 0;
+      flex: 0 0 auto; display: flex; align-items: center; justify-content: center; gap: 0;
+      width: 100%; margin: 0; padding: var(--space-1) var(--space-2);
       border: 0; border-radius: 0; background: transparent; color: var(--text-primary); cursor: pointer;
-      font: 400 24px/26px var(--font-serif); letter-spacing: 0; text-align: center;
+      font: 600 16px/20px var(--font-serif); letter-spacing: 0; text-align: center;
       text-wrap: balance; white-space: normal;
+    }
+    .panel-intro .icon {
+      overflow: hidden;
+      transition:
+        width .26s var(--motion-standard),
+        margin .26s var(--motion-standard),
+        opacity .22s var(--ease-ui),
+        transform .26s var(--motion-standard);
+    }
+    .panel-intro .icon-close-small {
+      width: 0; margin-right: 0; opacity: 0; transform: scale(.7);
+    }
+    .panel-intro .icon-chevron-right {
+      width: 16px; margin-left: 6px; opacity: 1; transform: translateX(0) scale(1);
+    }
+    .panel-intro.is-active .icon-chevron-right,
+    .panel-intro[aria-current="true"] .icon-chevron-right {
+      width: 0; margin-left: 0; opacity: 0; transform: translateX(4px) scale(.7);
+    }
+    .panel-intro.is-active .icon-close-small,
+    .panel-intro[aria-current="true"] .icon-close-small {
+      width: 16px; margin-right: 6px; opacity: 1; transform: scale(1);
     }
     .panel-intro:hover, .panel-intro.is-active { color: var(--text-secondary); }
     .panel-intro:focus-visible { outline-offset: 4px; }
@@ -251,7 +291,7 @@
       display: flex; align-items: center; justify-content: center; min-height: 180px; padding: 20px 16px;
     }
     .empty-state-card {
-      width: 100%; padding: 20px 18px; border: 1px solid #e6e0d7; border-radius: 12px; background: rgba(255,255,255,.72); text-align: center;
+      width: 100%; padding: 20px 18px; border: 0; background: transparent; text-align: center;
     }
     .empty-state-card h3 { margin: 0 0 8px; color: #171717; font: 400 24px/1.2 var(--font-serif); }
     .empty-state-card p { margin: 0 0 14px; color: #666; font: 13px/1.5 var(--font-sans); }
@@ -349,7 +389,7 @@
     .card-icon-frame img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
     .card-copy { min-width: 0; text-align: center; }
     .card-copy h3 {
-      overflow: hidden; margin: 0; color: var(--text-primary); font: 400 16px/22px var(--font-serif);
+      overflow: hidden; margin: -2px 0; padding: 2px 0; color: var(--text-primary); font: 600 16px/22px var(--font-serif);
       text-overflow: ellipsis; white-space: nowrap;
     }
     .card-copy p { overflow: hidden; margin: 0; color: var(--text-secondary); font: 14px/20px var(--font-sans); text-overflow: ellipsis; white-space: nowrap; }
@@ -359,13 +399,27 @@
       left: calc(32px + min(434px, calc(100vw - 32px)));
       width: min(434px, calc(100vw - min(434px, calc(100vw - 32px)) - 48px));
       pointer-events: none;
+      opacity: 1; visibility: visible;
+      transition: opacity .26s var(--motion-standard), visibility 0s linear 0s;
+    }
+    .detail-overlay.hidden {
+      display: block !important;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity .22s var(--ease-ui), visibility 0s linear .22s;
     }
     .monk-detail-modal {
       position: absolute; z-index: 30; inset: 0;
       display: flex; width: 100%; max-height: none; pointer-events: auto;
       flex-direction: column; overflow: hidden;
       border: 0; border-radius: var(--radius-s); background: var(--surface-base);
-      transition: opacity .2s, transform .2s;
+      opacity: 1; visibility: visible; transform: translateY(0) scale(1);
+      transition: opacity .28s var(--motion-standard), transform .28s var(--motion-standard), visibility 0s linear 0s;
+    }
+    .monk-detail-modal.hidden {
+      display: flex !important;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transform: translateY(10px) scale(.985);
+      transition: opacity .22s var(--ease-ui), transform .22s var(--ease-ui), visibility 0s linear .22s;
     }
     .modal-content { flex: 1; overflow-y: auto; margin-right: 6px; padding: var(--space-6) 10px 96px var(--space-4); text-align: center; }
     @keyframes detail-card-enter-next {
@@ -390,7 +444,7 @@
       background: transparent; color: #111; cursor: pointer; pointer-events: auto;
     }
     .modal-close:hover { color: #777; }
-    #modal-monk-index { display: block; margin-bottom: var(--space-6); color: var(--text-primary); font: 400 16px/20px var(--font-serif); }
+    #modal-monk-index { display: block; margin-bottom: var(--space-6); color: var(--text-primary); font: 600 16px/20px var(--font-serif); }
     #modal-monk-name { margin: 0 0 var(--space-6); color: var(--text-primary); font: 400 24px/28px var(--font-serif); }
     .modal-icon-frame {
       position: relative; display: grid; width: 160px; height: 160px; margin: 0 auto var(--space-6);
@@ -405,7 +459,7 @@
     #modal-monk-desc section { text-align: left; }
     #modal-monk-desc section + section { margin-top: var(--space-6); }
     #modal-monk-desc h3 {
-      margin: 0 0 var(--space-2); color: var(--text-primary); font: 400 16px/20px var(--font-serif);
+      margin: 0 0 var(--space-2); color: var(--text-primary); font: 600 16px/20px var(--font-serif);
     }
     #modal-monk-desc p + p { margin-top: var(--space-3); }
     #modal-monk-desc ul {
@@ -414,7 +468,9 @@
     #modal-monk-desc li + li { margin-top: var(--space-2); }
     .monk-detail-modal.is-intro #modal-monk-index,
     .monk-detail-modal.is-intro .modal-icon-frame,
-    .monk-detail-modal.is-intro .modal-footer { display: none; }
+    .monk-detail-modal.is-intro .modal-footer,
+    .monk-detail-modal.is-intro .desktop-detail-nav { display: none; }
+    #detail-overlay:has(.monk-detail-modal.is-intro) .modal-side-preview { display: none; }
     #modal-monk-desc strong { color: var(--text-primary); }
     .monk-popup-gmaps {
       display: inline-flex; height: var(--control-height-m); align-items: center; justify-content: center; gap: var(--space-3);
@@ -445,7 +501,7 @@
       gap: var(--space-3); padding: var(--space-5) var(--space-4) var(--space-4);
     }
     .place-card-text { display: flex; width: 100%; flex-direction: column; align-items: center; gap: var(--space-1); }
-    .place-card-title { margin: 0; color: var(--text-primary); font: 400 16px/20px var(--font-serif); white-space: nowrap; }
+    .place-card-title { margin: 0; color: var(--text-primary); font: 600 16px/20px var(--font-serif); white-space: nowrap; }
     .place-card-region { color: var(--text-secondary); font: 400 14px/20px var(--font-sans); white-space: nowrap; }
     .place-card-close {
       display: inline-flex; width: var(--control-height-s); height: var(--control-height-s); align-items: center; justify-content: center;
@@ -457,36 +513,12 @@
       text-shadow: 0 1px 4px rgba(0,0,0,.8);
     }
     .maplibregl-popup-tip { display: none; }
-
-    /* Map controls: Button design-system pills on one shared vertical axis. */
     .maplibregl-ctrl-bottom-right {
-      right: var(--space-4); bottom: var(--space-4);
-      display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      right: 10px; bottom: 10px;
     }
     .maplibregl-ctrl-bottom-right .maplibregl-ctrl { float: none; clear: none; margin: 0; }
-    .maplibregl-ctrl-group, .maplibregl-ctrl-group:not(:empty) {
-      display: flex; flex-direction: column; gap: var(--space-2); border-radius: 0; background: transparent; box-shadow: none;
-    }
-    .maplibregl-ctrl-group button {
-      width: var(--control-height-m); height: var(--control-height-m); border: 0; border-radius: var(--radius-pill);
-      background-color: var(--surface-soft);
-    }
-    .maplibregl-ctrl-group button + button { border-top: 0; }
-    .maplibregl-ctrl-group button:not(:disabled):hover { background-color: var(--surface-hover); }
-    .maplibregl-ctrl-group button .maplibregl-ctrl-icon { background-position: center; background-size: 24px; }
-    .maplibregl-ctrl-attrib.maplibregl-compact, .maplibregl-ctrl-attrib.maplibregl-compact-show {
-      position: relative; box-sizing: border-box; width: var(--control-height-m); height: var(--control-height-m);
-      min-height: var(--control-height-m); margin: 0; padding: 0; border-radius: var(--radius-pill); background: var(--surface-soft);
-    }
-    .maplibregl-ctrl-attrib-button {
-      top: 0; right: 0; width: var(--control-height-m); height: var(--control-height-m);
-      border-radius: var(--radius-pill); background-position: center; background-size: 24px;
-    }
-    .maplibregl-ctrl-attrib.maplibregl-compact .maplibregl-ctrl-attrib-inner { display: none; }
-    .maplibregl-ctrl-attrib.maplibregl-compact-show .maplibregl-ctrl-attrib-inner {
-      position: absolute; top: 50%; right: 48px; display: block; padding: var(--space-1) var(--space-3);
-      border-radius: var(--radius-pill); background: var(--surface-soft); white-space: nowrap; transform: translateY(-50%);
-    }
+    .maplibregl-ctrl-bottom-right .maplibregl-ctrl-attrib.maplibregl-compact-show { align-self: flex-end; }
 
     @media (min-width: 761px) {
       .maplibregl-popup-close-button { display: none; }
@@ -495,33 +527,35 @@
         align-items: center; gap: var(--space-3); min-height: 88px; padding: 20px var(--space-6);
       }
       .app-header::before {
-        background: linear-gradient(to bottom, rgba(224,213,193,.98) 0%, rgba(235,230,218,.9) 50%, rgba(235,230,218,0) 100%);
+        inset: 0 0 -16px;
+        background: linear-gradient(to bottom, rgba(224,213,193,.94) 0%, rgba(224,213,193,.56) 60%, rgba(224,213,193,0) 100%);
       }
       .app-header .app-title {
         min-width: 0; max-width: none; flex: 1; overflow: hidden; text-overflow: ellipsis;
+        padding: 6px 0; margin: -6px 0;
         color: var(--text-primary); font: 400 40px/48px var(--font-serif); letter-spacing: 0;
         text-shadow: none; white-space: nowrap;
       }
       .header-actions { align-items: center; gap: var(--space-6); }
+      .header-actions .reset-btn { order: 1; }
       .header-actions .language-switch {
-        order: 1; width: var(--control-height-m); height: var(--control-height-m);
+        order: 2; width: var(--control-height-m); height: var(--control-height-m);
       }
-      .header-actions .reset-btn { order: 2; }
       .monks-panel {
-        top: 88px; bottom: 0; left: 16px; width: min(340px, calc(100vw - 32px));
+        z-index: 20; top: 88px; bottom: 16px; left: 16px; width: min(340px, calc(100vw - 32px));
         gap: var(--space-4); padding: var(--space-5) var(--space-4) 0; overflow: hidden;
-        border: 2px solid var(--surface-soft); border-bottom: 0; border-radius: var(--radius-s) var(--radius-s) 0 0; background: var(--surface-soft);
+        border: 2px solid var(--surface-soft); border-radius: var(--radius-s); background: var(--surface-soft);
         box-shadow: none;
       }
       #monks-list { padding-bottom: var(--space-4); }
       .detail-overlay {
-        top: 88px; bottom: 0;
+        z-index: 25; top: 88px; bottom: 16px;
         left: calc(32px + min(340px, calc(100vw - 32px)));
         width: min(400px, calc(100vw - min(340px, calc(100vw - 32px)) - 48px));
       }
       .monk-detail-modal {
         width: 100%;
-        border-radius: var(--radius-s) var(--radius-s) 0 0; background: var(--surface-base);
+        border-radius: var(--radius-s); background: var(--surface-base);
       }
       .modal-transition-outgoing { display: none !important; }
       .modal-content { padding: var(--space-6) 18px 96px var(--space-6); }
@@ -532,11 +566,11 @@
       }
       .desktop-detail-nav button {
         display: inline-flex; width: var(--control-height-m); height: var(--control-height-m);
-        border: 0; border-radius: 0; background: transparent; color: var(--text-primary);
+        border: 0; border-radius: var(--radius-pill); background: var(--surface-soft); color: var(--text-primary);
         align-items: center; justify-content: center; padding: var(--space-2);
         cursor: pointer; pointer-events: auto;
       }
-      .desktop-detail-nav button:hover { background: transparent; color: var(--text-secondary); }
+      .desktop-detail-nav button:hover { background: var(--surface-hover); color: var(--text-primary); }
       #modal-monk-desc { text-align: center; }
       .monks-panel, .detail-overlay {
         transition: opacity .24s ease, transform .24s ease, visibility 0s;
@@ -678,7 +712,7 @@
         display: flex; flex: 0 0 64px; height: 64px; max-width: none;
         align-items: center; justify-content: center;
         padding: var(--space-2) var(--space-4); border-radius: 8px;
-        font: 400 16px/20px var(--font-serif);
+        font: 600 16px/20px var(--font-serif);
       }
       .card-number { font: 400 24px/26px var(--font-serif); }
       .mobile-list-close { display: none; }
@@ -764,8 +798,8 @@
         align-items: center; padding: var(--space-5) var(--space-4) var(--space-3); text-align: center;
       }
       .mobile-card-name {
-        max-width: 100%; overflow: hidden; margin: 0 0 var(--space-1); color: var(--text-primary);
-        font: 400 16px/20px var(--font-serif);
+        max-width: 100%; overflow: hidden; margin: -2px 0 calc(var(--space-1) - 2px); padding: 2px 0; color: var(--text-primary);
+        font: 600 16px/20px var(--font-serif);
         text-overflow: ellipsis; white-space: nowrap;
       }
       .mobile-card-monastery {
@@ -935,13 +969,17 @@
       <button id="mobile-list-close" class="mobile-list-close" type="button" aria-label="Close monastery list" data-i18n-aria-label="header.closeList">
         <i class="icon icon-close" aria-hidden="true"></i>
       </button>
-      <button id="card-intro" class="panel-intro" type="button" data-i18n="intro.title">The origins of the spread of Christianity</button>
+      <button id="card-intro" class="panel-intro" type="button">
+        <i class="icon icon-close-small" aria-hidden="true"></i>
+        <span data-i18n="intro.label">Context</span>
+        <i class="icon icon-chevron-right" aria-hidden="true"></i>
+      </button>
       <button id="mobile-reset-btn" class="mobile-reset-btn" type="button" data-i18n="header.resetMap">Reset map</button>
       <label class="search-wrap">
         <i class="icon icon-search search-icon" aria-hidden="true"></i>
         <input id="search-input" type="search" placeholder="Search" data-i18n-placeholder="search.placeholder" data-i18n-aria-label="search.ariaLabel" aria-label="Search by monk, monastery, or region">
         <button id="search-clear" class="search-clear" type="button" aria-label="Clear search" data-i18n-aria-label="search.clear">
-          <i class="icon icon-close" aria-hidden="true"></i>
+          <i class="icon icon-close-small" aria-hidden="true"></i>
         </button>
       </label>
       <span id="counter" aria-live="polite">0 monasteries</span>
@@ -958,7 +996,7 @@
     </aside>
   </main>
 
-  <script type="module" src="js/app.js?v=figma-sync-11"></script>
+  <script type="module" src="js/app.js?v=figma-sync-14"></script>
 
   <div id="detail-overlay" class="detail-overlay hidden">
     <button id="close-modal-btn" class="modal-close" type="button" aria-label="Close">

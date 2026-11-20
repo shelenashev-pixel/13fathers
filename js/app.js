@@ -172,6 +172,12 @@ function openIntroModal() {
 }
 
 function handleSelectIntro() {
+  const modal = document.getElementById('monk-detail-modal');
+  if (modal && !modal.classList.contains('hidden') && modal.classList.contains('is-intro')) {
+    closeDetailModal();
+    highlightActiveCard(null);
+    return;
+  }
   selectionRevision += 1;
   const isMobile = window.matchMedia('(max-width: 760px)').matches;
   if (!isMobile) {
@@ -207,7 +213,13 @@ export function closeMonkModal() {
 function closeDetailModal({ syncMap = true } = {}) {
   const modal = document.getElementById('monk-detail-modal');
   const wasOpen = modal && !modal.classList.contains('hidden');
-  if (modal) modal.classList.add('hidden');
+  const wasIntro = modal?.classList.contains('is-intro');
+  if (modal) {
+    modal.classList.add('hidden');
+  }
+  if (wasIntro) {
+    highlightActiveCard(null);
+  }
   document.getElementById('detail-overlay')?.classList.add('hidden');
   document.body.classList.remove('monk-modal-open');
   if (syncMap && wasOpen && window.matchMedia('(max-width: 760px)').matches && activeMonkId) {
@@ -489,11 +501,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   const selectAdjacentMonk = (offset) => {
     const isIntro = document.getElementById('monk-detail-modal')?.classList.contains('is-intro');
-    const currentIndex = isIntro ? -1 : allMonksData.findIndex((monk) => monk.id === activeMonkId);
-    if ((currentIndex < 0 && !isIntro) || !allMonksData.length) return;
-    const nextIndex = isIntro
-      ? (offset > 0 ? 0 : allMonksData.length - 1)
-      : (currentIndex + offset + allMonksData.length) % allMonksData.length;
+    if (isIntro) return;
+    const currentIndex = allMonksData.findIndex((monk) => monk.id === activeMonkId);
+    if (currentIndex < 0 || !allMonksData.length) return;
+    const nextIndex = (currentIndex + offset + allMonksData.length) % allMonksData.length;
     const modal = document.getElementById('monk-detail-modal');
     const keepModalOpen = window.matchMedia('(max-width: 760px)').matches
       && modal
