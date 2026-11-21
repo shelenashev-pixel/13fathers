@@ -371,15 +371,18 @@
     .monk-card {
       display: grid; flex: 0 0 64px; grid-template-columns: 24px 48px minmax(0,1fr);
       align-items: center; gap: var(--space-3); width: 100%; height: 64px; padding: var(--space-2) var(--space-4);
-      border: 0; border-radius: 8px; background: transparent; color: var(--text-primary); cursor: pointer;
-      cursor: pointer;
+      border: 0; border-radius: 8px;
+      background-color: rgba(235, 230, 218, 0);
+      box-shadow: inset 0 0 0 1.5px rgba(77, 77, 77, 0);
+      color: var(--text-primary); cursor: pointer;
+      transition: background-color .28s var(--motion-standard), box-shadow .28s var(--motion-standard), color .28s var(--motion-standard);
     }
-    .monk-card:hover { background: var(--surface-hover); }
-    #monks-list:has(.monk-card[aria-current="true"]) .monk-card:hover { background: var(--surface-hover); }
+    .monk-card:hover { background-color: var(--surface-hover); }
+    #monks-list:has(.monk-card[aria-current="true"]) .monk-card:hover { background-color: var(--surface-hover); }
     #monks-list .monk-card[aria-current="true"] {
-      background: transparent; box-shadow: inset 0 0 0 1.5px var(--border-selected);
+      background-color: rgba(235, 230, 218, 0); box-shadow: inset 0 0 0 1.5px var(--border-selected);
     }
-    #monks-list .monk-card[aria-current="true"]:hover { background: transparent; }
+    #monks-list .monk-card[aria-current="true"]:hover { background-color: rgba(235, 230, 218, 0); }
     .card-number { padding-top: 4px; color: var(--text-primary); font: 400 20px/24px var(--font-serif); text-align: center; }
     .card-icon-frame {
       position: relative; display: grid; width: 48px; height: 48px; overflow: hidden; place-items: center;
@@ -507,6 +510,7 @@
     .place-card {
       display: flex; width: 100%; height: 264px; flex-direction: column; overflow: hidden;
       border-radius: var(--radius-m); background: var(--surface-base);
+      box-shadow: 0 8px 24px rgba(17,17,17,.14);
     }
     .place-card-image { flex: 0 0 132px; height: 132px; overflow: hidden; background: #e8e6e0; }
     .place-card-image img {
@@ -562,14 +566,14 @@
       .monks-panel {
         z-index: 20; top: 88px; bottom: 16px; left: 16px; width: min(340px, calc(100vw - 32px));
         gap: var(--space-4); padding: var(--space-5) var(--space-4) 0; overflow: hidden;
-        border: 2px solid var(--surface-soft); border-radius: var(--radius-s); background: var(--surface-soft);
+        border: 0; border-radius: var(--radius-s); background: var(--surface-soft);
         box-shadow: none;
       }
       #monks-list { padding-bottom: var(--space-4); }
       .detail-overlay {
         z-index: 18; top: 88px; bottom: 16px;
         left: calc(32px + min(340px, calc(100vw - 32px)));
-        width: min(400px, calc(100vw - min(340px, calc(100vw - 32px)) - 48px));
+        width: min(424px, calc(100vw - min(340px, calc(100vw - 32px)) - 48px));
         opacity: 1; visibility: visible; transform: translateX(0);
         transition:
           opacity .36s var(--motion-standard),
@@ -800,7 +804,7 @@
       }
       .mobile-monk-carousel {
         display: flex; width: 100%; gap: var(--space-4); overflow-x: auto; overflow-y: visible;
-        padding: 0 var(--space-8);
+        padding: 4px var(--space-8) 12px;
         scroll-snap-type: x mandatory; scrollbar-width: none;
         -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; touch-action: pan-x;
         pointer-events: auto;
@@ -813,6 +817,7 @@
         position: relative; display: flex; flex: 0 0 calc(100vw - 64px);
         height: 240px; min-height: 240px; flex-direction: column;
         overflow: hidden; border-radius: var(--radius-m); background: var(--surface-base);
+        box-shadow: 0 6px 18px rgba(17,17,17,.14);
         scroll-snap-align: center; scroll-snap-stop: always;
       }
       .mobile-card-image { position: relative; flex: 1; min-height: 0; overflow: hidden; background: #e8e6e0; }
