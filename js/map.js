@@ -132,10 +132,23 @@ export function flyToMonk(monk, { duration } = {}) {
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const { top, left } = getFreeMapInsets();
+  let offset = [left / 2, top / 2 + 138];
+  if (window.innerWidth <= 760) {
+    if (document.body.classList.contains('map-only-view')) {
+      offset = [0, 0];
+    } else {
+      const resetRect = document.getElementById('reset-btn')?.getBoundingClientRect();
+      const cardRect = document.querySelector('.mobile-monk-card')?.getBoundingClientRect();
+      const topEdge = resetRect && resetRect.height > 0 ? resetRect.bottom : 140;
+      const bottomEdge = cardRect && cardRect.height > 0 ? cardRect.top : window.innerHeight - 248;
+      const mapCenterY = mapInstance.getContainer().getBoundingClientRect().height / 2;
+      offset = [0, Math.round((topEdge + bottomEdge) / 2 - mapCenterY)];
+    }
+  }
   // Centre the pin + place card group (card above the pin) in the free map area.
   const cameraOptions = {
     center: monk.coordinates,
-    offset: window.innerWidth > 760 ? [left / 2, top / 2 + 138] : [0, 0],
+    offset,
     zoom: 11,
     essential: !prefersReducedMotion,
     duration: prefersReducedMotion ? 0 : duration ?? 850
