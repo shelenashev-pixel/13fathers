@@ -121,6 +121,14 @@
     ::-webkit-scrollbar-thumb { background: transparent; border-radius: 9999px; }
     #monks-list:hover::-webkit-scrollbar-thumb,
     .modal-content:hover::-webkit-scrollbar-thumb { background: #c9c6bd; }
+    .monks-panel::-webkit-scrollbar { width: 16px; }
+    .monks-panel::-webkit-scrollbar-track,
+    .modal-content::-webkit-scrollbar-track { margin: 8px 0; }
+    .monks-panel::-webkit-scrollbar-thumb {
+      border: 5px solid transparent; border-radius: 9999px;
+      background-color: transparent; background-clip: content-box;
+    }
+    .monks-panel:hover::-webkit-scrollbar-thumb { background-color: #c9c6bd; }
 
     #map {
       position: absolute !important;
@@ -383,7 +391,7 @@
       background-color: rgba(235, 230, 218, 0); box-shadow: inset 0 0 0 1.5px var(--border-selected);
     }
     #monks-list .monk-card[aria-current="true"]:hover { background-color: rgba(235, 230, 218, 0); }
-    .card-number { padding-top: 4px; color: var(--text-primary); font: 400 20px/24px var(--font-serif); text-align: center; }
+    .card-number { padding-bottom: 2px; color: var(--text-primary); font: 400 20px/24px var(--font-serif); text-align: center; }
     .card-icon-frame {
       position: relative; display: grid; width: 48px; height: 48px; overflow: hidden; place-items: center;
       border-radius: 50%; background: #e8e6e0; color: #8a8882;
@@ -565,11 +573,12 @@
       }
       .monks-panel {
         z-index: 20; top: 88px; bottom: 16px; left: 16px; width: min(340px, calc(100vw - 32px));
-        gap: var(--space-4); padding: var(--space-5) var(--space-4) 0; overflow: hidden;
+        gap: var(--space-4); padding: var(--space-5) 2px var(--space-4) var(--space-4); overflow-y: auto; overflow-x: hidden;
+        scrollbar-gutter: stable;
         border: 0; border-radius: var(--radius-s); background: var(--surface-soft);
         box-shadow: none;
       }
-      #monks-list { padding-bottom: var(--space-4); }
+      #monks-list { flex: 0 0 auto; overflow: visible; margin-right: 0; padding: 0; }
       .detail-overlay {
         z-index: 18; top: 88px; bottom: 16px;
         left: calc(32px + min(340px, calc(100vw - 32px)));
@@ -607,7 +616,6 @@
         border: 0; border-radius: var(--radius-pill);
         background: var(--surface-inverse); color: var(--text-inverse);
         font: 600 14px var(--font-sans); text-decoration: none;
-        box-shadow: var(--shadow-button);
       }
       .desktop-modal-gmaps-wrap .modal-gmaps:hover { background: var(--action-primary-hover); }
       .desktop-detail-nav {
@@ -946,7 +954,7 @@
         border: 0; border-radius: var(--radius-pill); pointer-events: auto;
         font: 600 14px var(--font-sans); text-decoration: none;
       }
-      .modal-gmaps { background: var(--surface-inverse); color: var(--text-inverse); box-shadow: var(--shadow-button); }
+      .modal-gmaps { background: var(--surface-inverse); color: var(--text-inverse); }
       .monk-detail-modal .modal-close { display: inline-flex; }
       .mobile-card-skeleton {
         display: flex; width: 100%; padding: 0 var(--space-8); pointer-events: none;
