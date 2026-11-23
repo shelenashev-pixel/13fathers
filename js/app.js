@@ -1,7 +1,7 @@
 import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-10';
 import {
   initMap, flyToMonk, showPopup, closePopup, resetMapView, setActiveMarker, selectMobileCard, hasMobilePopup, showAllMonks
-} from './map.js?v=figma-sync-27';
+} from './map.js?v=figma-sync-29';
 import { i18n } from './i18n.js?v=figma-sync-10';
 
 const INTRO_TITLE = 'The origins of the spread of Christianity';
@@ -22,17 +22,18 @@ function openMonkModal(monk, index, direction = 0) {
   const modal = document.getElementById('monk-detail-modal');
   if (!modal || !monk) return;
 
-  const wasHidden = modal.classList.contains('hidden');
   modal.classList.remove('is-intro');
-  document.getElementById('detail-overlay')?.classList.remove('hidden');
+  const detailOverlay = document.getElementById('detail-overlay');
+  detailOverlay?.classList.remove('hidden');
   document.body.classList.add('monk-modal-open');
   const modalContent = modal.querySelector('.modal-content');
-  if (modalContent) modalContent.scrollTop = 0;
+  const prevScrollTop = modalContent ? modalContent.scrollTop : 0;
   if (direction && window.matchMedia('(max-width: 760px)').matches) {
+    document.querySelectorAll('.modal-transition-outgoing').forEach((el) => el.remove());
     const outgoingCard = modal.cloneNode(true);
     outgoingCard.removeAttribute('id');
     outgoingCard.querySelectorAll('[id]').forEach((element) => element.removeAttribute('id'));
-    outgoingCard.classList.remove('hidden', 'slide-from-next', 'slide-from-previous');
+    outgoingCard.classList.remove('hidden', 'slide-from-next', 'slide-from-previous', 'sheet-enter');
     outgoingCard.classList.add('modal-transition-outgoing');
     outgoingCard.setAttribute('aria-hidden', 'true');
     outgoingCard.inert = true;
@@ -42,17 +43,20 @@ function openMonkModal(monk, index, direction = 0) {
     });
     outgoingCard.classList.add(direction > 0 ? 'slide-to-previous' : 'slide-to-next');
     outgoingCard.addEventListener('animationend', () => outgoingCard.remove(), { once: true });
-    document.body.appendChild(outgoingCard);
-    window.setTimeout(() => outgoingCard.remove(), 500);
+    (detailOverlay || document.body).appendChild(outgoingCard);
+    const outgoingContent = outgoingCard.querySelector('.modal-content');
+    if (outgoingContent) outgoingContent.scrollTop = prevScrollTop;
+    window.setTimeout(() => outgoingCard.remove(), 420);
 
     const animationClass = direction > 0 ? 'slide-from-next' : 'slide-from-previous';
-    modal.classList.remove('slide-from-next', 'slide-from-previous');
+    modal.classList.remove('slide-from-next', 'slide-from-previous', 'sheet-enter');
     void modal.offsetWidth;
     modal.classList.add(animationClass);
-    modal.addEventListener('animationend', () => {
-      modal.classList.remove(animationClass);
+    modal.addEventListener('animationend', (event) => {
+      if (event.target === modal) modal.classList.remove(animationClass);
     }, { once: true });
   }
+  if (modalContent) modalContent.scrollTop = 0;
   document.getElementById('modal-monk-index').innerText = index;
   const modalNameEl = document.getElementById('modal-monk-name');
   if (modalNameEl) {
@@ -105,19 +109,15 @@ function openMonkModal(monk, index, direction = 0) {
     descContainer.innerHTML = paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('');
   }
   modal.classList.remove('hidden');
-  if (wasHidden && !direction && window.matchMedia('(max-width: 760px)').matches) {
-    modal.classList.remove('sheet-enter');
-    void modal.offsetWidth;
-    modal.classList.add('sheet-enter');
-    modal.addEventListener('animationend', () => modal.classList.remove('sheet-enter'), { once: true });
-  }
 }
 
 function openIntroModal() {
   const modal = document.getElementById('monk-detail-modal');
   if (!modal) return;
 
-  document.getElementById('detail-overlay')?.classList.remove('hidden');
+  const detailOverlay = document.getElementById('detail-overlay');
+  modal.classList.add('is-intro');
+  detailOverlay?.classList.remove('hidden');
   document.body.classList.add('monk-modal-open');
   const modalContent = modal.querySelector('.modal-content');
   if (modalContent) modalContent.scrollTop = 0;
@@ -165,15 +165,7 @@ function openIntroModal() {
     }
     return section;
   }));
-  const wasHidden = modal.classList.contains('hidden');
-  modal.classList.add('is-intro');
   modal.classList.remove('hidden');
-  if (wasHidden && window.matchMedia('(max-width: 760px)').matches) {
-    modal.classList.remove('sheet-enter');
-    void modal.offsetWidth;
-    modal.classList.add('sheet-enter');
-    modal.addEventListener('animationend', () => modal.classList.remove('sheet-enter'), { once: true });
-  }
 }
 
 function handleSelectIntro() {
@@ -194,10 +186,12 @@ function handleSelectIntro() {
   }
   document.body.classList.remove('map-only-view');
   updateMapViewButton();
-  highlightActiveCard('intro');
+  highlightActiveCard('intro', { scroll: !isMobile });
   setMobileListOpen(false);
   openIntroModal();
-  void showAllMonks().catch((error) => console.error('Failed to fit map to all monasteries', error));
+  if (!isMobile) {
+    void showAllMonks().catch((error) => console.error('Failed to fit map to all monasteries', error));
+  }
 }
 
 function openMonkDetails(monkId) {
@@ -245,7 +239,6 @@ function setMobileListOpen(isOpen) {
   toggle?.setAttribute('aria-expanded', String(isOpen));
   toggle?.setAttribute('data-i18n-aria-label', labelKey);
   toggle?.setAttribute('aria-label', i18n.t(labelKey, fallbackLabel));
-  toggle?.querySelector('.icon')?.classList.replace(isOpen ? 'icon-menu' : 'icon-close', isOpen ? 'icon-close' : 'icon-menu');
 }
 
 function updateMapViewButton() {
@@ -516,7 +509,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       && !modal.classList.contains('hidden');
     if (keepModalOpen) {
       syncActiveMonkOnMobile(allMonksData[nextIndex].id, {
-        syncMiniCarousel: true,
+        syncMiniCarousel: false,
         syncDetailCarousel: true,
         modalDirection: offset
       });

@@ -21,13 +21,20 @@ export function initMap(monks, onMarkerClick) {
 
   mapInstance.addControl(new maplibregl.NavigationControl(), 'bottom-right');
   mapInstance.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
-  mapInstance.once('load', () => {
+  let attributionUserToggled = false;
+  const collapseAttribution = () => {
+    if (attributionUserToggled) return;
     const attribution = mapInstance.getContainer().querySelector('.maplibregl-ctrl-attrib');
     if (attribution?.classList.contains('maplibregl-compact')) {
       attribution.classList.remove('maplibregl-compact-show');
       attribution.removeAttribute('open');
     }
-  });
+  };
+  const attribEl = mapInstance.getContainer().querySelector('.maplibregl-ctrl-attrib-button');
+  attribEl?.addEventListener('click', () => { attributionUserToggled = true; });
+  collapseAttribution();
+  mapInstance.on('styledata', collapseAttribution);
+  mapInstance.once('load', collapseAttribution);
 
   monks.forEach((monk) => {
     if (monk.imageUrl) {
