@@ -1,8 +1,9 @@
-import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-11';
+import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-13';
 import {
   initMap, flyToMonk, showPopup, closePopup, setActiveMarker, selectMobileCard, hasMobilePopup, showAllMonks
-} from './map.js?v=figma-sync-31';
-import { i18n } from './i18n.js?v=figma-sync-10';
+} from './map.js?v=figma-sync-33';
+import { i18n } from './i18n.js?v=figma-sync-12';
+import { initAnalytics, trackEvent } from './analytics.js?v=analytics-3';
 
 const INTRO_TITLE = 'The origins of the spread of Christianity';
 const INTRO_SECTIONS_FALLBACK = [
@@ -17,6 +18,11 @@ const INTRO_SECTIONS_FALLBACK = [
 let allMonksData = [];
 let selectionRevision = 0;
 let activeMonkId = null;
+
+function trackMonkSelection(monkId, source) {
+  if (!monkId) return;
+  trackEvent('monk_select', { monk_id: monkId, source });
+}
 
 function openMonkModal(monk, index, direction = 0) {
   const modal = document.getElementById('monk-detail-modal');
@@ -189,6 +195,7 @@ function handleSelectIntro() {
   highlightActiveCard('intro', { scroll: !isMobile });
   setMobileListOpen(false);
   openIntroModal();
+  trackEvent('edition_open');
   if (!isMobile) {
     void showAllMonks().catch((error) => console.error('Failed to fit map to all monasteries', error));
   }
@@ -201,6 +208,7 @@ function openMonkDetails(monkId) {
   const monk = allMonksData[index];
   syncActiveMonkOnMobile(monkId, { syncMiniCarousel: true });
   openMonkModal(monk, index + 1);
+  trackEvent('monk_detail_open', { monk_id: monk.id });
 }
 
 export function closeMonkModal() {
@@ -285,7 +293,8 @@ function syncActiveMonkOnMobile(monkId, {
 export function handleSelectMonk(monkId, {
   fromSwipe = false,
   keepModalOpen = false,
-  modalDirection = 0
+  modalDirection = 0,
+  source = fromSwipe ? 'prev_next' : 'list'
 } = {}) {
   const monk = allMonksData.find(m => m.id === monkId);
   if (!monk) return;
@@ -294,6 +303,7 @@ export function handleSelectMonk(monkId, {
   const originalIndex = allMonksData.findIndex(m => m.id === monk.id) + 1;
   const isMobile = window.matchMedia('(max-width: 760px)').matches;
   activeMonkId = monk.id;
+  trackMonkSelection(monk.id, source);
 
   document.body.classList.remove('map-only-view');
   updateMapViewButton();
@@ -336,8 +346,9 @@ export function handleSelectMonk(monkId, {
           if (!nextMonk) return;
           if (isMobile) {
             syncActiveMonkOnMobile(nextMonk.id, { syncMiniCarousel: false, flyMap: true });
+            trackMonkSelection(nextMonk.id, 'prev_next');
           } else {
-            handleSelectMonk(nextMonk.id, { fromSwipe: true });
+            handleSelectMonk(nextMonk.id, { fromSwipe: true, source: 'prev_next' });
             popupSelectionRevision = selectionRevision;
           }
         },
@@ -399,6 +410,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const searchInput = document.getElementById('search-input');
   const counter = document.getElementById('counter');
+  let searchTrackTimer = null;
+  let lastTrackedSearch = '';
+  const scheduleSearchTrack = (query, resultsCount) => {
+    clearTimeout(searchTrackTimer);
+    if (query.length < 2) {
+      lastTrackedSearch = '';
+      return;
+    }
+    searchTrackTimer = window.setTimeout(() => {
+      if (query === lastTrackedSearch) return;
+      lastTrackedSearch = query;
+      trackEvent('search_use', { results_count: resultsCount });
+    }, 800);
+  };
   const renderFilteredCards = () => {
     const query = searchInput?.value.trim().toLocaleLowerCase() ?? '';
     const filteredMonks = allMonksData.filter((monk) =>
@@ -412,6 +437,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         i18n.t(`monks.${monk.id}.region`)
       ].some((value) => value?.toLocaleLowerCase().includes(query))
     );
+    scheduleSearchTrack(query, filteredMonks.length);
 
     if (!filteredMonks.length) {
       renderCards(filteredMonks, allMonksData, handleSelectMonk, {
@@ -449,11 +475,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('reset-btn')?.addEventListener('click', () => {
     setMobileListOpen(false);
-    document.body.classList.toggle('map-only-view');
+    const isMapOnly = document.body.classList.toggle('map-only-view');
     updateMapViewButton();
+    trackEvent('view_mode_toggle', { target_view: isMapOnly ? 'map' : 'list' });
   });
   document.getElementById('mobile-list-toggle')?.addEventListener('click', () => {
-    setMobileListOpen(!document.body.classList.contains('mobile-list-open'));
+    const isOpen = !document.body.classList.contains('mobile-list-open');
+    setMobileListOpen(isOpen);
+    trackEvent('view_mode_toggle', { target_view: isOpen ? 'list' : 'map' });
+  });
+  ['modal-monk-gmaps-desktop', 'modal-monk-gmaps'].forEach((id) => {
+    document.getElementById(id)?.addEventListener('click', () => {
+      if (!activeMonkId) return;
+      trackEvent('open_google_maps', {
+        monk_id: activeMonkId,
+        surface: 'detail'
+      });
+    });
   });
 
   renderFilteredCards();
@@ -473,7 +511,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       1,
       (targetIndex) => {
         const selectedMonk = allMonksData[targetIndex];
-        if (selectedMonk) handleSelectMonk(selectedMonk.id, { fromSwipe: true });
+        if (selectedMonk) handleSelectMonk(selectedMonk.id, { fromSwipe: true, source: 'prev_next' });
       },
       allMonksData
     );
@@ -501,8 +539,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         syncDetailCarousel: true,
         modalDirection: offset
       });
+      trackMonkSelection(allMonksData[nextIndex].id, 'prev_next');
     } else {
-      handleSelectMonk(allMonksData[nextIndex].id);
+      handleSelectMonk(allMonksData[nextIndex].id, { source: 'prev_next' });
     }
   };
   document.getElementById('detail-prev')?.addEventListener('click', () => selectAdjacentMonk(-1));
@@ -549,4 +588,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       selectAdjacentMonk(1);
     }
   });
+
+  initAnalytics();
 });

@@ -1,4 +1,4 @@
-import { i18n } from './i18n.js?v=figma-sync-10';
+import { i18n } from './i18n.js?v=figma-sync-12';
 
 let onCardClickCallback = null;
 
@@ -63,13 +63,13 @@ export function renderCards(monks, allMonks, onSelect, emptyState = null) {
 
     card.addEventListener('click', () => {
       if (onCardClickCallback) {
-        onCardClickCallback(monk.id);
+        onCardClickCallback(monk.id, { source: 'list' });
       }
     });
     card.addEventListener('keydown', (event) => {
       if ((event.key === 'Enter' || event.key === ' ') && onCardClickCallback) {
         event.preventDefault();
-        onCardClickCallback(monk.id);
+        onCardClickCallback(monk.id, { source: 'list' });
       }
     });
 

@@ -1,4 +1,5 @@
-import { i18n } from './i18n.js?v=figma-sync-10';
+import { i18n } from './i18n.js?v=figma-sync-12';
+import { trackEvent } from './analytics.js?v=analytics-3';
 
 let mapInstance = null;
 let markersMap = {};
@@ -67,7 +68,7 @@ export function initMap(monks, onMarkerClick) {
 
     const selectMarker = (event) => {
       event.stopPropagation();
-      onMarkerClick?.(monk.id);
+      onMarkerClick?.(monk.id, { source: 'map_pin' });
     };
     marker.getElement().addEventListener('click', selectMarker);
     marker.getElement().addEventListener('pointerenter', () => preloadMonasteryImage(monk), { once: true });
@@ -220,7 +221,7 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
           <img src="${item.imageUrl || `./images/monasteries/${item.id}.webp`}" alt="${i18n.t(`monks.${item.id}.monastery`, item.monastery)}" width="296" height="132" style="object-position: ${item.imagePosition || '50% 35%'}" loading="${Math.abs(itemIndex - activeIndex) <= 1 ? 'eager' : 'lazy'}" decoding="async" />
           <span class="mobile-card-number">${itemIndex + 1}</span>
           ${item.gmapsUrl ? `
-            <a class="mobile-card-location" href="${item.gmapsUrl}" target="_blank" rel="noopener noreferrer" aria-label="Open ${item.monastery} in Google Maps">
+            <a class="mobile-card-location" href="${item.gmapsUrl}" target="_blank" rel="noopener noreferrer" data-monk-id="${item.id}" aria-label="Open ${item.monastery} in Google Maps">
               <i class="icon icon-map-pin" aria-hidden="true"></i>
             </a>
           ` : ''}
@@ -295,6 +296,12 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
         placeImg.addEventListener('load', markLoaded, { once: true });
       }
     }
+    popupContent.querySelector('.monk-popup-gmaps')?.addEventListener('click', () => {
+      trackEvent('open_google_maps', {
+        monk_id: monk.id,
+        surface: 'popup'
+      });
+    });
   }
 
   const popup = isMobile
@@ -407,6 +414,16 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
         const targetMonk = monks[targetIndex];
         if (!targetMonk) throw new Error(`Unknown monk on mobile card: ${monkId}`);
         onRead?.(monkId, targetIndex, targetMonk);
+      });
+    });
+    popupContent.querySelectorAll('.mobile-card-location').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        const monkId = event.currentTarget.dataset.monkId;
+        if (!monkId) return;
+        trackEvent('open_google_maps', {
+          monk_id: monkId,
+          surface: 'mini_card'
+        });
       });
     });
     popupContent.addEventListener('scroll', () => {

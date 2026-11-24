@@ -1,3 +1,5 @@
+import { trackEvent } from './analytics.js?v=analytics-3';
+
 const STORAGE_KEY = '13monks_lang';
 const DEFAULT_LANG = 'en';
 const LANGUAGES = {
@@ -170,6 +172,11 @@ class I18nManager {
         const selectedLang = option.dataset.lang;
         this.closeMenu();
         if (selectedLang && selectedLang !== this.currentLang) {
+          const fromLang = this.currentLang;
+          trackEvent('language_switch', {
+            from_lang: fromLang,
+            to_lang: selectedLang
+          });
           void this.setLanguage(selectedLang);
         }
       });
