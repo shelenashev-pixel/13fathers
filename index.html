@@ -7,51 +7,36 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#f5f2eb">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>13 Assyrian Monks in Georgia</title>
+  <title>13 Assyrian fathers in Georgia</title>
   <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2">
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- MapLibre GL JS -->
   <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
-  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
 
   <!-- Google Fonts: Prata & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Georgian:wght@400;500;600&family=Noto+Serif+Georgian:wght@400;500;600&family=Prata&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            serif: ['Prata', 'Georgia', 'serif'],
-            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+Georgian:wght@400;600&family=Noto+Serif+Georgian:wght@400;600&family=Prata&display=swap" rel="stylesheet">
 
   <style>
     :root {
       color-scheme: light;
       --surface-canvas: #e0d5c1;
-      --surface-panel: #ffffff;
+      --surface-canvas-rgb: 224 213 193;
       --surface-base: #ffffff;
       --surface-soft: #f5f2eb;
+      --surface-soft-rgb: 245 242 235;
       --surface-hover: #ebe6da;
+      --surface-placeholder: #e8e6e0;
       --surface-inverse: #1a1a1a;
-      --surface-input: #e9e7e2;
       --text-primary: #1a1a1a;
       --text-secondary: #727272;
       --text-inverse: #ffffff;
+      --border-subtle: #c9c6bd;
       --border-selected: #4d4d4d;
+      --accent-focus: #6f5636;
       --action-primary-hover: #333333;
-      --paper: var(--surface-soft);
-      --ink: var(--text-primary);
-      --muted: var(--text-secondary);
       --space-1: 4px;
       --space-2: 8px;
       --space-3: 12px;
@@ -59,16 +44,20 @@
       --space-5: 20px;
       --space-6: 24px;
       --space-8: 32px;
+      --radius-xs: 8px;
       --radius-s: 12px;
       --radius-m: 20px;
-      --radius-card: 16px;
       --radius-pill: 999px;
       --control-height-s: 32px;
       --control-height-m: 40px;
       --control-height-l: 48px;
+      --dur-fast: .18s;
+      --dur-base: .26s;
+      --dur-slow: .34s;
       --motion-standard: cubic-bezier(.22, 1, .36, 1);
       --ease-ui: cubic-bezier(.4, 0, .2, 1);
       --shadow-button: 0 4px 8px rgba(17,17,17,.16);
+      --shadow-card: 0 8px 24px rgba(17,17,17,.14);
       --font-serif: 'Prata', Georgia, serif;
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
@@ -77,7 +66,10 @@
       --font-sans: 'Noto Sans Georgian', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    * { box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; }
+    h1, h2, h3, h4, p, ul, ol { margin: 0; }
+    img { display: block; }
+    button, input { font: inherit; color: inherit; margin: 0; }
     html {
       margin: 0; padding: 0; width: 100%; height: 100%;
       -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
@@ -85,7 +77,7 @@
     }
     body {
       margin: 0; padding: 0; width: 100%; height: 100lvh;
-      position: relative;
+      position: relative; font-family: var(--font-sans);
       background-color: var(--surface-canvas); overscroll-behavior: none;
     }
     .hidden, [hidden] { display: none !important; }
@@ -95,13 +87,13 @@
     }
     button, a, [role="button"], input, .monk-card {
       transition:
-        background-color .3s var(--ease-ui), color .3s var(--ease-ui), border-color .3s var(--ease-ui),
-        box-shadow .3s var(--ease-ui), opacity .3s var(--ease-ui), transform .3s var(--ease-ui);
+        background-color var(--dur-base) var(--ease-ui), color var(--dur-base) var(--ease-ui), border-color var(--dur-base) var(--ease-ui),
+        box-shadow var(--dur-base) var(--ease-ui), opacity var(--dur-base) var(--ease-ui), transform var(--dur-base) var(--ease-ui);
     }
     /* MapLibre positions markers via transform; animating it makes pins lag behind the map. */
     .map-pin-wrap { transition: none; }
     button:focus-visible, a:focus-visible, [role="button"]:focus-visible, input:focus-visible {
-      outline: 2px solid #6f5636; outline-offset: 3px;
+      outline: 2px solid var(--accent-focus); outline-offset: 3px;
     }
     .monk-popup-gmaps:focus-visible, .modal-gmaps:focus-visible { outline: none; }
     /* Single source: edit/re-export images/ui-icons/<name>.svg and every icon updates. */
@@ -120,17 +112,17 @@
     .icon-close-small { width: 16px; height: 16px; --icon: url('./images/ui-icons/close-small.svg'); }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: transparent; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb { background: transparent; border-radius: var(--radius-pill); }
     #monks-list:hover::-webkit-scrollbar-thumb,
-    .modal-content:hover::-webkit-scrollbar-thumb { background: #c9c6bd; }
+    .modal-content:hover::-webkit-scrollbar-thumb { background: var(--border-subtle); }
     .monks-panel::-webkit-scrollbar { width: 16px; }
     .monks-panel::-webkit-scrollbar-track,
     .modal-content::-webkit-scrollbar-track { margin: 8px 0; }
     .monks-panel::-webkit-scrollbar-thumb {
-      border: 5px solid transparent; border-radius: 9999px;
+      border: 5px solid transparent; border-radius: var(--radius-pill);
       background-color: transparent; background-clip: content-box;
     }
-    .monks-panel:hover::-webkit-scrollbar-thumb { background-color: #c9c6bd; }
+    .monks-panel:hover::-webkit-scrollbar-thumb { background-color: var(--border-subtle); }
 
     #map {
       position: absolute !important;
@@ -151,10 +143,10 @@
       pointer-events: none;
       background: linear-gradient(
         to bottom,
-        #e0d5c1 0%,
-        rgba(224, 213, 193, 0) 36px,
-        rgba(224, 213, 193, 0) calc(100% - 36px),
-        #e0d5c1 100%
+        var(--surface-canvas) 0%,
+        rgb(var(--surface-canvas-rgb) / 0) 36px,
+        rgb(var(--surface-canvas-rgb) / 0) calc(100% - 36px),
+        var(--surface-canvas) 100%
       );
     }
     .app-header {
@@ -164,12 +156,12 @@
     }
     .app-header::before {
       position: absolute; z-index: -1; inset: 0 0 -16px; content: ""; pointer-events: none;
-      background: linear-gradient(to bottom, rgba(224,213,193,.94) 0%, rgba(224,213,193,.56) 60%, rgba(224,213,193,0) 100%);
-      transition: opacity .3s var(--ease-ui);
+      background: linear-gradient(to bottom, rgb(var(--surface-canvas-rgb) / .94) 0%, rgb(var(--surface-canvas-rgb) / .56) 60%, rgb(var(--surface-canvas-rgb) / 0) 100%);
+      transition: opacity var(--dur-base) var(--ease-ui);
     }
     .app-title {
-      margin: 0; color: var(--ink); font: 400 clamp(26px, 3.4vw, 43px)/1.1 var(--font-serif);
-      letter-spacing: -1.2px; text-shadow: 0 1px 8px rgba(255,255,255,.38);
+      margin: 0; color: var(--text-primary); font: 400 clamp(26px, 3.4vw, 43px)/1.1 var(--font-serif);
+      letter-spacing: -1.2px;
       max-width: 620px;
     }
     .header-actions { display: flex; align-items: center; gap: var(--space-3); pointer-events: auto; }
@@ -204,14 +196,14 @@
     .language-menu {
       position: absolute; top: calc(100% + var(--space-1)); left: 50%;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: var(--space-1); border-radius: var(--space-6);
+      padding: var(--space-1); border-radius: var(--radius-m);
       background: var(--surface-base); box-shadow: var(--shadow-button);
       opacity: 1; visibility: visible; pointer-events: auto;
       transform: translateX(-50%) translateY(0) scale(1);
       transform-origin: top center;
       transition:
-        opacity .22s var(--motion-standard),
-        transform .22s var(--motion-standard),
+        opacity var(--dur-base) var(--motion-standard),
+        transform var(--dur-base) var(--motion-standard),
         visibility 0s linear 0s;
     }
     .language-menu[hidden] {
@@ -219,9 +211,9 @@
       opacity: 0; visibility: hidden; pointer-events: none;
       transform: translateX(-50%) translateY(-6px) scale(.94);
       transition:
-        opacity .18s var(--ease-ui),
-        transform .18s var(--ease-ui),
-        visibility 0s linear .18s;
+        opacity var(--dur-fast) var(--ease-ui),
+        transform var(--dur-fast) var(--ease-ui),
+        visibility 0s linear var(--dur-fast);
     }
     .language-option {
       display: flex; width: var(--control-height-m); height: var(--control-height-m);
@@ -232,16 +224,16 @@
     .language-option:hover { background: var(--surface-soft); }
     .language-option.is-active,
     .language-option[aria-selected="true"] {
-      border-color: var(--border-selected); background: #f0f0f0;
+      border-color: var(--border-selected); background: var(--surface-soft);
     }
-    .mobile-list-toggle, .mobile-list-close, .mobile-reset-btn { display: none; }
+    .mobile-list-toggle { display: none; }
 
     .monks-panel {
       position: fixed; z-index: 10; top: 82px; bottom: 16px; left: 16px;
       display: flex; flex-direction: column; gap: var(--space-4);
       width: min(434px, calc(100vw - 32px)); padding: var(--space-4);
-      border: 0px solid rgba(255,255,255,.8); border-radius: 16px;
-      background: #f7f5ef; box-shadow: 0 10px 28px rgba(36,31,24,.08);
+      border: 0; border-radius: var(--radius-s);
+      background: var(--surface-soft);
     }
     .panel-intro {
       flex: 0 0 auto; display: flex; align-items: center; justify-content: center;
@@ -252,7 +244,7 @@
     .panel-intro-inner {
       position: relative; display: inline-flex; align-items: center; white-space: nowrap;
       transform: translateX(-6px);
-      transition: transform .24s var(--motion-standard);
+      transition: transform var(--dur-base) var(--motion-standard);
     }
     .panel-intro.is-active .panel-intro-inner,
     .panel-intro[aria-current="true"] .panel-intro-inner {
@@ -262,8 +254,8 @@
       position: absolute; top: 50%; width: 16px; height: 16px; pointer-events: none;
       -webkit-mask-size: 16px 16px; mask-size: 16px 16px;
       transition:
-        opacity .2s var(--ease-ui),
-        transform .24s var(--motion-standard);
+        opacity var(--dur-fast) var(--ease-ui),
+        transform var(--dur-base) var(--motion-standard);
     }
     .panel-intro .icon-close-small {
       right: calc(100% + 4px); opacity: 0; transform: translate(4px, calc(-50% + 1px));
@@ -314,17 +306,17 @@
     .empty-state-card {
       width: 100%; padding: 20px 18px; border: 0; background: transparent; text-align: center;
     }
-    .empty-state-card h3 { margin: 0 0 8px; color: #171717; font: 400 24px/1.2 var(--font-serif); }
-    .empty-state-card p { margin: 0 0 14px; color: #666; font: 13px/1.5 var(--font-sans); }
+    .empty-state-card h3 { margin: 0 0 8px; color: var(--text-primary); font: 400 24px/1.2 var(--font-serif); }
+    .empty-state-card p { margin: 0 0 14px; color: var(--text-secondary); font: 13px/1.5 var(--font-sans); }
     .empty-state-action {
       display: inline-flex; height: var(--control-height-m); padding: 0 16px;
-      border: 0; border-radius: var(--radius-pill); background: #171717;
-      color: white; font: 600 12px var(--font-sans); cursor: pointer;
+      border: 0; border-radius: var(--radius-pill); background: var(--surface-inverse);
+      color: var(--text-inverse); font: 600 12px var(--font-sans); cursor: pointer;
     }
     .monk-skeleton {
       position: relative; display: grid; flex: 0 0 64px; height: 64px; overflow: hidden;
       grid-template-columns: 24px 48px minmax(0, 1fr); align-items: center; gap: var(--space-3);
-      padding: var(--space-2) var(--space-4); border-radius: 8px;
+      padding: var(--space-2) var(--space-4); border-radius: var(--radius-xs);
     }
     .monk-skeleton > i { display: block; height: 20px; border-radius: var(--radius-pill); background: var(--surface-hover); }
     .monk-skeleton > .sk-avatar { width: 48px; height: 48px; }
@@ -338,20 +330,20 @@
     }
     @keyframes skeleton-shimmer { to { transform: translateX(100%); } }
     @keyframes list-reveal { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-    #monks-list.is-revealing > * { animation: list-reveal .3s ease-out both; }
+    #monks-list.is-revealing > * { animation: list-reveal var(--dur-base) var(--motion-standard) both; }
     .mobile-card-skeleton { display: none; }
     .app-status {
       position: fixed; z-index: 40; bottom: 24px; left: 50%;
       display: flex; align-items: center; gap: var(--space-3); max-width: calc(100vw - 32px);
       padding: var(--space-3) var(--space-4); transform: translateX(-50%);
-      border: 1px solid rgba(17,17,17,.08); border-radius: 12px;
-      background: var(--surface-panel); color: var(--text-primary);
-      box-shadow: 0 8px 24px rgba(17,17,17,.12);
+      border: 1px solid rgba(17,17,17,.08); border-radius: var(--radius-s);
+      background: var(--surface-base); color: var(--text-primary);
+      box-shadow: var(--shadow-card);
       font: 13px/1.4 var(--font-sans);
     }
     .app-status::before {
       width: 18px; height: 18px; flex: 0 0 18px; content: "";
-      border: 2px solid #ded9cf; border-top-color: #6f5636; border-radius: 50%;
+      border: 2px solid var(--surface-hover); border-top-color: var(--accent-focus); border-radius: 50%;
       animation: status-spin .8s linear infinite;
     }
     @keyframes status-spin { to { transform: rotate(360deg); } }
@@ -363,7 +355,7 @@
     .app-status-retry {
       display: inline-flex; height: var(--control-height-m); margin-left: auto;
       padding: 0 16px; border: 0; border-radius: var(--radius-pill);
-      background: #171717; color: #fff; font: 500 12px var(--font-sans); cursor: pointer;
+      background: var(--surface-inverse); color: var(--text-inverse); font: 600 12px var(--font-sans); cursor: pointer;
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -377,33 +369,33 @@
       display: flex; width: 32px; height: 32px; align-items: center; justify-content: center; border-radius: 50%;
       background: var(--surface-base); color: var(--text-primary);
       filter: drop-shadow(0 4px 8px rgba(17,17,17,.22));
-      transition: background-color .3s var(--ease-ui), color .3s var(--ease-ui);
+      transition: background-color var(--dur-base) var(--ease-ui), color var(--dur-base) var(--ease-ui);
     }
     .map-pin .icon { width: 24px; height: 24px; }
     .map-pin.is-active { background: var(--surface-inverse); color: var(--text-inverse); }
     .map-pin-wrap:focus-visible {
-      border-radius: 50%; outline: 2px solid #6f5636; outline-offset: 3px;
+      border-radius: 50%; outline: 2px solid var(--accent-focus); outline-offset: 3px;
     }
 
     .monk-card {
       display: grid; flex: 0 0 64px; grid-template-columns: 24px 48px minmax(0,1fr);
       align-items: center; gap: var(--space-3); width: 100%; height: 64px; padding: var(--space-2) var(--space-4);
-      border: 0; border-radius: 8px;
-      background-color: rgba(235, 230, 218, 0);
-      box-shadow: inset 0 0 0 1.5px rgba(77, 77, 77, 0);
+      border: 0; border-radius: var(--radius-xs);
+      background-color: transparent;
+      box-shadow: inset 0 0 0 1.5px transparent;
       color: var(--text-primary); cursor: pointer;
-      transition: background-color .28s var(--motion-standard), box-shadow .28s var(--motion-standard), color .28s var(--motion-standard);
+      transition: background-color var(--dur-base) var(--motion-standard), box-shadow var(--dur-base) var(--motion-standard), color var(--dur-base) var(--motion-standard);
     }
     .monk-card:hover { background-color: var(--surface-hover); }
     #monks-list:has(.monk-card[aria-current="true"]) .monk-card:hover { background-color: var(--surface-hover); }
     #monks-list .monk-card[aria-current="true"] {
-      background-color: rgba(235, 230, 218, 0); box-shadow: inset 0 0 0 1.5px var(--border-selected);
+      background-color: transparent; box-shadow: inset 0 0 0 1.5px var(--border-selected);
     }
-    #monks-list .monk-card[aria-current="true"]:hover { background-color: rgba(235, 230, 218, 0); }
+    #monks-list .monk-card[aria-current="true"]:hover { background-color: transparent; }
     .card-number { padding-top: 2px; color: var(--text-primary); font: 400 20px/1 var(--font-serif); text-align: center; }
     .card-icon-frame {
       position: relative; display: grid; width: 48px; height: 48px; overflow: hidden; place-items: center;
-      border-radius: 50%; background: #e8e6e0; color: #8a8882;
+      border-radius: 50%; background: var(--surface-placeholder); color: var(--text-secondary);
     }
     .card-icon-frame::after {
       position: absolute; content: ''; width: 24px; height: 24px; background-color: currentColor;
@@ -424,12 +416,12 @@
       width: min(434px, calc(100vw - min(434px, calc(100vw - 32px)) - 48px));
       pointer-events: none;
       opacity: 1; visibility: visible;
-      transition: opacity .26s var(--motion-standard), visibility 0s linear 0s;
+      transition: opacity var(--dur-base) var(--motion-standard), visibility 0s linear 0s;
     }
     .detail-overlay.hidden {
       display: block !important;
       opacity: 0; visibility: hidden; pointer-events: none;
-      transition: opacity .22s var(--ease-ui), visibility 0s linear .22s;
+      transition: opacity var(--dur-fast) var(--ease-ui), visibility 0s linear var(--dur-fast);
     }
     .monk-detail-modal {
       position: absolute; z-index: 30; inset: 0;
@@ -437,13 +429,13 @@
       flex-direction: column; overflow: hidden;
       border: 0; border-radius: var(--radius-s); background: var(--surface-base);
       opacity: 1; visibility: visible; transform: translateY(0) scale(1);
-      transition: opacity .28s var(--motion-standard), transform .28s var(--motion-standard), visibility 0s linear 0s;
+      transition: opacity var(--dur-base) var(--motion-standard), transform var(--dur-base) var(--motion-standard), visibility 0s linear 0s;
     }
     .monk-detail-modal.hidden {
       display: flex !important;
       opacity: 0; visibility: hidden; pointer-events: none;
       transform: translateY(10px) scale(.985);
-      transition: opacity .22s var(--ease-ui), transform .22s var(--ease-ui), visibility 0s linear .22s;
+      transition: opacity var(--dur-fast) var(--ease-ui), transform var(--dur-fast) var(--ease-ui), visibility 0s linear var(--dur-fast);
     }
     .modal-clip { display: contents; }
     .modal-content { flex: 1; overflow-y: auto; margin-right: 6px; padding: var(--space-6) 10px 96px var(--space-4); text-align: center; }
@@ -466,18 +458,18 @@
     .modal-close {
       position: absolute; top: 13px; right: 14px; z-index: 2; display: inline-flex;
       width: 34px; height: 34px; place-items: center; padding: 0; border: 0;
-      background: transparent; color: #111; cursor: pointer; pointer-events: auto;
+      background: transparent; color: var(--text-primary); cursor: pointer; pointer-events: auto;
     }
-    .modal-close:hover { color: #777; }
+    .modal-close:hover { color: var(--text-secondary); }
     #modal-monk-index { display: block; margin-bottom: var(--space-6); color: var(--text-primary); font: 600 16px/20px var(--font-serif); }
     #modal-monk-name { margin: 0 0 var(--space-6); color: var(--text-primary); font: 400 24px/26px var(--font-serif); }
     .modal-icon-frame {
       position: relative; display: grid; width: 160px; height: 160px; margin: 0 auto var(--space-6);
       overflow: hidden; place-items: center; border: 0;
-      border-radius: 50%; background: #eeece8;
+      border-radius: 50%; background: var(--surface-placeholder);
     }
     .modal-icon { display: block; width: 100%; height: 100%; object-fit: cover; }
-    .modal-icon-fallback { display: none; width: 42px; height: 42px; color: #777; }
+    .modal-icon-fallback { display: none; width: 42px; height: 42px; color: var(--text-secondary); }
     .modal-icon-frame.is-missing .modal-icon { display: none; }
     .modal-icon-frame.is-missing .modal-icon-fallback { display: block; }
     #modal-monk-desc { margin: 0; color: var(--text-primary); font: 14px/22px var(--font-sans); text-align: center; }
@@ -527,17 +519,17 @@
     .place-card-wrap {
       display: flex; flex-direction: column; align-items: center; gap: var(--space-3); user-select: none;
       transform-origin: bottom center;
-      animation: place-card-enter .32s var(--motion-standard) both;
+      animation: place-card-enter var(--dur-slow) var(--motion-standard) both;
     }
     .place-card {
       display: flex; width: 100%; height: 264px; flex-direction: column; overflow: hidden;
       border-radius: var(--radius-m); background: var(--surface-base);
-      box-shadow: 0 8px 24px rgba(17,17,17,.14);
+      box-shadow: var(--shadow-card);
     }
-    .place-card-image { flex: 0 0 132px; height: 132px; overflow: hidden; background: #e8e6e0; }
+    .place-card-image { flex: 0 0 132px; height: 132px; overflow: hidden; background: var(--surface-placeholder); }
     .place-card-image img {
       display: block; width: 100%; height: 100%; object-fit: cover;
-      opacity: 0; transition: opacity .35s var(--ease-ui);
+      opacity: 0; transition: opacity var(--dur-slow) var(--ease-ui);
     }
     .place-card-image img.is-loaded { opacity: 1; }
     .place-card-body {
@@ -547,13 +539,8 @@
     .place-card-text { display: flex; width: 100%; flex-direction: column; align-items: center; gap: var(--space-1); }
     .place-card-title { margin: 0; color: var(--text-primary); font: 600 16px/20px var(--font-serif); white-space: nowrap; }
     .place-card-region { color: var(--text-secondary); font: 400 14px/20px var(--font-sans); white-space: nowrap; }
-    .place-card-close {
-      display: inline-flex; width: var(--control-height-s); height: var(--control-height-s); align-items: center; justify-content: center;
-      border-radius: var(--radius-pill); pointer-events: none;
-      background: var(--surface-inverse); color: var(--text-inverse);
-    }
     .maplibregl-popup-close-button {
-      z-index: 2; padding: 3px 8px; color: #fff !important; font-size: 19px;
+      z-index: 2; padding: 3px 8px; color: var(--text-inverse) !important; font-size: 19px;
       text-shadow: 0 1px 4px rgba(0,0,0,.8);
     }
     .maplibregl-popup-tip { display: none; }
@@ -574,13 +561,13 @@
       }
       .app-header::before {
         inset: 0 0 -16px;
-        background: linear-gradient(to bottom, rgba(224,213,193,.94) 0%, rgba(224,213,193,.56) 60%, rgba(224,213,193,0) 100%);
+        background: linear-gradient(to bottom, rgb(var(--surface-canvas-rgb) / .94) 0%, rgb(var(--surface-canvas-rgb) / .56) 60%, rgb(var(--surface-canvas-rgb) / 0) 100%);
       }
       .app-header .app-title {
         min-width: 0; max-width: none; flex: 1; overflow: hidden; text-overflow: ellipsis;
         padding: 6px 0; margin: -6px 0;
         color: var(--text-primary); font: 400 40px/48px var(--font-serif); letter-spacing: 0;
-        text-shadow: none; white-space: nowrap;
+        white-space: nowrap;
       }
       .header-actions { align-items: center; gap: var(--space-4); }
       .header-actions .reset-btn { order: 1; }
@@ -601,17 +588,17 @@
         width: min(424px, calc(100vw - min(340px, calc(100vw - 32px)) - 48px));
         opacity: 1; visibility: visible; transform: translateX(0);
         transition:
-          opacity .36s var(--motion-standard),
-          transform .36s var(--motion-standard),
+          opacity var(--dur-slow) var(--motion-standard),
+          transform var(--dur-slow) var(--motion-standard),
           visibility 0s linear 0s;
       }
       .detail-overlay.hidden {
         opacity: 0; visibility: hidden; pointer-events: none;
         transform: translateX(-24px);
         transition:
-          opacity .24s var(--ease-ui),
-          transform .24s var(--ease-ui),
-          visibility 0s linear .24s;
+          opacity var(--dur-base) var(--ease-ui),
+          transform var(--dur-base) var(--ease-ui),
+          visibility 0s linear var(--dur-base);
       }
       .monk-detail-modal {
         width: 100%;
@@ -638,7 +625,7 @@
       .desktop-detail-nav {
         position: absolute; right: 0; bottom: 0; left: 0; z-index: 2;
         display: flex; justify-content: center; gap: var(--space-3); padding: var(--space-3) 0; pointer-events: none;
-        background: linear-gradient(to top, var(--surface-base), rgba(255,255,255,0));
+        background: linear-gradient(to top, var(--surface-base), transparent);
       }
       .desktop-detail-nav button {
         display: inline-flex; width: var(--control-height-m); height: var(--control-height-m);
@@ -649,10 +636,10 @@
       .desktop-detail-nav button:hover { background: var(--surface-hover); color: var(--text-primary); }
       #modal-monk-desc { text-align: center; }
       .monks-panel {
-        transition: opacity .28s var(--motion-standard), transform .28s var(--motion-standard), visibility 0s;
+        transition: opacity var(--dur-base) var(--motion-standard), transform var(--dur-base) var(--motion-standard), visibility 0s;
       }
       .maplibregl-popup {
-        transition: opacity .24s ease, visibility 0s;
+        transition: opacity var(--dur-base) var(--ease-ui), visibility 0s;
       }
       body.map-only-view .monks-panel,
       body.map-only-view .detail-overlay {
@@ -660,7 +647,7 @@
       }
       body.map-only-view .maplibregl-popup {
         opacity: 0; visibility: hidden; pointer-events: none;
-        transition-delay: 0s, .24s;
+        transition-delay: 0s, var(--dur-base);
       }
     }
 
@@ -682,12 +669,12 @@
         background: var(--surface-soft);
         pointer-events: auto;
         opacity: 1; visibility: visible;
-        transition: opacity .26s var(--motion-standard), visibility 0s linear 0s;
+        transition: opacity var(--dur-base) var(--motion-standard), visibility 0s linear 0s;
       }
       .detail-overlay.hidden {
         display: block !important;
         opacity: 0; visibility: hidden; pointer-events: none;
-        transition: opacity .22s var(--ease-ui), visibility 0s linear .22s;
+        transition: opacity var(--dur-fast) var(--ease-ui), visibility 0s linear var(--dur-fast);
       }
       .detail-overlay::before { display: none; }
       body.monk-modal-open .modal-side-preview {
@@ -718,13 +705,13 @@
           to bottom,
           var(--surface-soft) 0%,
           var(--surface-soft) 25%,
-          rgba(245, 242, 235, .72) 55%,
-          rgba(245, 242, 235, .3) 80%,
-          rgba(245, 242, 235, 0) 100%
+          rgb(var(--surface-soft-rgb) / .72) 55%,
+          rgb(var(--surface-soft-rgb) / .3) 80%,
+          rgb(var(--surface-soft-rgb) / 0) 100%
         );
       }
       .app-header .app-title {
-        grid-area: title; max-width: none; color: var(--text-primary); text-shadow: none;
+        grid-area: title; max-width: none; color: var(--text-primary);
         font: 600 26px/30px var(--font-serif); text-align: center; letter-spacing: 0;
       }
       .header-actions { display: contents; }
@@ -745,7 +732,7 @@
       }
       .mobile-list-toggle .icon {
         position: absolute;
-        transition: opacity .24s var(--ease-ui), transform .28s var(--motion-standard);
+        transition: opacity var(--dur-base) var(--ease-ui), transform var(--dur-base) var(--motion-standard);
       }
       .mobile-list-toggle .icon-menu {
         opacity: 1; transform: rotate(0deg) scale(1);
@@ -768,7 +755,7 @@
         background: var(--surface-base);
         box-shadow: none;
         opacity: 0; visibility: hidden; pointer-events: none; transform: none;
-        transition: opacity .3s var(--ease-ui), visibility 0s linear .3s;
+        transition: opacity var(--dur-base) var(--ease-ui), visibility 0s linear var(--dur-base);
       }
       .monks-panel > * {
         transform: none;
@@ -786,7 +773,7 @@
       .panel-intro {
         display: flex; flex: 0 0 var(--control-height-m); height: var(--control-height-m); max-width: none;
         align-items: center; justify-content: center;
-        padding: var(--space-2) 0; border-radius: 8px;
+        padding: var(--space-2) 0; border-radius: var(--radius-xs);
         font: 600 16px/20px var(--font-serif);
         transition: none;
       }
@@ -805,12 +792,6 @@
         transform: translateY(1px);
       }
       .card-number { font: 400 24px/1 var(--font-serif); }
-      .mobile-list-close { display: none; }
-      .mobile-reset-btn {
-        display: none;
-        align-self: flex-start; padding: 0; border: 0; background: transparent;
-        color: var(--text-secondary); font: 12px var(--font-sans); text-decoration: underline; cursor: pointer;
-      }
       .search-wrap { flex: 0 0 var(--control-height-m); }
       #search-input { font-size: 16px; }
       #monks-list {
@@ -822,8 +803,8 @@
         overflow: hidden; pointer-events: none; contain: layout paint;
         opacity: 1; visibility: visible; transform: translateY(0);
         transition:
-          opacity .32s var(--motion-standard),
-          transform .32s var(--motion-standard),
+          opacity var(--dur-slow) var(--motion-standard),
+          transform var(--dur-slow) var(--motion-standard),
           visibility 0s linear 0s;
       }
       .app-status { bottom: calc(16px + env(safe-area-inset-bottom)); }
@@ -833,9 +814,9 @@
       body.map-only-view #mobile-card-overlay {
         opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-4px);
         transition:
-          opacity .24s var(--ease-ui),
-          transform .24s var(--ease-ui),
-          visibility 0s linear .24s;
+          opacity var(--dur-base) var(--ease-ui),
+          transform var(--dur-base) var(--ease-ui),
+          visibility 0s linear var(--dur-base);
       }
       body.map-only-view #mobile-card-overlay .mobile-monk-carousel,
       body.mobile-list-open #mobile-card-overlay .mobile-monk-carousel,
@@ -852,20 +833,20 @@
         pointer-events: auto;
       }
       .mobile-monk-carousel.is-entering {
-        animation: mobile-card-enter .34s var(--motion-standard) both;
+        animation: mobile-card-enter var(--dur-slow) var(--motion-standard) both;
       }
       .mobile-monk-carousel::-webkit-scrollbar { display: none; }
       .mobile-monk-card {
         position: relative; display: flex; flex: 0 0 calc(100vw - 64px);
         height: 240px; min-height: 240px; flex-direction: column;
         overflow: hidden; border-radius: var(--radius-m); background: var(--surface-base);
-        box-shadow: 0 6px 18px rgba(17,17,17,.14);
+        box-shadow: var(--shadow-card);
         scroll-snap-align: center; scroll-snap-stop: always;
       }
-      .mobile-card-image { position: relative; flex: 1; min-height: 0; overflow: hidden; background: #e8e6e0; }
+      .mobile-card-image { position: relative; flex: 1; min-height: 0; overflow: hidden; background: var(--surface-placeholder); }
       .mobile-card-image > img {
         display: block; width: 100%; height: 100%; object-fit: cover;
-        opacity: 0; transition: opacity .32s var(--ease-ui);
+        opacity: 0; transition: opacity var(--dur-slow) var(--ease-ui);
       }
       .mobile-card-image > img.is-loaded { opacity: 1; }
       .mobile-card-number {
@@ -897,22 +878,14 @@
         display: flex; width: 100%; gap: var(--space-3); justify-content: center;
         margin-top: 0; padding-top: 0;
       }
-      .mobile-card-read, .mobile-card-maps {
-        display: flex; flex: 1; min-width: 0; height: var(--control-height-s);
+      .mobile-card-read {
+        display: flex; flex: 0 0 auto; min-width: 0; max-width: 100%; height: var(--control-height-s);
         align-items: center; justify-content: center; padding: var(--space-2) var(--space-4);
         border: 0; border-radius: var(--radius-pill); font: 600 14px var(--font-sans);
         text-decoration: none; white-space: nowrap;
-      }
-      .mobile-card-read {
-        flex: 0 0 auto; max-width: 100%;
         background: var(--surface-soft); color: var(--text-primary); cursor: pointer;
       }
       .mobile-card-read:hover { background: var(--surface-hover); }
-      .mobile-card-maps { background: var(--surface-soft); color: var(--text-primary); }
-      .mobile-card-maps span {
-        display: block; width: 100%; overflow: hidden; text-align: center;
-        text-overflow: ellipsis; white-space: nowrap;
-      }
       .maplibregl-ctrl-bottom-right {
         position: fixed;
         top: calc(50dvh - 122px + env(safe-area-inset-top, 0px) / 2);
@@ -923,22 +896,22 @@
         width: auto; max-height: none; touch-action: pan-y;
         border: 0; border-radius: 0; background: transparent;
         opacity: 1; visibility: visible; transform: none;
-        transition: transform .28s var(--motion-standard), opacity .26s var(--motion-standard), visibility 0s linear 0s;
+        transition: transform var(--dur-base) var(--motion-standard), opacity var(--dur-base) var(--motion-standard), visibility 0s linear 0s;
       }
       .monk-detail-modal.hidden {
         opacity: 0; visibility: hidden; pointer-events: none;
         transform: translate3d(0, 20px, 0);
-        transition: transform .24s var(--ease-ui), opacity .24s var(--ease-ui), visibility 0s linear .24s;
+        transition: transform var(--dur-base) var(--ease-ui), opacity var(--dur-base) var(--ease-ui), visibility 0s linear var(--dur-base);
       }
       .monk-detail-modal.slide-from-next {
         z-index: 32;
         transition: none; will-change: transform;
-        animation: detail-card-enter-next .32s var(--motion-standard) both;
+        animation: detail-card-enter-next var(--dur-slow) var(--motion-standard) both;
       }
       .monk-detail-modal.slide-from-previous {
         z-index: 32;
         transition: none; will-change: transform;
-        animation: detail-card-enter-previous .32s var(--motion-standard) both;
+        animation: detail-card-enter-previous var(--dur-slow) var(--motion-standard) both;
       }
       .modal-transition-outgoing {
         position: absolute; z-index: 31; top: 0; right: 0; bottom: 0; left: 0;
@@ -947,10 +920,10 @@
         pointer-events: none; will-change: transform;
       }
       .modal-transition-outgoing.slide-to-previous {
-        animation: detail-card-exit-next .32s var(--motion-standard) both;
+        animation: detail-card-exit-next var(--dur-slow) var(--motion-standard) both;
       }
       .modal-transition-outgoing.slide-to-next {
-        animation: detail-card-exit-previous .32s var(--motion-standard) both;
+        animation: detail-card-exit-previous var(--dur-slow) var(--motion-standard) both;
       }
       .modal-clip {
         display: block;
@@ -977,14 +950,6 @@
         border-radius: var(--radius-m);
         background: var(--surface-base);
       }
-      @keyframes sheet-enter {
-        from { opacity: 0; transform: translate3d(0, 24px, 0); }
-        to { opacity: 1; transform: translate3d(0, 0, 0); }
-      }
-      .monk-detail-modal.sheet-enter {
-        animation: sheet-enter .32s var(--motion-standard) both;
-        will-change: transform, opacity;
-      }
       body.monk-modal-open::after { display: none; }
       #modal-monk-desc { font: 15px/24px var(--font-sans); text-align: center; }
       .modal-close {
@@ -999,7 +964,7 @@
       .app-header .app-title,
       .app-header .mobile-list-toggle,
       .app-header .reset-btn {
-        transition: opacity .24s var(--ease-ui);
+        transition: opacity var(--dur-base) var(--ease-ui);
       }
       body.monk-modal-open .app-header::before,
       body.monk-modal-open .app-header .app-title,
@@ -1092,9 +1057,6 @@
 
   <main class="main-layout">
     <aside class="monks-panel" aria-label="Monastery list">
-      <button id="mobile-list-close" class="mobile-list-close" type="button" aria-label="Close monastery list" data-i18n-aria-label="header.closeList">
-        <i class="icon icon-close" aria-hidden="true"></i>
-      </button>
       <button id="card-intro" class="panel-intro" type="button">
         <span class="panel-intro-inner">
           <i class="icon icon-close-small" aria-hidden="true"></i>
@@ -1102,7 +1064,6 @@
           <i class="icon icon-chevron-right" aria-hidden="true"></i>
         </span>
       </button>
-      <button id="mobile-reset-btn" class="mobile-reset-btn" type="button" data-i18n="header.resetMap">Reset map</button>
       <label class="search-wrap">
         <i class="icon icon-search search-icon" aria-hidden="true"></i>
         <input id="search-input" type="search" placeholder="Search" data-i18n-placeholder="search.placeholder" data-i18n-aria-label="search.ariaLabel" aria-label="Search by monk, monastery, or region">
@@ -1124,7 +1085,7 @@
     </aside>
   </main>
 
-  <script type="module" src="js/app.js?v=figma-sync-37"></script>
+  <script type="module" src="js/app.js?v=figma-sync-40"></script>
 
   <div id="detail-overlay" class="detail-overlay hidden">
     <button id="close-modal-btn" class="modal-close" type="button" aria-label="Close">

@@ -23,7 +23,7 @@ function preloadMonasteryImage(monk) {
 export function initMap(monks, onMarkerClick) {
   mapInstance = new maplibregl.Map({
     container: 'map',
-    style: './assets/map-style.json',
+    style: './data/map-style.json',
     center: [44.8, 41.9],
     zoom: 7.5,
     refreshExpiredTiles: false,

@@ -1,7 +1,7 @@
 import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-11';
 import {
-  initMap, flyToMonk, showPopup, closePopup, resetMapView, setActiveMarker, selectMobileCard, hasMobilePopup, showAllMonks
-} from './map.js?v=figma-sync-30';
+  initMap, flyToMonk, showPopup, closePopup, setActiveMarker, selectMobileCard, hasMobilePopup, showAllMonks
+} from './map.js?v=figma-sync-31';
 import { i18n } from './i18n.js?v=figma-sync-10';
 
 const INTRO_TITLE = 'The origins of the spread of Christianity';
@@ -103,7 +103,7 @@ function openMonkModal(monk, index, direction = 0) {
     const martyrdom = monk.martyrdom ? monk.martyrdom.trim() : '';
     const paragraphs = [
       notable,
-      martyrdom ? `<strong class="text-stone-700">Repose:</strong> ${martyrdom}` : ''
+      martyrdom ? `<strong>Repose:</strong> ${martyrdom}` : ''
     ].filter(Boolean);
 
     descContainer.innerHTML = paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('');
@@ -447,26 +447,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     searchInput?.focus();
   });
 
-  const resetMap = () => {
-    selectionRevision += 1;
-    if (searchInput) searchInput.value = '';
-    renderFilteredCards();
-    resetMapView();
-    closeMonkModal();
-    setMobileListOpen(false);
-    document.body.classList.remove('map-only-view');
-    updateMapViewButton();
-  };
   document.getElementById('reset-btn')?.addEventListener('click', () => {
     setMobileListOpen(false);
     document.body.classList.toggle('map-only-view');
     updateMapViewButton();
   });
-  document.getElementById('mobile-reset-btn')?.addEventListener('click', resetMap);
   document.getElementById('mobile-list-toggle')?.addEventListener('click', () => {
     setMobileListOpen(!document.body.classList.contains('mobile-list-open'));
   });
-  document.getElementById('mobile-list-close')?.addEventListener('click', () => setMobileListOpen(false));
 
   renderFilteredCards();
   monkList?.classList.add('is-revealing');
