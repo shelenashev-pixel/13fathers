@@ -9,10 +9,21 @@ let currentMobileCardCleanup = null;
 let currentMobileCardSelect = null;
 const loadedImages = new Set();
 
+function preloadMonasteryImage(monk) {
+  const src = monk?.imageUrl || (monk?.id ? `./images/monasteries/${monk.id}.webp` : '');
+  if (!src || loadedImages.has(src)) return;
+  const preload = new Image();
+  preload.onload = () => {
+    loadedImages.add(src);
+    preload.decode?.().catch(() => {});
+  };
+  preload.src = src;
+}
+
 export function initMap(monks, onMarkerClick) {
   mapInstance = new maplibregl.Map({
     container: 'map',
-    style: './assets/i7nro2p20%20(1).json',
+    style: './assets/map-style.json',
     center: [44.8, 41.9],
     zoom: 7.5,
     refreshExpiredTiles: false,
@@ -37,14 +48,6 @@ export function initMap(monks, onMarkerClick) {
   mapInstance.once('load', collapseAttribution);
 
   monks.forEach((monk) => {
-    if (monk.imageUrl) {
-      const preload = new Image();
-      preload.onload = () => {
-        loadedImages.add(monk.imageUrl);
-        preload.decode?.().catch(() => {});
-      };
-      preload.src = monk.imageUrl;
-    }
     if (!monk.coordinates) return;
 
     const el = document.createElement('div');
@@ -67,6 +70,8 @@ export function initMap(monks, onMarkerClick) {
       onMarkerClick?.(monk.id);
     };
     marker.getElement().addEventListener('click', selectMarker);
+    marker.getElement().addEventListener('pointerenter', () => preloadMonasteryImage(monk), { once: true });
+    marker.getElement().addEventListener('focus', () => preloadMonasteryImage(monk), { once: true });
     marker.getElement().addEventListener('keydown', (event) => {
       if (event.key !== 'Enter' && event.key !== ' ') return;
       event.preventDefault();
@@ -133,6 +138,7 @@ export function showAllMonks({ duration = 900 } = {}) {
 export function flyToMonk(monk, { duration } = {}) {
   if (!mapInstance || !monk || !monk.coordinates) return Promise.resolve();
 
+  preloadMonasteryImage(monk);
   mapInstance.stop();
   mapInstance.resize();
   setActiveMarker(monk);
@@ -219,7 +225,7 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
             </a>
           ` : ''}
         </div>
-        <img class="mobile-card-icon" src="${item.iconUrl || `./images/icons/${item.id}.jpg`}" alt="" width="48" height="48" loading="lazy" decoding="async" onerror="this.style.display='none'" />
+        <img class="mobile-card-icon" src="${item.iconUrl || `./images/icons/${item.id}.webp`}" alt="" width="48" height="48" loading="lazy" decoding="async" onerror="this.style.display='none'" />
         <div class="mobile-card-content">
           <h2 class="mobile-card-name" data-i18n="monks.${item.id}.monastery">${i18n.t(`monks.${item.id}.monastery`, item.monastery)}</h2>
           <p class="mobile-card-monastery" data-i18n="monks.${item.id}.region">${i18n.t(`monks.${item.id}.region`, item.region || '')}</p>

@@ -8,6 +8,7 @@
   <meta name="theme-color" content="#f5f2eb">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>13 Assyrian Monks in Georgia</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -469,7 +470,7 @@
     }
     .modal-close:hover { color: #777; }
     #modal-monk-index { display: block; margin-bottom: var(--space-6); color: var(--text-primary); font: 600 16px/20px var(--font-serif); }
-    #modal-monk-name { margin: 0 0 var(--space-6); color: var(--text-primary); font: 400 24px/28px var(--font-serif); }
+    #modal-monk-name { margin: 0 0 var(--space-6); color: var(--text-primary); font: 400 24px/26px var(--font-serif); }
     .modal-icon-frame {
       position: relative; display: grid; width: 160px; height: 160px; margin: 0 auto var(--space-6);
       overflow: hidden; place-items: center; border: 0;
@@ -481,9 +482,12 @@
     .modal-icon-frame.is-missing .modal-icon-fallback { display: block; }
     #modal-monk-desc { margin: 0; color: var(--text-primary); font: 14px/22px var(--font-sans); text-align: center; }
     #modal-monk-desc section { text-align: center; }
-    #modal-monk-desc section + section { margin-top: var(--space-6); }
+    #modal-monk-desc section + section { margin-top: 48px; }
     #modal-monk-desc h3 {
-      margin: 0 0 var(--space-2); color: var(--text-primary); font: 600 16px/20px var(--font-serif);
+      margin: 0 0 var(--space-6); color: var(--text-primary); font: 400 24px/26px var(--font-serif);
+    }
+    .monk-detail-modal.is-intro #modal-monk-desc > section:first-child h3 {
+      margin-top: var(--space-6);
     }
     #modal-monk-desc p + p { margin-top: var(--space-3); }
     #modal-monk-desc ul {
@@ -492,6 +496,7 @@
     #modal-monk-desc li + li { margin-top: var(--space-2); }
     .desktop-modal-gmaps-wrap { display: none; }
     .monk-detail-modal.is-intro #modal-monk-index,
+    .monk-detail-modal.is-intro #modal-monk-name,
     .monk-detail-modal.is-intro .modal-icon-frame,
     .monk-detail-modal.is-intro .desktop-modal-gmaps-wrap,
     .monk-detail-modal.is-intro .desktop-detail-nav { display: none; }
@@ -618,7 +623,7 @@
       }
       .modal-transition-outgoing { display: none !important; }
       .modal-content { padding: var(--space-6) 18px 96px var(--space-6); }
-      #modal-monk-index { margin-bottom: 26px; }
+      #modal-monk-index { margin-bottom: 27px; }
       .desktop-modal-gmaps-wrap {
         display: flex; justify-content: center; margin-top: var(--space-6);
       }
@@ -1119,7 +1124,7 @@
     </aside>
   </main>
 
-  <script type="module" src="js/app.js?v=figma-sync-36"></script>
+  <script type="module" src="js/app.js?v=figma-sync-37"></script>
 
   <div id="detail-overlay" class="detail-overlay hidden">
     <button id="close-modal-btn" class="modal-close" type="button" aria-label="Close">

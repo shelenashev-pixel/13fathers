@@ -46,7 +46,7 @@ export function renderCards(monks, allMonks, onSelect, emptyState = null) {
       <span class="card-number">${originalIndex}</span>
       <span class="card-icon-frame">
         <img
-          src="${monk.iconUrl || `./images/icons/${monk.id}.jpg`}"
+          src="${monk.iconUrl || `./images/icons/${monk.id}.webp`}"
           alt=""
           width="48"
           height="48"

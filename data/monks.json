@@ -32,7 +32,7 @@
   },
   {
     "id": "stepane-khirsa",
-    "iconUrl": "./images/icons/stephen-khirsa.jpg",
+    "iconUrl": "./images/icons/stephen-khirsa.webp",
     "name": "Stephane of Khirsa",
     "monastery": "Khirsa Monastery",
     "georgianName": "სტეფანე ხირსელი",
@@ -95,7 +95,7 @@
   },
   {
     "id": "tadeoz-stepantsminda",
-    "iconUrl": "./images/icons/thaddeus-stepantsminda.jpg",
+    "iconUrl": "./images/icons/thaddeus-stepantsminda.webp",
     "name": "Tadeoz of Stepantsminda",
     "monastery": "Tetrakhevi Monastery",
     "georgianName": "თადეოზ სტეფანწმინდელი",
@@ -127,7 +127,7 @@
   },
   {
     "id": "zenon-ikhalto",
-    "iconUrl": "./images/icons/zenon-iqalto.jpg",
+    "iconUrl": "./images/icons/zenon-iqalto.webp",
     "name": "Zenon of Ikhalto",
     "monastery": "Ikhalto Monastery",
     "georgianName": "ზენონ იყალთოელი",
@@ -159,7 +159,7 @@
   },
   {
     "id": "davit-gareja",
-    "iconUrl": "./images/icons/david-gareji.jpg",
+    "iconUrl": "./images/icons/david-gareji.webp",
     "name": "Davit of Gareja",
     "monastery": "David Gareja Lavra",
     "georgianName": "დავით გარეჯელი",
@@ -191,7 +191,7 @@
   },
   {
     "id": "ioseb-alaverdi",
-    "iconUrl": "./images/icons/joseph-alaverdi.jpg",
+    "iconUrl": "./images/icons/joseph-alaverdi.webp",
     "name": "Ioseb of Alaverdi",
     "monastery": "Alaverdi Cathedral",
     "georgianName": "იოსებ ალავერდელი",
@@ -316,7 +316,7 @@
   },
   {
     "id": "isidor-samtavisi",
-    "iconUrl": "./images/icons/isidore-samtavisi.jpg",
+    "iconUrl": "./images/icons/isidore-samtavisi.webp",
     "name": "Isidore of Samtavisi",
     "monastery": "Samtavisi Cathedral",
     "georgianName": "ისიდორე სამთავნელი",
@@ -348,7 +348,7 @@
   },
   {
     "id": "piros-breti",
-    "iconUrl": "./images/icons/pyrrhus-breti.jpg",
+    "iconUrl": "./images/icons/pyrrhus-breti.webp",
     "name": "Piros of Breti",
     "monastery": "Breti Monastery",
     "georgianName": "პიროზ ბრეთელი",
@@ -380,7 +380,7 @@
   },
   {
     "id": "mikhail-ulumbo",
-    "iconUrl": "./images/icons/michael-ulumbo.jpg",
+    "iconUrl": "./images/icons/michael-ulumbo.webp",
     "name": "Mikhail of Ulumbo",
     "monastery": "Ulumbo Monastery",
     "georgianName": "მიქაელ ულუმბოელი",

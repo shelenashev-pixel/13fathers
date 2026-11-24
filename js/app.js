@@ -1,7 +1,7 @@
-import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-10';
+import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-11';
 import {
   initMap, flyToMonk, showPopup, closePopup, resetMapView, setActiveMarker, selectMobileCard, hasMobilePopup, showAllMonks
-} from './map.js?v=figma-sync-29';
+} from './map.js?v=figma-sync-30';
 import { i18n } from './i18n.js?v=figma-sync-10';
 
 const INTRO_TITLE = 'The origins of the spread of Christianity';
@@ -68,7 +68,7 @@ function openMonkModal(monk, index, direction = 0) {
   iconFrame?.classList.remove('is-missing');
   icon.onload = () => iconFrame?.classList.remove('is-missing');
   icon.onerror = () => iconFrame?.classList.add('is-missing');
-  icon.src = monk.iconUrl || `./images/icons/${monk.id}.jpg`;
+  icon.src = monk.iconUrl || `./images/icons/${monk.id}.webp`;
   ['modal-monk-gmaps', 'modal-monk-gmaps-desktop'].forEach((id) => {
     const gmapsLink = document.getElementById(id);
     if (!gmapsLink) return;
