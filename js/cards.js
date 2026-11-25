@@ -1,4 +1,4 @@
-import { i18n } from './i18n.js?v=figma-sync-12';
+import { i18n } from './i18n.js?v=figma-sync-13';
 
 let onCardClickCallback = null;
 

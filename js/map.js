@@ -1,5 +1,5 @@
-import { i18n } from './i18n.js?v=figma-sync-12';
-import { trackEvent } from './analytics.js?v=analytics-3';
+import { i18n } from './i18n.js?v=figma-sync-13';
+import { trackEvent } from './analytics.js?v=analytics-4';
 
 let mapInstance = null;
 let markersMap = {};

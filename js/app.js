@@ -1,8 +1,8 @@
-import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-15';
+import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-16';
 import {
   initMap, flyToMonk, showPopup, closePopup, setActiveMarker, selectMobileCard, hasMobilePopup, showAllMonks
-} from './map.js?v=figma-sync-35';
-import { i18n } from './i18n.js?v=figma-sync-12';
+} from './map.js?v=figma-sync-36';
+import { i18n, getRouteFromLocation, buildLocalizedPath } from './i18n.js?v=figma-sync-13';
 import { initAnalytics, trackEvent } from './analytics.js?v=analytics-4';
 
 const INTRO_TITLE = 'The origins of the spread of Christianity';
@@ -18,6 +18,30 @@ const INTRO_SECTIONS_FALLBACK = [
 let allMonksData = [];
 let selectionRevision = 0;
 let activeMonkId = null;
+
+function syncRouteAndMeta(monkId = activeMonkId) {
+  const siteTitle = i18n.t('app.title', '13 Assyrian fathers in Georgia');
+  const monk = monkId ? allMonksData.find((m) => m.id === monkId) : null;
+  if (monk) {
+    const monkName = i18n.t(`monks.${monk.id}.name`, monk.name);
+    const monastery = i18n.t(`monks.${monk.id}.monastery`, monk.monastery);
+    document.title = `${monkName} — ${monastery} | ${siteTitle}`;
+  } else {
+    document.title = siteTitle;
+  }
+
+  if (window.location.protocol !== 'file:') {
+    const targetPath = buildLocalizedPath(i18n.currentLang, monk ? monk.id : null);
+    const nextUrl = targetPath + window.location.search + window.location.hash;
+    if (window.location.pathname + window.location.search + window.location.hash !== nextUrl) {
+      try {
+        window.history.replaceState(null, '', nextUrl);
+      } catch {
+        // Ignore history restrictions
+      }
+    }
+  }
+}
 
 function trackMonkSelection(monkId, source) {
   if (!monkId) return;
@@ -212,9 +236,11 @@ function openMonkDetails(monkId) {
 }
 
 export function closeMonkModal() {
+  activeMonkId = null;
   closePopup();
   closeDetailModal();
   highlightActiveCard(null);
+  syncRouteAndMeta(null);
 }
 
 function closeDetailModal({ syncMap = true } = {}) {
@@ -277,6 +303,7 @@ function syncActiveMonkOnMobile(monkId, {
 
   const monk = allMonksData[index];
   activeMonkId = monkId;
+  syncRouteAndMeta(monkId);
   document.body.classList.remove('map-only-view');
   updateMapViewButton();
   setActiveMarker(monk);
@@ -303,6 +330,7 @@ export function handleSelectMonk(monkId, {
   const originalIndex = allMonksData.findIndex(m => m.id === monk.id) + 1;
   const isMobile = window.matchMedia('(max-width: 760px)').matches;
   activeMonkId = monk.id;
+  syncRouteAndMeta(monk.id);
   trackMonkSelection(monk.id, source);
 
   document.body.classList.remove('map-only-view');
@@ -498,24 +526,40 @@ document.addEventListener('DOMContentLoaded', async () => {
   monkList?.classList.add('is-revealing');
   window.setTimeout(() => monkList?.classList.remove('is-revealing'), 400);
   monkList?.setAttribute('aria-busy', 'false');
-  if (window.matchMedia('(max-width: 760px)').matches && allMonksData[0]?.coordinates) {
-    activeMonkId = allMonksData[0].id;
-    setActiveMarker(allMonksData[0]);
-    showPopup(
-      allMonksData[0],
-      () => {
-        closeDetailModal();
-        highlightActiveCard(null);
-      },
-      (selectedMonkId) => openMonkDetails(selectedMonkId),
-      1,
-      (targetIndex) => {
-        const selectedMonk = allMonksData[targetIndex];
-        if (selectedMonk) handleSelectMonk(selectedMonk.id, { fromSwipe: true, source: 'prev_next' });
-      },
-      allMonksData
-    );
-    flyToMonk(allMonksData[0]);
+  i18n.onChange(() => {
+    renderFilteredCards();
+    syncRouteAndMeta(activeMonkId);
+  });
+
+  const { monkId: initialMonkId } = getRouteFromLocation();
+  const initialMonk = initialMonkId ? allMonksData.find((monk) => monk.id === initialMonkId) : null;
+
+  if (initialMonk) {
+    handleSelectMonk(initialMonk.id, {
+      source: 'direct_url',
+      keepModalOpen: window.matchMedia('(max-width: 760px)').matches
+    });
+  } else {
+    syncRouteAndMeta(null);
+    if (window.matchMedia('(max-width: 760px)').matches && allMonksData[0]?.coordinates) {
+      activeMonkId = allMonksData[0].id;
+      setActiveMarker(allMonksData[0]);
+      showPopup(
+        allMonksData[0],
+        () => {
+          closeDetailModal();
+          highlightActiveCard(null);
+        },
+        (selectedMonkId) => openMonkDetails(selectedMonkId),
+        1,
+        (targetIndex) => {
+          const selectedMonk = allMonksData[targetIndex];
+          if (selectedMonk) handleSelectMonk(selectedMonk.id, { fromSwipe: true, source: 'prev_next' });
+        },
+        allMonksData
+      );
+      flyToMonk(allMonksData[0]);
+    }
   }
 
   // Кнопка закрытия модального окна

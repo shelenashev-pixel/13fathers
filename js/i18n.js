@@ -1,4 +1,4 @@
-import { trackEvent } from './analytics.js?v=analytics-3';
+import { trackEvent } from './analytics.js?v=analytics-4';
 
 const STORAGE_KEY = '13monks_lang';
 const DEFAULT_LANG = 'en';
@@ -8,13 +8,47 @@ const LANGUAGES = {
   ru: { flag: '🇷🇺', label: 'Русский' }
 };
 
+export function getRouteFromLocation(pathname = window.location.pathname) {
+  const segments = String(pathname || '/').split('/').filter(Boolean);
+  let lang = null;
+  let monkId = document.documentElement.dataset.monkId || null;
+
+  if (segments[0] && Object.prototype.hasOwnProperty.call(LANGUAGES, segments[0])) {
+    lang = segments[0];
+    if (!monkId && segments[1] && segments[1] !== 'index.html') {
+      monkId = segments[1];
+    }
+  } else if (segments[0] && segments[0] !== 'index.html') {
+    lang = DEFAULT_LANG;
+    if (!monkId) {
+      monkId = segments[0];
+    }
+  }
+
+  return { lang, monkId };
+}
+
+export function buildLocalizedPath(lang, monkId = null) {
+  const safeLang = Object.prototype.hasOwnProperty.call(LANGUAGES, lang) ? lang : DEFAULT_LANG;
+  const parts = [];
+  if (safeLang !== DEFAULT_LANG) parts.push(safeLang);
+  if (monkId) parts.push(monkId);
+  return parts.length ? `/${parts.join('/')}/` : '/';
+}
+
 class I18nManager {
   constructor() {
-    this.currentLang = this.getSavedLanguage();
+    this.currentLang = this.getInitialLanguage();
     this.cache = new Map();
     this.dictionary = {};
     this.listeners = new Set();
     this.pendingRequest = null;
+  }
+
+  getInitialLanguage() {
+    const { lang: routeLang } = getRouteFromLocation();
+    if (routeLang) return routeLang;
+    return this.getSavedLanguage();
   }
 
   getSavedLanguage() {
