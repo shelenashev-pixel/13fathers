@@ -1,5 +1,5 @@
 /**
- * Lightweight, non-blocking PostHog analytics for 13monks.
+ * Lightweight, non-blocking PostHog analytics for 13fathers.
  *
  * Paste your PostHog Project API Key (`phc_...`) into `POSTHOG_KEY` below.
  * Switch `POSTHOG_HOST` to 'https://us.i.posthog.com' if your project is on US Cloud.
@@ -7,7 +7,8 @@
 export const POSTHOG_KEY = 'phc_mEHSJohwN7PHjokwQocFvxTqDFS7WY3qGFu96oBXCF6t';
 export const POSTHOG_HOST = 'https://eu.i.posthog.com';
 
-const OPT_OUT_STORAGE_KEY = '13monks_analytics_opt_out';
+const OPT_OUT_STORAGE_KEY = '13fathers_analytics_opt_out';
+const LEGACY_OPT_OUT_KEY = '13monks_analytics_opt_out';
 
 let isInitialized = false;
 let isTrackingEnabled = false;
@@ -27,16 +28,22 @@ function syncOptOutPreference() {
 
     if (param === '1' || param === 'true') {
       window.localStorage.setItem(OPT_OUT_STORAGE_KEY, '1');
+      window.localStorage.removeItem(LEGACY_OPT_OUT_KEY);
       optedOut = true;
       url.searchParams.delete('notrack');
       window.history.replaceState(null, '', url.pathname + url.search + url.hash);
     } else if (param === '0' || param === 'false') {
       window.localStorage.removeItem(OPT_OUT_STORAGE_KEY);
+      window.localStorage.removeItem(LEGACY_OPT_OUT_KEY);
       optedOut = false;
       explicitOptIn = true;
       url.searchParams.delete('notrack');
       window.history.replaceState(null, '', url.pathname + url.search + url.hash);
     } else {
+      if (window.localStorage.getItem(LEGACY_OPT_OUT_KEY) === '1') {
+        window.localStorage.setItem(OPT_OUT_STORAGE_KEY, '1');
+        window.localStorage.removeItem(LEGACY_OPT_OUT_KEY);
+      }
       optedOut = window.localStorage.getItem(OPT_OUT_STORAGE_KEY) === '1';
     }
   } catch {

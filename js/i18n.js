@@ -1,6 +1,6 @@
 import { trackEvent } from './analytics.js?v=analytics-4';
 
-const STORAGE_KEY = '13monks_lang';
+const STORAGE_KEY = '13fathers_lang';
 const DEFAULT_LANG = 'en';
 const LANGUAGES = {
   en: { flag: '🇬🇧', label: 'English' },
