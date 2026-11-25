@@ -7,12 +7,43 @@
 export const POSTHOG_KEY = 'phc_mEHSJohwN7PHjokwQocFvxTqDFS7WY3qGFu96oBXCF6t';
 export const POSTHOG_HOST = 'https://eu.i.posthog.com';
 
+const OPT_OUT_STORAGE_KEY = '13monks_analytics_opt_out';
+
 let isInitialized = false;
 let isTrackingEnabled = false;
 
 function isLocalEnvironment() {
   const { protocol, hostname } = window.location;
   return protocol === 'file:' || hostname === 'localhost' || hostname === '127.0.0.1';
+}
+
+function syncOptOutPreference() {
+  let optedOut = false;
+  let explicitOptIn = false;
+
+  try {
+    const url = new URL(window.location.href);
+    const param = url.searchParams.get('notrack');
+
+    if (param === '1' || param === 'true') {
+      window.localStorage.setItem(OPT_OUT_STORAGE_KEY, '1');
+      optedOut = true;
+      url.searchParams.delete('notrack');
+      window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+    } else if (param === '0' || param === 'false') {
+      window.localStorage.removeItem(OPT_OUT_STORAGE_KEY);
+      optedOut = false;
+      explicitOptIn = true;
+      url.searchParams.delete('notrack');
+      window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+    } else {
+      optedOut = window.localStorage.getItem(OPT_OUT_STORAGE_KEY) === '1';
+    }
+  } catch {
+    optedOut = false;
+  }
+
+  return { optedOut, explicitOptIn };
 }
 
 function isDebugEnabled() {
@@ -97,8 +128,9 @@ export function initAnalytics() {
   if (isInitialized) return;
   isInitialized = true;
 
+  const { optedOut, explicitOptIn } = syncOptOutPreference();
   const key = POSTHOG_KEY.trim();
-  if (!key || isLocalEnvironment()) {
+  if (!key || isLocalEnvironment() || optedOut) {
     isTrackingEnabled = false;
     return;
   }
@@ -108,6 +140,9 @@ export function initAnalytics() {
   const start = () => {
     try {
       loadPostHogSnippet(key, POSTHOG_HOST);
+      if (explicitOptIn && window.posthog && typeof window.posthog.opt_in_capturing === 'function') {
+        window.posthog.opt_in_capturing();
+      }
     } catch {
       // Never let analytics failures break the app
     }
