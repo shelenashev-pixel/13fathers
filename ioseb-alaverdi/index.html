@@ -28,7 +28,7 @@
   <meta name="twitter:title" content="Ioseb of Alaverdi — Alaverdi Cathedral | 13 Assyrian Fathers in Georgia">
   <meta name="twitter:description" content="Ioseb of Alaverdi (Alaverdi Cathedral, Kakheti (Akhmeta)) — one of the 13 Assyrian Fathers in Georgia. After parting with Ioane of Zedazeni, Ioseb moved into…">
   <meta name="twitter:image" content="https://13fathers.ge/images/monasteries/joseph-alaverdi.webp">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"13 Assyrian Fathers","item":"https://13fathers.ge/"},{"@type":"ListItem","position":2,"name":"Ioseb of Alaverdi","item":"https://13fathers.ge/ioseb-alaverdi/"}]},{"@type":"Person","@id":"https://13fathers.ge/ioseb-alaverdi/#person","name":"Ioseb of Alaverdi","alternateName":["Joseph of Alaverdi","Ioseb Alaverdeli"],"description":"After parting with Ioane of Zedazeni, Ioseb moved into northern Kakheti, onto the Alazani plain beneath the wall of the Greater Caucasus. According to tradition, the area was sparsely inhabited and nearby highlanders gathered there for seasonal festivals of a moon deity. Ioseb built a small church dedicated to St. George; hagiography notes that…","image":"https://13fathers.ge/images/monasteries/joseph-alaverdi.webp","url":"https://13fathers.ge/ioseb-alaverdi/","workLocation":{"@id":"https://13fathers.ge/ioseb-alaverdi/#monastery"}},{"@type":"LandmarksOrHistoricalBuildings","@id":"https://13fathers.ge/ioseb-alaverdi/#monastery","name":"Alaverdi Cathedral","description":"St. George Cathedral was built in the early 11th century by King Kvirike III of Kakheti, incorporating the foundation of the 6th-century church. Rising over 50 meters, it is enclosed by a fortified wall and articulated outside with restrained blind arcades. Inside, after 19th-century whitewash was…","image":"https://13fathers.ge/images/monasteries/joseph-alaverdi.webp","address":{"@type":"PostalAddress","addressRegion":"Kakheti (Akhmeta)","addressCountry":"GE"},"geo":{"@type":"GeoCoordinates","latitude":42.0108,"longitude":45.367},"hasMap":"https://www.google.com/maps/place/Alaverdi+Monastery/@42.032484,45.3772068,17z/data=!3m1!4b1!4m6!3m5!1s0x4045b5a2f185196f:0x5ed1db1b09239e1d!8m2!3d42.032484!4d45.3772068!16zL20vMDVsbDk2"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"13 Assyrian Fathers","item":"https://13fathers.ge/"},{"@type":"ListItem","position":2,"name":"Ioseb of Alaverdi","item":"https://13fathers.ge/ioseb-alaverdi/"}]},{"@type":"Person","@id":"https://13fathers.ge/ioseb-alaverdi/#person","name":"Ioseb of Alaverdi","alternateName":["Joseph of Alaverdi","Ioseb Alaverdeli"],"description":"After parting with Ioane of Zedazeni, Ioseb moved into northern Kakheti, onto the wide plain of the Alazani River at the foot of the Greater Caucasus. According to tradition, the area was sparsely settled then, and neighboring highlanders came down here for seasonal festivals of a moon deity. Ioseb built a small church dedicated to St. George…","image":"https://13fathers.ge/images/monasteries/joseph-alaverdi.webp","url":"https://13fathers.ge/ioseb-alaverdi/","workLocation":{"@id":"https://13fathers.ge/ioseb-alaverdi/#monastery"}},{"@type":"LandmarksOrHistoricalBuildings","@id":"https://13fathers.ge/ioseb-alaverdi/#monastery","name":"Alaverdi Cathedral","description":"In the early 11th century, St. George Cathedral was raised directly over the foundations of the 6th-century church. Standing more than fifty meters tall, it can be spotted across the flat plain from far away; a fortified stone wall encloses the grounds, while the austere facades are articulated…","image":"https://13fathers.ge/images/monasteries/joseph-alaverdi.webp","address":{"@type":"PostalAddress","addressRegion":"Kakheti (Akhmeta)","addressCountry":"GE"},"geo":{"@type":"GeoCoordinates","latitude":42.0108,"longitude":45.367},"hasMap":"https://www.google.com/maps/place/Alaverdi+Monastery/@42.032484,45.3772068,17z/data=!3m1!4b1!4m6!3m5!1s0x4045b5a2f185196f:0x5ed1db1b09239e1d!8m2!3d42.032484!4d45.3772068!16zL20vMDVsbDk2"}]}</script>
   <!-- SEO_META_END -->
   <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2">
 
@@ -79,7 +79,7 @@
       --motion-standard: cubic-bezier(.22, 1, .36, 1);
       --ease-ui: cubic-bezier(.4, 0, .2, 1);
       --shadow-button: 0 4px 8px rgba(17,17,17,.16);
-      --shadow-card: 0 8px 24px rgba(17,17,17,.14);
+      --shadow-card: 0 4px 12px rgba(17,17,17,.10);
       --font-serif: 'Prata', Georgia, serif;
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
@@ -219,7 +219,7 @@
     .language-menu {
       position: absolute; top: calc(100% + var(--space-1)); left: 50%;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: var(--space-1); border-radius: var(--radius-m);
+      padding: var(--space-1); border-radius: var(--radius-pill);
       background: var(--surface-base); box-shadow: var(--shadow-button);
       opacity: 1; visibility: visible; pointer-events: auto;
       transform: translateX(-50%) translateY(0) scale(1);
@@ -510,6 +510,13 @@
     }
     #modal-monk-desc li + li { margin-top: var(--space-2); }
     .desktop-modal-gmaps-wrap { display: none; }
+    .intro-contact-wrap { display: none; justify-content: center; margin-top: 96px; }
+    .monk-detail-modal.is-intro .intro-contact-wrap { display: flex; }
+    .intro-contact-link {
+      color: var(--text-secondary); font: 14px/22px var(--font-sans);
+      text-decoration: underline; text-underline-offset: 4px;
+    }
+    .intro-contact-link:hover { color: var(--text-primary); }
     .monk-detail-modal.is-intro #modal-monk-index,
     .monk-detail-modal.is-intro #modal-monk-name,
     .monk-detail-modal.is-intro .modal-icon-frame,
@@ -633,6 +640,7 @@
       }
       .modal-transition-outgoing { display: none !important; }
       .modal-content { padding: var(--space-6) 18px 96px var(--space-6); }
+      .monk-detail-modal.is-intro .modal-content { padding-bottom: 48px; }
       #modal-monk-index { margin-bottom: 27px; }
       .desktop-modal-gmaps-wrap {
         display: flex; justify-content: center; margin-top: var(--space-6);
@@ -822,7 +830,7 @@
         padding-bottom: calc(100lvh - 100dvh + 96px + env(safe-area-inset-bottom, 0px));
       }
       #mobile-card-overlay {
-        position: fixed; z-index: 25; right: 0; bottom: 12px; left: 0;
+        position: fixed; z-index: 25; right: 0; bottom: 0; left: 0;
         overflow: hidden; pointer-events: none; contain: layout paint;
         opacity: 1; visibility: visible; transform: translateY(0);
         transition:
@@ -850,7 +858,7 @@
       }
       .mobile-monk-carousel {
         display: flex; width: 100%; gap: var(--space-4); overflow-x: auto; overflow-y: visible;
-        padding: 4px var(--space-8) 4px;
+        padding: 12px var(--space-8) 16px;
         scroll-snap-type: x mandatory; scrollbar-width: none;
         -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; touch-action: pan-x;
         pointer-events: auto;
@@ -873,17 +881,16 @@
       }
       .mobile-card-image > img.is-loaded { opacity: 1; }
       .mobile-card-number {
-        position: absolute; top: var(--space-5); left: var(--space-5); z-index: 1;
+        position: absolute; top: var(--space-5); left: var(--space-3); z-index: 1;
         display: grid; width: var(--control-height-m); height: var(--control-height-m); place-items: center;
-        border-radius: var(--radius-pill); background: var(--surface-soft); color: var(--text-primary);
-        font: 400 20px/24px var(--font-serif);
+        color: var(--text-inverse); font: 400 20px/24px var(--font-serif); text-align: center;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, .6), 0 0 10px rgba(0, 0, 0, .3);
       }
       .mobile-card-location {
         position: absolute; top: var(--space-5); right: var(--space-5); z-index: 1;
         display: grid; width: var(--control-height-m); height: var(--control-height-m); place-items: center;
         padding: var(--space-2); border-radius: var(--radius-pill); background: var(--surface-soft); color: var(--text-primary);
       }
-      .mobile-card-icon { display: none; }
       .mobile-card-content {
         position: relative; display: flex; flex: 0 0 auto; flex-direction: column;
         align-items: center; padding: var(--space-5) var(--space-4) var(--space-3); text-align: center;
@@ -961,6 +968,12 @@
         mask-image: radial-gradient(white, black);
         isolation: isolate;
       }
+      .monk-detail-modal.is-intro .modal-clip {
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border-radius: var(--radius-m) var(--radius-m) 0 0;
+      }
       .modal-content {
         position: absolute; inset: 0; margin: 0; padding: 72px 0 0; overflow-x: hidden; overflow-y: auto;
         -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain;
@@ -969,12 +982,18 @@
       }
       .modal-card {
         min-height: 100%;
-        padding: var(--space-6) var(--space-4) calc(100lvh - 100dvh + 136px + env(safe-area-inset-bottom, 0px));
+        padding: var(--space-6) var(--space-4) calc(100lvh - 100dvh + 176px + env(safe-area-inset-bottom, 0px));
         border-radius: var(--radius-m);
         background: var(--surface-base);
       }
+      .monk-detail-modal.is-intro .modal-card {
+        padding-bottom: calc(100lvh - 100dvh + 120px + env(safe-area-inset-bottom, 0px));
+        border-radius: var(--radius-m) var(--radius-m) 0 0;
+      }
       body.monk-modal-open::after { display: none; }
-      #modal-monk-desc { font: 15px/24px var(--font-sans); text-align: center; }
+      #modal-monk-desc { font: 17px/24px var(--font-sans); text-align: left; }
+      .monk-detail-modal.is-intro #modal-monk-desc { text-align: center; }
+      .intro-contact-link { font: 17px/24px var(--font-sans); }
       .modal-close {
         position: fixed; top: calc(var(--space-6) + env(safe-area-inset-top, 0px)); left: var(--space-4);
         z-index: 100; display: flex; width: var(--control-height-m); height: var(--control-height-m);
@@ -1204,7 +1223,7 @@
     </aside>
   </main>
 
-  <script type="module" src="js/app.js?v=figma-sync-46"></script>
+  <script type="module" src="js/app.js?v=figma-sync-51"></script>
 
   <div id="detail-overlay" class="detail-overlay hidden">
     <button id="close-modal-btn" class="modal-close" type="button" aria-label="Close">
@@ -1222,12 +1241,15 @@
           <img id="modal-monk-icon" class="modal-icon" src="" alt="" width="160" height="160" decoding="async">
           <i class="icon icon-cross modal-icon-fallback" aria-hidden="true"></i>
         </div>
-        <div id="modal-monk-desc"><section><p>After parting with Ioane of Zedazeni, Ioseb moved into northern Kakheti, onto the Alazani plain beneath the wall of the Greater Caucasus. According to tradition, the area was sparsely inhabited and nearby highlanders gathered there for seasonal festivals of a moon deity. Ioseb built a small church dedicated to St. George; hagiography notes that he wore a cross containing a fragment of the True Cross.</p><p>Medieval hagiography links the monastery's later rise to a chance encounter on a hunt. A Kakhetian nobleman riding through the thickets of the Alazani plain came upon the solitary monk at prayer; impressed by both the man and his relic, the prince funded the first stone church and enlisted neighboring villages to protect the community. From that modest 6th-century building grew, in the early 11th century, a cathedral that remained the tallest church in Georgia for a long time.</p><p>Ioseb was buried in the church he founded, and when the 11th-century cathedral was raised, his tomb was preserved in the northern part of the sanctuary. The Georgian Orthodox Church venerates him as Venerable Ioseb (Joseph) of Alaverdi; the regional festival of Alaverdoba is held in late September.</p></section><section><h3>The Monastery</h3><p>St. George Cathedral was built in the early 11th century by King Kvirike III of Kakheti, incorporating the foundation of the 6th-century church. Rising over 50 meters, it is enclosed by a fortified wall and articulated outside with restrained blind arcades. Inside, after 19th-century whitewash was cleaned away, frescoes of the 11th, 15th, and 16th centuries came to light—among them a Virgin and Child in the apse and a rare portrait of Ioseb above his tomb.</p><p>Alaverdi is an active men's monastery and the seat of the Metropolitan of Alaverdi. The monks run a working estate: they tend vineyards and apiaries and ferment wine in a marani dating from the 8th–11th centuries.</p></section></div>
+        <div id="modal-monk-desc"><section><p>After parting with Ioane of Zedazeni, Ioseb moved into northern Kakheti, onto the wide plain of the Alazani River at the foot of the Greater Caucasus. According to tradition, the area was sparsely settled then, and neighboring highlanders came down here for seasonal festivals of a moon deity. Ioseb built a small church dedicated to St. George; his vita mentions that he wore a cross containing a fragment of the True Cross.</p><p>Medieval hagiography links the monastery's later rise to a chance encounter on a hunt. A local nobleman riding through the thickets of the Alazani plain came across the lone monk at prayer. Impressed by the encounter and the relic Ioseb carried, he paid for the first stone church and enlisted neighboring villages to protect the small community.</p><p>From that modest 6th-century church grew one of the main spiritual centers of Eastern Georgia. Five centuries later, in the early 11th century, Kakhetian rulers raised a vast cathedral on the same spot—a church that remained the tallest in Georgia for nearly a thousand years.</p><p>Ioseb was buried in the church he founded, and when the 11th-century cathedral was built, his tomb was carefully preserved in the northern part of the sanctuary. The Georgian Orthodox Church venerates him as Venerable Ioseb of Alaverdi. Every late September, people from across Kakheti and the mountain gorges still gather here for the traditional festival of Alaverdoba.</p></section><section><h3>The Monastery</h3><p>In the early 11th century, St. George Cathedral was raised directly over the foundations of the 6th-century church. Standing more than fifty meters tall, it can be spotted across the flat plain from far away; a fortified stone wall encloses the grounds, while the austere facades are articulated with restrained blind arcades.</p><p>Inside, the cathedral feels unusually tall and spacious. Once 19th-century whitewash was cleaned off the walls, medieval frescoes of the 11th, 15th, and 16th centuries came back into view—among them the Virgin and Child in the apse and a rare portrait of Ioseb directly above his tomb.</p><p>Today Alaverdi is an active men's monastery and the seat of the local metropolitan. The monks run a large working estate: they tend vineyards and beehives, and still ferment wine in an ancient stone marani dating from the 8th–11th centuries.</p></section></div>
         <div class="desktop-modal-gmaps-wrap">
           <a id="modal-monk-gmaps-desktop" class="modal-gmaps" href="#" target="_blank" rel="noopener noreferrer">
             <span data-i18n="card.openMaps">Open in Google Maps</span>
             <i class="icon icon-map-pin" aria-hidden="true"></i>
           </a>
+        </div>
+        <div class="intro-contact-wrap">
+          <a id="intro-contact-link" class="intro-contact-link" href="mailto:shelenashev@gmail.com?subject=13fathers" data-i18n="intro.contact">Contact</a>
         </div>
         </div>
       </div>

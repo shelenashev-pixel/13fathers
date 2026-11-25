@@ -28,7 +28,7 @@
   <meta name="twitter:title" content="Piros of Breti — Breti Monastery | 13 Assyrian Fathers in Georgia">
   <meta name="twitter:description" content="Piros of Breti (Breti Monastery, Shida Kartli (Kareli)) — one of the 13 Assyrian Fathers in Georgia. Piros settled on the bank of the Dvani River at Breti, near…">
   <meta name="twitter:image" content="https://13fathers.ge/images/monasteries/pyrrhus-breti.webp">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"13 Assyrian Fathers","item":"https://13fathers.ge/"},{"@type":"ListItem","position":2,"name":"Piros of Breti","item":"https://13fathers.ge/piros-breti/"}]},{"@type":"Person","@id":"https://13fathers.ge/piros-breti/#person","name":"Piros of Breti","alternateName":["Pyrrhus of Breti","Piros Breteli"],"description":"Piros settled on the bank of the Dvani River at Breti, near present-day Kareli in Shida Kartli. Medieval hymns call him a \"divine image of repentance\" for his strict fasting and night vigils, yet he did not shut himself off from people: his monastery served as a refuge for the poor, the sick, and those with nowhere else to turn. The best-known…","image":"https://13fathers.ge/images/monasteries/pyrrhus-breti.webp","url":"https://13fathers.ge/piros-breti/","workLocation":{"@id":"https://13fathers.ge/piros-breti/#monastery"}},{"@type":"LandmarksOrHistoricalBuildings","@id":"https://13fathers.ge/piros-breti/#monastery","name":"Breti Monastery","description":"Breti shows clearly how medieval builders treated earlier shrines: directly south of Piros's small 6th-century hall church, they added the larger 8th–9th-century St. George hall church of yellowish sandstone. Restoration beneath layers of soot and whitewash uncovered fragments of 11th–13th-century…","image":"https://13fathers.ge/images/monasteries/pyrrhus-breti.webp","address":{"@type":"PostalAddress","addressRegion":"Shida Kartli (Kareli)","addressCountry":"GE"},"geo":{"@type":"GeoCoordinates","latitude":42.0633,"longitude":43.9161},"hasMap":"https://maps.app.goo.gl/eVdwKMJ4CePGYPD96"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"13 Assyrian Fathers","item":"https://13fathers.ge/"},{"@type":"ListItem","position":2,"name":"Piros of Breti","item":"https://13fathers.ge/piros-breti/"}]},{"@type":"Person","@id":"https://13fathers.ge/piros-breti/#person","name":"Piros of Breti","alternateName":["Pyrrhus of Breti","Piros Breteli"],"description":"Piros settled on the bank of the Dvani River at Breti, near present-day Kareli in Shida Kartli. Medieval church hymns call him a \"divine image of repentance\" for his strict fasting and long night vigils, yet he never cut himself off from ordinary people. His monastery served as a refuge for the poor, the sick, and those with nowhere else to turn…","image":"https://13fathers.ge/images/monasteries/pyrrhus-breti.webp","url":"https://13fathers.ge/piros-breti/","workLocation":{"@id":"https://13fathers.ge/piros-breti/#monastery"}},{"@type":"LandmarksOrHistoricalBuildings","@id":"https://13fathers.ge/piros-breti/#monastery","name":"Breti Monastery","description":"Breti shows clearly how medieval builders treated earlier shrines: directly against the southern wall of Piros's modest 6th-century hall church, they added the larger 8th–9th-century St. George hall church of yellowish sandstone, leaving the older chapel intact. During restoration, removing layers…","image":"https://13fathers.ge/images/monasteries/pyrrhus-breti.webp","address":{"@type":"PostalAddress","addressRegion":"Shida Kartli (Kareli)","addressCountry":"GE"},"geo":{"@type":"GeoCoordinates","latitude":42.0633,"longitude":43.9161},"hasMap":"https://maps.app.goo.gl/eVdwKMJ4CePGYPD96"}]}</script>
   <!-- SEO_META_END -->
   <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2">
 
@@ -79,7 +79,7 @@
       --motion-standard: cubic-bezier(.22, 1, .36, 1);
       --ease-ui: cubic-bezier(.4, 0, .2, 1);
       --shadow-button: 0 4px 8px rgba(17,17,17,.16);
-      --shadow-card: 0 8px 24px rgba(17,17,17,.14);
+      --shadow-card: 0 4px 12px rgba(17,17,17,.10);
       --font-serif: 'Prata', Georgia, serif;
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
@@ -219,7 +219,7 @@
     .language-menu {
       position: absolute; top: calc(100% + var(--space-1)); left: 50%;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: var(--space-1); border-radius: var(--radius-m);
+      padding: var(--space-1); border-radius: var(--radius-pill);
       background: var(--surface-base); box-shadow: var(--shadow-button);
       opacity: 1; visibility: visible; pointer-events: auto;
       transform: translateX(-50%) translateY(0) scale(1);
@@ -510,6 +510,13 @@
     }
     #modal-monk-desc li + li { margin-top: var(--space-2); }
     .desktop-modal-gmaps-wrap { display: none; }
+    .intro-contact-wrap { display: none; justify-content: center; margin-top: 96px; }
+    .monk-detail-modal.is-intro .intro-contact-wrap { display: flex; }
+    .intro-contact-link {
+      color: var(--text-secondary); font: 14px/22px var(--font-sans);
+      text-decoration: underline; text-underline-offset: 4px;
+    }
+    .intro-contact-link:hover { color: var(--text-primary); }
     .monk-detail-modal.is-intro #modal-monk-index,
     .monk-detail-modal.is-intro #modal-monk-name,
     .monk-detail-modal.is-intro .modal-icon-frame,
@@ -633,6 +640,7 @@
       }
       .modal-transition-outgoing { display: none !important; }
       .modal-content { padding: var(--space-6) 18px 96px var(--space-6); }
+      .monk-detail-modal.is-intro .modal-content { padding-bottom: 48px; }
       #modal-monk-index { margin-bottom: 27px; }
       .desktop-modal-gmaps-wrap {
         display: flex; justify-content: center; margin-top: var(--space-6);
@@ -822,7 +830,7 @@
         padding-bottom: calc(100lvh - 100dvh + 96px + env(safe-area-inset-bottom, 0px));
       }
       #mobile-card-overlay {
-        position: fixed; z-index: 25; right: 0; bottom: 12px; left: 0;
+        position: fixed; z-index: 25; right: 0; bottom: 0; left: 0;
         overflow: hidden; pointer-events: none; contain: layout paint;
         opacity: 1; visibility: visible; transform: translateY(0);
         transition:
@@ -850,7 +858,7 @@
       }
       .mobile-monk-carousel {
         display: flex; width: 100%; gap: var(--space-4); overflow-x: auto; overflow-y: visible;
-        padding: 4px var(--space-8) 4px;
+        padding: 12px var(--space-8) 16px;
         scroll-snap-type: x mandatory; scrollbar-width: none;
         -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; touch-action: pan-x;
         pointer-events: auto;
@@ -873,17 +881,16 @@
       }
       .mobile-card-image > img.is-loaded { opacity: 1; }
       .mobile-card-number {
-        position: absolute; top: var(--space-5); left: var(--space-5); z-index: 1;
+        position: absolute; top: var(--space-5); left: var(--space-3); z-index: 1;
         display: grid; width: var(--control-height-m); height: var(--control-height-m); place-items: center;
-        border-radius: var(--radius-pill); background: var(--surface-soft); color: var(--text-primary);
-        font: 400 20px/24px var(--font-serif);
+        color: var(--text-inverse); font: 400 20px/24px var(--font-serif); text-align: center;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, .6), 0 0 10px rgba(0, 0, 0, .3);
       }
       .mobile-card-location {
         position: absolute; top: var(--space-5); right: var(--space-5); z-index: 1;
         display: grid; width: var(--control-height-m); height: var(--control-height-m); place-items: center;
         padding: var(--space-2); border-radius: var(--radius-pill); background: var(--surface-soft); color: var(--text-primary);
       }
-      .mobile-card-icon { display: none; }
       .mobile-card-content {
         position: relative; display: flex; flex: 0 0 auto; flex-direction: column;
         align-items: center; padding: var(--space-5) var(--space-4) var(--space-3); text-align: center;
@@ -961,6 +968,12 @@
         mask-image: radial-gradient(white, black);
         isolation: isolate;
       }
+      .monk-detail-modal.is-intro .modal-clip {
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border-radius: var(--radius-m) var(--radius-m) 0 0;
+      }
       .modal-content {
         position: absolute; inset: 0; margin: 0; padding: 72px 0 0; overflow-x: hidden; overflow-y: auto;
         -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain;
@@ -969,12 +982,18 @@
       }
       .modal-card {
         min-height: 100%;
-        padding: var(--space-6) var(--space-4) calc(100lvh - 100dvh + 136px + env(safe-area-inset-bottom, 0px));
+        padding: var(--space-6) var(--space-4) calc(100lvh - 100dvh + 176px + env(safe-area-inset-bottom, 0px));
         border-radius: var(--radius-m);
         background: var(--surface-base);
       }
+      .monk-detail-modal.is-intro .modal-card {
+        padding-bottom: calc(100lvh - 100dvh + 120px + env(safe-area-inset-bottom, 0px));
+        border-radius: var(--radius-m) var(--radius-m) 0 0;
+      }
       body.monk-modal-open::after { display: none; }
-      #modal-monk-desc { font: 15px/24px var(--font-sans); text-align: center; }
+      #modal-monk-desc { font: 17px/24px var(--font-sans); text-align: left; }
+      .monk-detail-modal.is-intro #modal-monk-desc { text-align: center; }
+      .intro-contact-link { font: 17px/24px var(--font-sans); }
       .modal-close {
         position: fixed; top: calc(var(--space-6) + env(safe-area-inset-top, 0px)); left: var(--space-4);
         z-index: 100; display: flex; width: var(--control-height-m); height: var(--control-height-m);
@@ -1204,7 +1223,7 @@
     </aside>
   </main>
 
-  <script type="module" src="js/app.js?v=figma-sync-46"></script>
+  <script type="module" src="js/app.js?v=figma-sync-51"></script>
 
   <div id="detail-overlay" class="detail-overlay hidden">
     <button id="close-modal-btn" class="modal-close" type="button" aria-label="Close">
@@ -1222,12 +1241,15 @@
           <img id="modal-monk-icon" class="modal-icon" src="" alt="" width="160" height="160" decoding="async">
           <i class="icon icon-cross modal-icon-fallback" aria-hidden="true"></i>
         </div>
-        <div id="modal-monk-desc"><section><p>Piros settled on the bank of the Dvani River at Breti, near present-day Kareli in Shida Kartli. Medieval hymns call him a &quot;divine image of repentance&quot; for his strict fasting and night vigils, yet he did not shut himself off from people: his monastery served as a refuge for the poor, the sick, and those with nowhere else to turn.</p><p>The best-known monument linked to Breti is neither a cave nor a fortress wall, but a work of goldsmithing. In the 11th century, the master Gabriel Sapaneli made a processional cross for the monastery: a wooden core sheathed in chased silver and gold sheets with scenes from the life of Christ and Georgian inscriptions. It survived the raids and is now kept in the Georgian National Museum in Tbilisi.</p><p>Piros was buried in the small 6th-century church he built at Breti. When the monastery was later expanded, the original chapel was not torn down, but kept as the northern burial chamber. The Georgian Orthodox Church venerates him as Venerable Piros of Breti; his feast day is 28 May (15 May Old Style).</p></section><section><h3>The Monastery</h3><p>Breti shows clearly how medieval builders treated earlier shrines: directly south of Piros's small 6th-century hall church, they added the larger 8th–9th-century St. George hall church of yellowish sandstone. Restoration beneath layers of soot and whitewash uncovered fragments of 11th–13th-century frescoes depicting the Church Fathers, along with medieval Georgian graffiti scratched into the plaster by pilgrims.</p><p>Breti is a village church and monastic complex set among orchards in the Kareli district. A low doorway leads into Piros's burial chamber.</p></section></div>
+        <div id="modal-monk-desc"><section><p>Piros settled on the bank of the Dvani River at Breti, near present-day Kareli in Shida Kartli. Medieval church hymns call him a &quot;divine image of repentance&quot; for his strict fasting and long night vigils, yet he never cut himself off from ordinary people.</p><p>His monastery served as a refuge for the poor, the sick, and those with nowhere else to turn. No dramatic mountain miracle tales grew up around Piros's name—instead, memory preserved a quiet, steady ascetic and a monastery woven into the life of nearby villages.</p><p>Curiously, the best-known historical work linked to Breti is neither a cave nor a fortress wall, but a piece of goldsmithing. In the 11th century, a medieval master made a processional cross for the monastery: a wooden core sheathed in chased silver and gold plates with scenes from the life of Christ and Georgian inscriptions. It survived centuries of raids and is now kept in the Georgian National Museum in Tbilisi.</p><p>Piros was buried in the small 6th-century church he built at Breti. When the monastery was later expanded, builders left his original chapel standing as the northern burial chamber. The Georgian Orthodox Church venerates him as Venerable Piros of Breti; his feast day is 28 May.</p></section><section><h3>The Monastery</h3><p>Breti shows clearly how medieval builders treated earlier shrines: directly against the southern wall of Piros's modest 6th-century hall church, they added the larger 8th–9th-century St. George hall church of yellowish sandstone, leaving the older chapel intact.</p><p>During restoration, removing layers of soot and later whitewash revealed fragments of 11th–13th-century frescoes depicting the Church Fathers, alongside medieval Georgian graffiti scratched into the plaster by pilgrims over the centuries.</p><p>Today Breti is a quiet village church and small monastic complex surrounded by orchards in the Kareli district. A low stone doorway leads straight from the main church into Piros's burial chamber.</p></section></div>
         <div class="desktop-modal-gmaps-wrap">
           <a id="modal-monk-gmaps-desktop" class="modal-gmaps" href="#" target="_blank" rel="noopener noreferrer">
             <span data-i18n="card.openMaps">Open in Google Maps</span>
             <i class="icon icon-map-pin" aria-hidden="true"></i>
           </a>
+        </div>
+        <div class="intro-contact-wrap">
+          <a id="intro-contact-link" class="intro-contact-link" href="mailto:shelenashev@gmail.com?subject=13fathers" data-i18n="intro.contact">Contact</a>
         </div>
         </div>
       </div>

@@ -28,7 +28,7 @@
   <meta name="twitter:title" content="Shio of Mgvime — Shio-Mgvime Monastery | 13 Assyrian Fathers in Georgia">
   <meta name="twitter:description" content="Shio of Mgvime (Shio-Mgvime Monastery, Mtskheta-Mtianeti) — one of the 13 Assyrian Fathers in Georgia. Shio, called the Cave-Dweller, went west from Mtskheta along…">
   <meta name="twitter:image" content="https://13fathers.ge/images/monasteries/shio-mgvime.webp">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"13 Assyrian Fathers","item":"https://13fathers.ge/"},{"@type":"ListItem","position":2,"name":"Shio of Mgvime","item":"https://13fathers.ge/shio-mgvime/"}]},{"@type":"Person","@id":"https://13fathers.ge/shio-mgvime/#person","name":"Shio of Mgvime","alternateName":["Shio of Mgvime","Shio Mgvimeli"],"description":"Shio, called the Cave-Dweller, went west from Mtskheta along the northern bank of the Mtkvari and settled in a narrow limestone gorge, in a cleft in the cliff. His pursuit of solitude produced an unexpected result: word of the hermit spread quickly, and according to chronicles up to two thousand monks gathered in the canyon, forming one of the…","image":"https://13fathers.ge/images/monasteries/shio-mgvime.webp","url":"https://13fathers.ge/shio-mgvime/","workLocation":{"@id":"https://13fathers.ge/shio-mgvime/#monastery"}},{"@type":"LandmarksOrHistoricalBuildings","@id":"https://13fathers.ge/shio-mgvime/#monastery","name":"Shio-Mgvime Monastery","description":"Because the monastery grew around a vertical cave in a narrow gorge, its buildings are arranged in tiers along the cliff. The oldest is the 6th-century octagonal domed Church of St. John the Baptist, built partly into the rock beside the mouth of Shio's pit. Above it stands the 11th–12th-century…","image":"https://13fathers.ge/images/monasteries/shio-mgvime.webp","address":{"@type":"PostalAddress","addressRegion":"Mtskheta-Mtianeti","addressCountry":"GE"},"geo":{"@type":"GeoCoordinates","latitude":41.8625,"longitude":44.6403},"hasMap":"https://www.google.com/maps/place/Shiomgvime+Monastery/@41.8623609,44.6402038,17z/data=!3m1!4b1!4m6!3m5!1s0x404464fce9540da1:0xe9fa3081792d61d7!8m2!3d41.8623609!4d44.6402038!16s%2Fm%2F027b25y"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"13 Assyrian Fathers","item":"https://13fathers.ge/"},{"@type":"ListItem","position":2,"name":"Shio of Mgvime","item":"https://13fathers.ge/shio-mgvime/"}]},{"@type":"Person","@id":"https://13fathers.ge/shio-mgvime/#person","name":"Shio of Mgvime","alternateName":["Shio of Mgvime","Shio Mgvimeli"],"description":"Shio, called the Cave-Dweller, went west from Mtskheta along the northern bank of the Mtkvari and settled in a narrow limestone gorge, inside a shallow cleft in the cliff. His search for quiet produced a familiar hermit's paradox: word of him spread quickly across Kartli, and chronicles claim up to two thousand monks eventually gathered in the…","image":"https://13fathers.ge/images/monasteries/shio-mgvime.webp","url":"https://13fathers.ge/shio-mgvime/","workLocation":{"@id":"https://13fathers.ge/shio-mgvime/#monastery"}},{"@type":"LandmarksOrHistoricalBuildings","@id":"https://13fathers.ge/shio-mgvime/#monastery","name":"Shio-Mgvime Monastery","description":"Because the monastery grew around a vertical cave in a tight canyon, its buildings rise in tiers right along the cliff. The oldest is the 6th-century octagonal domed Church of St. John the Baptist, set partly into the rock beside the mouth of Shio's pit. Higher up stands the 11th–12th-century…","image":"https://13fathers.ge/images/monasteries/shio-mgvime.webp","address":{"@type":"PostalAddress","addressRegion":"Mtskheta-Mtianeti","addressCountry":"GE"},"geo":{"@type":"GeoCoordinates","latitude":41.8625,"longitude":44.6403},"hasMap":"https://www.google.com/maps/place/Shiomgvime+Monastery/@41.8623609,44.6402038,17z/data=!3m1!4b1!4m6!3m5!1s0x404464fce9540da1:0xe9fa3081792d61d7!8m2!3d41.8623609!4d44.6402038!16s%2Fm%2F027b25y"}]}</script>
   <!-- SEO_META_END -->
   <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2">
 
@@ -79,7 +79,7 @@
       --motion-standard: cubic-bezier(.22, 1, .36, 1);
       --ease-ui: cubic-bezier(.4, 0, .2, 1);
       --shadow-button: 0 4px 8px rgba(17,17,17,.16);
-      --shadow-card: 0 8px 24px rgba(17,17,17,.14);
+      --shadow-card: 0 4px 12px rgba(17,17,17,.10);
       --font-serif: 'Prata', Georgia, serif;
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
@@ -219,7 +219,7 @@
     .language-menu {
       position: absolute; top: calc(100% + var(--space-1)); left: 50%;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: var(--space-1); border-radius: var(--radius-m);
+      padding: var(--space-1); border-radius: var(--radius-pill);
       background: var(--surface-base); box-shadow: var(--shadow-button);
       opacity: 1; visibility: visible; pointer-events: auto;
       transform: translateX(-50%) translateY(0) scale(1);
@@ -510,6 +510,13 @@
     }
     #modal-monk-desc li + li { margin-top: var(--space-2); }
     .desktop-modal-gmaps-wrap { display: none; }
+    .intro-contact-wrap { display: none; justify-content: center; margin-top: 96px; }
+    .monk-detail-modal.is-intro .intro-contact-wrap { display: flex; }
+    .intro-contact-link {
+      color: var(--text-secondary); font: 14px/22px var(--font-sans);
+      text-decoration: underline; text-underline-offset: 4px;
+    }
+    .intro-contact-link:hover { color: var(--text-primary); }
     .monk-detail-modal.is-intro #modal-monk-index,
     .monk-detail-modal.is-intro #modal-monk-name,
     .monk-detail-modal.is-intro .modal-icon-frame,
@@ -633,6 +640,7 @@
       }
       .modal-transition-outgoing { display: none !important; }
       .modal-content { padding: var(--space-6) 18px 96px var(--space-6); }
+      .monk-detail-modal.is-intro .modal-content { padding-bottom: 48px; }
       #modal-monk-index { margin-bottom: 27px; }
       .desktop-modal-gmaps-wrap {
         display: flex; justify-content: center; margin-top: var(--space-6);
@@ -822,7 +830,7 @@
         padding-bottom: calc(100lvh - 100dvh + 96px + env(safe-area-inset-bottom, 0px));
       }
       #mobile-card-overlay {
-        position: fixed; z-index: 25; right: 0; bottom: 12px; left: 0;
+        position: fixed; z-index: 25; right: 0; bottom: 0; left: 0;
         overflow: hidden; pointer-events: none; contain: layout paint;
         opacity: 1; visibility: visible; transform: translateY(0);
         transition:
@@ -850,7 +858,7 @@
       }
       .mobile-monk-carousel {
         display: flex; width: 100%; gap: var(--space-4); overflow-x: auto; overflow-y: visible;
-        padding: 4px var(--space-8) 4px;
+        padding: 12px var(--space-8) 16px;
         scroll-snap-type: x mandatory; scrollbar-width: none;
         -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; touch-action: pan-x;
         pointer-events: auto;
@@ -873,17 +881,16 @@
       }
       .mobile-card-image > img.is-loaded { opacity: 1; }
       .mobile-card-number {
-        position: absolute; top: var(--space-5); left: var(--space-5); z-index: 1;
+        position: absolute; top: var(--space-5); left: var(--space-3); z-index: 1;
         display: grid; width: var(--control-height-m); height: var(--control-height-m); place-items: center;
-        border-radius: var(--radius-pill); background: var(--surface-soft); color: var(--text-primary);
-        font: 400 20px/24px var(--font-serif);
+        color: var(--text-inverse); font: 400 20px/24px var(--font-serif); text-align: center;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, .6), 0 0 10px rgba(0, 0, 0, .3);
       }
       .mobile-card-location {
         position: absolute; top: var(--space-5); right: var(--space-5); z-index: 1;
         display: grid; width: var(--control-height-m); height: var(--control-height-m); place-items: center;
         padding: var(--space-2); border-radius: var(--radius-pill); background: var(--surface-soft); color: var(--text-primary);
       }
-      .mobile-card-icon { display: none; }
       .mobile-card-content {
         position: relative; display: flex; flex: 0 0 auto; flex-direction: column;
         align-items: center; padding: var(--space-5) var(--space-4) var(--space-3); text-align: center;
@@ -961,6 +968,12 @@
         mask-image: radial-gradient(white, black);
         isolation: isolate;
       }
+      .monk-detail-modal.is-intro .modal-clip {
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border-radius: var(--radius-m) var(--radius-m) 0 0;
+      }
       .modal-content {
         position: absolute; inset: 0; margin: 0; padding: 72px 0 0; overflow-x: hidden; overflow-y: auto;
         -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain;
@@ -969,12 +982,18 @@
       }
       .modal-card {
         min-height: 100%;
-        padding: var(--space-6) var(--space-4) calc(100lvh - 100dvh + 136px + env(safe-area-inset-bottom, 0px));
+        padding: var(--space-6) var(--space-4) calc(100lvh - 100dvh + 176px + env(safe-area-inset-bottom, 0px));
         border-radius: var(--radius-m);
         background: var(--surface-base);
       }
+      .monk-detail-modal.is-intro .modal-card {
+        padding-bottom: calc(100lvh - 100dvh + 120px + env(safe-area-inset-bottom, 0px));
+        border-radius: var(--radius-m) var(--radius-m) 0 0;
+      }
       body.monk-modal-open::after { display: none; }
-      #modal-monk-desc { font: 15px/24px var(--font-sans); text-align: center; }
+      #modal-monk-desc { font: 17px/24px var(--font-sans); text-align: left; }
+      .monk-detail-modal.is-intro #modal-monk-desc { text-align: center; }
+      .intro-contact-link { font: 17px/24px var(--font-sans); }
       .modal-close {
         position: fixed; top: calc(var(--space-6) + env(safe-area-inset-top, 0px)); left: var(--space-4);
         z-index: 100; display: flex; width: var(--control-height-m); height: var(--control-height-m);
@@ -1204,7 +1223,7 @@
     </aside>
   </main>
 
-  <script type="module" src="js/app.js?v=figma-sync-46"></script>
+  <script type="module" src="js/app.js?v=figma-sync-51"></script>
 
   <div id="detail-overlay" class="detail-overlay hidden">
     <button id="close-modal-btn" class="modal-close" type="button" aria-label="Close">
@@ -1222,12 +1241,15 @@
           <img id="modal-monk-icon" class="modal-icon" src="" alt="" width="160" height="160" decoding="async">
           <i class="icon icon-cross modal-icon-fallback" aria-hidden="true"></i>
         </div>
-        <div id="modal-monk-desc"><section><p>Shio, called the Cave-Dweller, went west from Mtskheta along the northern bank of the Mtkvari and settled in a narrow limestone gorge, in a cleft in the cliff. His pursuit of solitude produced an unexpected result: word of the hermit spread quickly, and according to chronicles up to two thousand monks gathered in the canyon, forming one of the largest monastic communities in medieval Georgia.</p><p>Hagiographies recount that in his early years a dove brought him food, and when the brothers were choosing a site for the first church, Shio burned incense on his bare palm without injury and told them to build where the smoke settled. Later, weary of renown and visits from the nobility, he carried the idea of seclusion to its logical limit: he had a vertical pit (mgvime) about ten meters deep dug into the limestone. Tradition holds that he spent his last fifteen years at the bottom, receiving bread and water in a basket through a narrow opening.</p><p>Shio was buried at the bottom of that same pit, which became a crypt for his relics. The Georgian Orthodox Church venerates him as Venerable Shio the Cave-Dweller (Shio Mgvimeli); his feast is observed on Cheesefare Thursday, before Great Lent.</p></section><section><h3>The Monastery</h3><p>Because the monastery grew around a vertical cave in a narrow gorge, its buildings are arranged in tiers along the cliff. The oldest is the 6th-century octagonal domed Church of St. John the Baptist, built partly into the rock beside the mouth of Shio's pit. Above it stands the 11th–12th-century Upper Church (Zemo Eklesia), founded under David the Builder and rebuilt as a brick-and-stone basilica after Persian and Mongol raids. More than a hundred cave cells of the 6th–12th centuries are cut into the limestone wall behind it.</p><p>Shio-Mgvime is an active men's monastery a short drive from Mtskheta. Inside the 6th-century church, visitors can see the opening of the pit where Shio lived for fifteen years.</p></section></div>
+        <div id="modal-monk-desc"><section><p>Shio, called the Cave-Dweller, went west from Mtskheta along the northern bank of the Mtkvari and settled in a narrow limestone gorge, inside a shallow cleft in the cliff. His search for quiet produced a familiar hermit's paradox: word of him spread quickly across Kartli, and chronicles claim up to two thousand monks eventually gathered in the canyon, forming one of the largest monastic communities in medieval Georgia.</p><p>Medieval vitae preserve plenty of vivid details from his early years in the gorge. They say a dove brought the hermit food at first, and when the growing brotherhood could not agree on where to build the first church, Shio burned incense right on his bare palm without injury and told them to build wherever the smoke settled.</p><p>Later, tired of renown and constant visits from the nobility, Shio carried the idea of seclusion to its limit. He had a vertical pit—mgvime in Georgian—about ten meters deep dug straight into the limestone. Tradition says he spent his last fifteen years at the bottom, receiving bread and water lowered in a basket through a narrow opening above.</p><p>He was buried at the bottom of that same pit, which became a crypt for his relics. The Georgian Orthodox Church venerates him as Venerable Shio the Cave-Dweller (Shio Mgvimeli); his feast is observed on Cheesefare Thursday, right before Great Lent.</p></section><section><h3>The Monastery</h3><p>Because the monastery grew around a vertical cave in a tight canyon, its buildings rise in tiers right along the cliff. The oldest is the 6th-century octagonal domed Church of St. John the Baptist, set partly into the rock beside the mouth of Shio's pit.</p><p>Higher up stands the 11th–12th-century Upper Church (Zemo Eklesia), founded under David the Builder and later rebuilt in brick and stone after Persian and Mongol raids. Behind the churches, more than a hundred cave cells from the 6th–12th centuries are cut into the pale limestone wall.</p><p>Today Shio-Mgvime is an active men's monastery a few kilometers west of Mtskheta. Inside the 6th-century church you can see the opening of the deep pit where Shio lived for fifteen years, while the tall canyon walls keep the courtyard shaded and cool for much of the day.</p></section></div>
         <div class="desktop-modal-gmaps-wrap">
           <a id="modal-monk-gmaps-desktop" class="modal-gmaps" href="#" target="_blank" rel="noopener noreferrer">
             <span data-i18n="card.openMaps">Open in Google Maps</span>
             <i class="icon icon-map-pin" aria-hidden="true"></i>
           </a>
+        </div>
+        <div class="intro-contact-wrap">
+          <a id="intro-contact-link" class="intro-contact-link" href="mailto:shelenashev@gmail.com?subject=13fathers" data-i18n="intro.contact">Contact</a>
         </div>
         </div>
       </div>

@@ -281,9 +281,9 @@ function buildMonkJsonLd(lang, monk, locale) {
   };
 }
 
-function buildMetaBlock({ lang, title, description, canonicalUrl, ogImage, monkId, jsonLd, isSubpage }) {
+function buildMetaBlock({ lang, title, description, canonicalUrl, ogImage, monkId, jsonLd }) {
   const meta = HOME_SEO[lang];
-  const baseTag = isSubpage ? '  <base href="/">\n' : '';
+  const baseTag = '  <base href="/">\n';
   const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 
   return [
@@ -448,6 +448,11 @@ function renderPageHtml(template, { lang, monk, monkIndex, monks, locale, isSubp
   html = html.replace(
     /(<div id="modal-monk-desc">)[\s\S]*?(<\/div>)/,
     `$1${modalDescHtml}$2`
+  );
+  const introContactLabel = locale.intro?.contact || 'Contact';
+  html = html.replace(
+    /(<a id="intro-contact-link"[^>]*>)[\s\S]*?(<\/a>)/,
+    `$1${escapeHtml(introContactLabel)}$2`
   );
 
   return html;

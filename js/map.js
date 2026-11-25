@@ -2,6 +2,8 @@ import { i18n } from './i18n.js?v=figma-sync-13';
 import { trackEvent } from './analytics.js?v=analytics-4';
 
 let mapInstance = null;
+let isMapLoaded = false;
+let cameraRevision = 0;
 let markersMap = {};
 let currentActivePopup = null;
 let currentMobileCardOverlay = null;
@@ -22,6 +24,7 @@ function preloadMonasteryImage(monk) {
 }
 
 export function initMap(monks, onMarkerClick) {
+  isMapLoaded = false;
   mapInstance = new maplibregl.Map({
     container: 'map',
     style: './data/map-style.json',
@@ -46,7 +49,10 @@ export function initMap(monks, onMarkerClick) {
   attribEl?.addEventListener('click', () => { attributionUserToggled = true; });
   collapseAttribution();
   mapInstance.on('styledata', collapseAttribution);
-  mapInstance.once('load', collapseAttribution);
+  mapInstance.once('load', () => {
+    isMapLoaded = true;
+    collapseAttribution();
+  });
 
   monks.forEach((monk) => {
     if (!monk.coordinates) return;
@@ -104,9 +110,19 @@ function getFreeMapInsets() {
   return { top: header?.bottom ?? 0, left };
 }
 
+function whenMapReady(callback) {
+  if (!mapInstance) return;
+  if (isMapLoaded || mapInstance.isStyleLoaded()) {
+    callback();
+  } else {
+    mapInstance.once('load', callback);
+  }
+}
+
 export function showAllMonks({ duration = 900 } = {}) {
   if (!mapInstance) return Promise.resolve();
 
+  const revision = ++cameraRevision;
   mapInstance.stop();
   mapInstance.resize();
   const bounds = new maplibregl.LngLatBounds();
@@ -122,6 +138,12 @@ export function showAllMonks({ duration = 900 } = {}) {
 
   return new Promise((resolve) => {
     const startFit = () => {
+      if (revision !== cameraRevision) {
+        resolve();
+        return;
+      }
+      mapInstance.stop();
+      mapInstance.resize();
       mapInstance.once('moveend', resolve);
       mapInstance.fitBounds(bounds, {
         padding, maxZoom: 7.7, essential: !reducedMotion, duration: reducedMotion ? 0 : duration
@@ -131,14 +153,14 @@ export function showAllMonks({ duration = 900 } = {}) {
         resolve();
       }
     };
-    if (mapInstance.isStyleLoaded()) startFit();
-    else mapInstance.once('load', startFit);
+    whenMapReady(startFit);
   });
 }
 
 export function flyToMonk(monk, { duration } = {}) {
   if (!mapInstance || !monk || !monk.coordinates) return Promise.resolve();
 
+  const revision = ++cameraRevision;
   preloadMonasteryImage(monk);
   mapInstance.stop();
   mapInstance.resize();
@@ -170,6 +192,12 @@ export function flyToMonk(monk, { duration } = {}) {
 
   return new Promise((resolve) => {
     const startFlight = () => {
+      if (revision !== cameraRevision) {
+        resolve();
+        return;
+      }
+      mapInstance.stop();
+      mapInstance.resize();
       const finishFlight = () => resolve();
       mapInstance.once('moveend', finishFlight);
       mapInstance.flyTo(cameraOptions);
@@ -180,11 +208,7 @@ export function flyToMonk(monk, { duration } = {}) {
       }
     };
 
-    if (mapInstance.isStyleLoaded()) {
-      startFlight();
-    } else {
-      mapInstance.once('load', startFlight);
-    }
+    whenMapReady(startFlight);
   });
 }
 
@@ -226,7 +250,6 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
             </a>
           ` : ''}
         </div>
-        <img class="mobile-card-icon" src="${item.iconUrl || `./images/icons/${item.id}.webp`}" alt="" width="48" height="48" loading="lazy" decoding="async" onerror="this.style.display='none'" />
         <div class="mobile-card-content">
           <h2 class="mobile-card-name" data-i18n="monks.${item.id}.monastery">${i18n.t(`monks.${item.id}.monastery`, item.monastery)}</h2>
           <p class="mobile-card-monastery" data-i18n="monks.${item.id}.region">${i18n.t(`monks.${item.id}.region`, item.region || '')}</p>

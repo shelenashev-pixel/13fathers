@@ -1,7 +1,7 @@
 import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-16';
 import {
   initMap, flyToMonk, showPopup, closePopup, setActiveMarker, selectMobileCard, hasMobilePopup, showAllMonks
-} from './map.js?v=figma-sync-36';
+} from './map.js?v=figma-sync-39';
 import { i18n, getRouteFromLocation, buildLocalizedPath } from './i18n.js?v=figma-sync-13';
 import { initAnalytics, trackEvent } from './analytics.js?v=analytics-4';
 
@@ -292,6 +292,29 @@ function updateMapViewButton() {
   }
 }
 
+function ensureMobileCarousel(monk, index) {
+  if (hasMobilePopup()) {
+    selectMobileCard(index);
+    return;
+  }
+  showPopup(
+    monk,
+    () => {
+      closeDetailModal();
+      highlightActiveCard(null);
+    },
+    (selectedMonkId) => openMonkDetails(selectedMonkId || monk.id),
+    index + 1,
+    (targetIndex) => {
+      const nextMonk = allMonksData[targetIndex];
+      if (!nextMonk) return;
+      syncActiveMonkOnMobile(nextMonk.id, { syncMiniCarousel: false, flyMap: true });
+      trackMonkSelection(nextMonk.id, 'prev_next');
+    },
+    allMonksData
+  );
+}
+
 function syncActiveMonkOnMobile(monkId, {
   syncMiniCarousel = true,
   syncDetailCarousel = false,
@@ -308,7 +331,7 @@ function syncActiveMonkOnMobile(monkId, {
   updateMapViewButton();
   setActiveMarker(monk);
   highlightActiveCard(monkId, { scroll: false });
-  if (syncMiniCarousel) selectMobileCard(index);
+  if (syncMiniCarousel) ensureMobileCarousel(monk, index);
   if (syncDetailCarousel) openMonkModal(monk, index + 1, modalDirection);
   if (flyMap) {
     void flyToMonk(monk, { duration: 450 }).catch((error) => {
@@ -506,6 +529,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     const isMapOnly = document.body.classList.toggle('map-only-view');
     updateMapViewButton();
     trackEvent('view_mode_toggle', { target_view: isMapOnly ? 'map' : 'list' });
+    if (isMapOnly) {
+      void showAllMonks().catch((error) => console.error('Failed to fit map to all monasteries', error));
+    } else {
+      const activeMonk = activeMonkId ? allMonksData.find((monk) => monk.id === activeMonkId) : null;
+      if (activeMonk) {
+        void flyToMonk(activeMonk).catch((error) => console.error(`Failed to navigate to ${activeMonk.name}`, error));
+      } else {
+        void showAllMonks().catch((error) => console.error('Failed to fit map to all monasteries', error));
+      }
+    }
   });
   document.getElementById('mobile-list-toggle')?.addEventListener('click', () => {
     const isOpen = !document.body.classList.contains('mobile-list-open');
