@@ -1,7 +1,7 @@
-import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-13';
+import { renderCards, highlightActiveCard } from './cards.js?v=figma-sync-15';
 import {
   initMap, flyToMonk, showPopup, closePopup, setActiveMarker, selectMobileCard, hasMobilePopup, showAllMonks
-} from './map.js?v=figma-sync-33';
+} from './map.js?v=figma-sync-35';
 import { i18n } from './i18n.js?v=figma-sync-12';
 import { initAnalytics, trackEvent } from './analytics.js?v=analytics-3';
 
