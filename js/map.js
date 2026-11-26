@@ -389,12 +389,8 @@ export function showPopup(monk, onClose, onRead, index, onSwipe, monks = [monk])
           ? card
           : closest;
       }, cards[0]);
-      let targetIndex = Number(target?.dataset.monkIndex);
+      const targetIndex = Number(target?.dataset.monkIndex);
       if (!Number.isInteger(targetIndex)) return;
-      if (Math.abs(targetIndex - activeIndex) > 1) {
-        targetIndex = activeIndex + Math.sign(targetIndex - activeIndex);
-        centerCard(targetIndex);
-      }
       selectCard(targetIndex);
     };
     const centerActiveCard = () => {
