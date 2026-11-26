@@ -33,6 +33,8 @@
   <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2">
 
   <!-- MapLibre GL JS -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://tiles.openfreemap.org" crossorigin>
   <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
   <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
 
@@ -79,7 +81,7 @@
       --motion-standard: cubic-bezier(.22, 1, .36, 1);
       --ease-ui: cubic-bezier(.4, 0, .2, 1);
       --shadow-button: 0 4px 8px rgba(17,17,17,.16);
-      --shadow-card: 0 4px 12px rgba(17,17,17,.10);
+      --shadow-card: 0 3px 9px rgba(17,17,17,.10);
       --font-serif: 'Prata', Georgia, serif;
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
@@ -95,6 +97,7 @@
     html {
       margin: 0; padding: 0; width: 100%; height: 100%;
       -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+      -webkit-tap-highlight-color: transparent;
       background-color: var(--surface-canvas);
     }
     body {
@@ -513,10 +516,10 @@
     .intro-contact-wrap { display: none; justify-content: center; margin-top: 96px; }
     .monk-detail-modal.is-intro .intro-contact-wrap { display: flex; }
     .intro-contact-link {
-      color: var(--text-secondary); font: 14px/22px var(--font-sans);
+      color: var(--text-primary); font: 14px/22px var(--font-sans);
       text-decoration: underline; text-underline-offset: 4px;
     }
-    .intro-contact-link:hover { color: var(--text-primary); }
+    .intro-contact-link:hover { color: var(--text-secondary); }
     .monk-detail-modal.is-intro #modal-monk-index,
     .monk-detail-modal.is-intro #modal-monk-name,
     .monk-detail-modal.is-intro .modal-icon-frame,
@@ -705,7 +708,7 @@
       .detail-overlay.hidden {
         display: block !important;
         opacity: 0; visibility: hidden; pointer-events: none;
-        transition: opacity var(--dur-fast) var(--ease-ui), visibility 0s linear var(--dur-fast);
+        transition: opacity var(--dur-base) var(--ease-ui), visibility 0s linear var(--dur-base);
       }
       .detail-overlay::before { display: none; }
       body.monk-modal-open .modal-side-preview {
@@ -830,7 +833,7 @@
         padding-bottom: calc(100lvh - 100dvh + 96px + env(safe-area-inset-bottom, 0px));
       }
       #mobile-card-overlay {
-        position: fixed; z-index: 25; right: 0; bottom: 0; left: 0;
+        position: fixed; z-index: 25; right: 0; bottom: 4px; left: 0;
         overflow: hidden; pointer-events: none; contain: layout paint;
         opacity: 1; visibility: visible; transform: translateY(0);
         transition:
@@ -858,7 +861,7 @@
       }
       .mobile-monk-carousel {
         display: flex; width: 100%; gap: var(--space-4); overflow-x: auto; overflow-y: visible;
-        padding: 12px var(--space-8) 16px;
+        padding: 12px var(--space-8) 12px;
         scroll-snap-type: x mandatory; scrollbar-width: none;
         -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; touch-action: pan-x;
         pointer-events: auto;
@@ -1002,10 +1005,15 @@
         box-shadow: var(--shadow-button);
         transform: translateZ(0); will-change: transform;
       }
-      .app-header::before,
+      .app-header::before {
+        transition: opacity .12s ease-out;
+      }
       .app-header .app-title,
       .app-header .mobile-list-toggle,
       .app-header .reset-btn {
+        transition: opacity var(--dur-base) var(--ease-ui);
+      }
+      body.monk-modal-open .app-header::before {
         transition: opacity var(--dur-base) var(--ease-ui);
       }
       body.monk-modal-open .app-header::before,
@@ -1031,7 +1039,7 @@
       .modal-gmaps { background: var(--surface-inverse); color: var(--text-inverse); }
       .monk-detail-modal .modal-close { display: inline-flex; }
       .mobile-card-skeleton {
-        display: flex; width: 100%; padding: 0 var(--space-8); pointer-events: none;
+        display: flex; width: 100%; padding: 12px var(--space-8) 12px; pointer-events: none;
       }
       .mobile-skel-card {
         position: relative; display: flex; flex: 0 0 calc(100vw - 64px); height: 240px; flex-direction: column;
@@ -1223,7 +1231,7 @@
     </aside>
   </main>
 
-  <script type="module" src="js/app.js?v=figma-sync-51"></script>
+  <script type="module" src="js/app.js?v=figma-sync-52"></script>
 
   <div id="detail-overlay" class="detail-overlay hidden">
     <button id="close-modal-btn" class="modal-close" type="button" aria-label="Close">

@@ -30,6 +30,8 @@ export function initMap(monks, onMarkerClick) {
     style: './data/map-style.json',
     center: [44.8, 41.9],
     zoom: 7.5,
+    maxTileCacheSize: 200,
+    fadeDuration: 100,
     refreshExpiredTiles: false,
     attributionControl: false
   });
